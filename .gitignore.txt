@@ -1,0 +1,24 @@
+                                                                                                                         
+  1. Откройте любой текстовый редактор (TextEdit, VSCode, или другой)                                                      
+  2. Создайте новый файл                                                                                                   
+  3. Вставьте содержимое:                                                                                                  
+  # MacOS                                                                                                                  
+  .DS_Store                                                                                                                
+  .AppleDouble                                                                                                             
+  .LSOverride                                                                                                              
+                                                                                                                           
+  # Thumbnails                                                                                                             
+  ._*                                                                                                                      
+                                                                                                                           
+  # IDE                                                                                                                    
+  .vscode/                                                                                                                 
+  .idea/                                                                                                                   
+                                                                                                                           
+  # Temporary files                                                                                                        
+  *.tmp                                                                                                                    
+  *.log                                                                                                                    
+  *~                                                                                                                       
+                                                                                                                           
+  # FTP credentials                                                                                                        
+  ftp-config.json                                                                                                          
+  .ftpconfig 
