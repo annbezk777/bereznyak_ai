@@ -16,7 +16,8 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}                                                                            
             script: |                                                                                                      
               cd /var/www/html                                                                                             
-              sudo git config --global --add safe.directory /var/www/html                                                  
+              sudo git config --global --add safe.directory /var/www/html
+              sudo git reset --hard HEAD
               sudo git pull origin main                                                                                    
               sudo chown -R www-data:www-data /var/www/html                                                                
                                                             
