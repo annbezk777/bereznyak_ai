@@ -204,6 +204,20 @@
             }
         }
     </style>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108506107', 'ym');
+
+        ym(108506107, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108506107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 </head>
 <body class="text-gray-100">
 
@@ -228,7 +242,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                     </span>
-                    <span class="text-blue-400 text-sm font-semibold tracking-wide">Боты-калькуляторы для любого B2B</span>
+                    <span class="text-blue-400 text-sm font-semibold tracking-wide">AI-бот для сложных расчетов в B2B</span>
                 </div>
             </div>
 
@@ -386,8 +400,8 @@
 
                     <div class="relative bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-2xl border border-blue-500/30 rounded-3xl p-8 md:p-10">
                         <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-                            Автоматические расчёты для любой B2B-ниши: логистика, производство мебели, монтаж кондиционеров, ремонт помещений, остекление, ландшафтный дизайн, детейлинг, IT-инфраструктура.<br>
-                            <span class="text-white font-semibold">С PDF-генерацией, CRM-интеграцией и админ-панелью для управления.</span>
+                            Логистика, производство, монтаж или IT — ваш AI-ассистент мгновенно выполняет сложные автоматические расчёты любой сложности.<br>
+                            Мультиплатформенная разработка — <span class="gradient-text">защищаем ваш бизнес от блокировок мессенджеров</span>. Бот легко переносится на любую доступную платформу без потери данных.
                         </p>
 
                         <!-- CTA buttons -->
@@ -719,6 +733,21 @@
                                 <p><span class="text-white font-semibold">Вебхуки и API:</span> передача данных в Google Sheets, 1C, ваши системы</p>
                             </div>
                         </div>
+
+                        <!-- Expandable explanation -->
+                        <button class="explain-toggle mt-4 text-green-400 text-sm flex items-center gap-2 hover:text-green-300 transition-colors">
+                            <i data-lucide="info" class="w-4 h-4"></i>
+                            <span>Как это работает на практике?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                        </button>
+                        <div class="explain-content hidden mt-4 p-4 bg-green-500/10 rounded-xl border border-green-500/30">
+                            <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                                <span class="text-white font-semibold">На практике:</span> клиент заполнил форму в боте → данные автоматически попали в вашу CRM без ручного переноса.
+                            </p>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Вы видите откуда пришел клиент (Яндекс реклама? Google? ВК?) и понимаете, какая реклама работает, а на какую не стоит тратить бюджет. Никакой потери лидов — всё автоматом в системе.
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Block 4: Infrastructure -->
@@ -745,6 +774,21 @@
                                 <i data-lucide="check" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
                                 <p><span class="text-white font-semibold">Техподдержка:</span> доработки, обновления, консультации после запуска</p>
                             </div>
+                        </div>
+
+                        <!-- Expandable explanation -->
+                        <button class="explain-toggle mt-4 text-orange-400 text-sm flex items-center gap-2 hover:text-orange-300 transition-colors">
+                            <i data-lucide="info" class="w-4 h-4"></i>
+                            <span>Как это работает на практике?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                        </button>
+                        <div class="explain-content hidden mt-4 p-4 bg-orange-500/10 rounded-xl border border-orange-500/30">
+                            <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                                <span class="text-white font-semibold">На практике:</span> бот не упадет, даже если к вам одновременно обратятся 100 клиентов. Серверы автоматически масштабируются под нагрузку.
+                            </p>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Данные защищены — резервные копии каждые 6 часов. Если что-то сломается, мы узнаем об этом раньше вас и сразу починим. Ваш бизнес работает без простоев.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1804,6 +1848,37 @@
                             <p class="mt-3 text-green-400">Или вообще без поддержки — бот будет работать, но правки делаем по разовому прайсу</p>
                         </div>
                     </div>
+
+                    <!-- FAQ 7 -->
+                    <div class="glassmorphism rounded-2xl border border-slate-700 overflow-hidden">
+                        <button class="faq-question w-full text-left px-8 py-6 flex items-center justify-between hover:bg-slate-800/30 transition-all group">
+                            <span class="text-lg font-semibold text-white pr-8">Что если Telegram заблокируют в России?</span>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-blue-400 flex-shrink-0 transition-transform group-[.active]:rotate-180"></i>
+                        </button>
+                        <div class="faq-answer px-8 pb-6 text-gray-400 leading-relaxed hidden">
+                            <p class="mb-3"><span class="text-white font-semibold">Мы разрабатываем мультиплатформенных ботов.</span> Мы не привязываем вас к одной платформе.</p>
+                            <p class="mb-3">Создаем универсальных ботов, которые смогут работать в разных мессенджерах:</p>
+                            <ul class="space-y-2 ml-6 list-disc">
+                                <li><span class="text-white font-semibold">Telegram</span> — как основной канал, пока доступен</li>
+                                <li><span class="text-white font-semibold">MAX</span> — российский мессенджер VK</li>
+                            </ul>
+                            <p class="mt-3 text-green-400">Если Telegram заблокируют — ваш бизнес продолжит работать в MAX без простоя.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 8 -->
+                    <div class="glassmorphism rounded-2xl border border-slate-700 overflow-hidden">
+                        <button class="faq-question w-full text-left px-8 py-6 flex items-center justify-between hover:bg-slate-800/30 transition-all group">
+                            <span class="text-lg font-semibold text-white pr-8">Нужно ли мне регистрировать компанию для бота MAX?</span>
+                            <i data-lucide="chevron-down" class="w-6 h-6 text-blue-400 flex-shrink-0 transition-transform group-[.active]:rotate-180"></i>
+                        </button>
+                        <div class="faq-answer px-8 pb-6 text-gray-400 leading-relaxed hidden">
+                            <p class="mb-3"><span class="text-white font-semibold">Для MAX — да, требуется ИП/ООО РФ.</span></p>
+                            <p class="mb-3">Это гарантирует легальность и защиту от мошенников.</p>
+                            <p class="mb-3"><span class="text-white font-semibold">Для Telegram — нет</span>, работает без документов.</p>
+                            <p class="mt-3 text-blue-400">Мы поможем с верификацией в MAX.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- CTA after FAQ -->
@@ -1981,6 +2056,23 @@
                     button.parentElement.classList.add('active');
                     button.classList.add('active');
                     answer.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Expandable explanations
+        document.querySelectorAll('.explain-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const chevron = button.querySelector('[data-lucide="chevron-down"]');
+                const isHidden = content.classList.contains('hidden');
+
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.add('hidden');
+                    chevron.style.transform = 'rotate(0deg)';
                 }
             });
         });
