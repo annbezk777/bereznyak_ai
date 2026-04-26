@@ -226,6 +226,48 @@
         body.modal-open {
             overflow: hidden;
         }
+
+        /* ================================================================
+           Quiz Calculator Styles
+           ================================================================ */
+        .quiz-step {
+            display: none;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .quiz-step.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: inherit;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .quiz-option > div {
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover > div {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
     </style>
 
     <!-- Yandex.Metrika counter -->
@@ -429,7 +471,7 @@
 
                         <!-- CTA buttons -->
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button class="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl shadow-blue-500/50 transition-all duration-300 hover:shadow-blue-500/70 hover:scale-105">
+                            <button onclick="document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' }); ym(108506107,'reachGoal','calculate_price_click');" class="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl shadow-blue-500/50 transition-all duration-300 hover:shadow-blue-500/70 hover:scale-105">
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                                 <span class="relative flex items-center gap-2 justify-center">
                                     <i data-lucide="calculator" class="w-5 h-5"></i>
@@ -438,7 +480,7 @@
                                 </span>
                             </button>
 
-                            <button class="group relative overflow-hidden bg-slate-800/50 backdrop-blur-sm border border-slate-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-slate-700/50 hover:border-slate-600" onclick="ym(108506107,'reachGoal','demo_bot_click')">
+                            <button class="group relative overflow-hidden bg-slate-800/50 backdrop-blur-sm border border-slate-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-slate-700/50 hover:border-slate-600" onclick="openDemoBotsModal()">
                                 <span class="flex items-center gap-2 justify-center">
                                     <i data-lucide="play-circle" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                                     <span>Посмотреть демо</span>
@@ -1037,7 +1079,7 @@
                             <p class="text-sm text-blue-300"><strong>Для кого:</strong> Малый бизнес, частные специалисты</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="ym(108506107,'reachGoal','tariff_lite_click')">
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('LITE', '45 000 – 60 000₽', ''); ym(108506107,'reachGoal','tariff_lite_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1095,7 +1137,7 @@
                             <p class="text-xs text-gray-400 mt-2">⚡ Окупаемость: 2-3 месяца</p>
                         </div>
 
-                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="ym(108506107,'reachGoal','tariff_pro_click')">
+                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="openConsultationModal('PRO', '120 000 – 180 000₽', ''); ym(108506107,'reachGoal','tariff_pro_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1148,7 +1190,7 @@
                             <p class="text-sm text-purple-300"><strong>Для кого:</strong> Enterprise, сети, холдинги</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="ym(108506107,'reachGoal','tariff_ultra_click')">
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('ULTRA', 'от 350 000₽', ''); ym(108506107,'reachGoal','tariff_ultra_click');">
                             Обсудить проект
                         </button>
                     </div>
@@ -1533,111 +1575,435 @@
                     </div>
                 </div>
 
-                <!-- Interactive ROI Calculator -->
-                <div class="mt-16 glassmorphism rounded-3xl p-10 border-2 border-blue-500/30">
-                    <div class="text-center mb-8">
-                        <h3 class="text-3xl font-bold mb-3">Рассчитайте вашу экономию</h3>
-                        <p class="text-gray-400">Введите данные вашего бизнеса и узнайте потенциальную выгоду</p>
+                <!-- Quiz Calculator: Bot Price Estimator -->
+                <div id="quizCalculator" class="mt-16 glassmorphism rounded-3xl p-8 md:p-12 border-2 border-blue-500/30">
+
+                    <!-- Progress Bar (hidden on welcome screen) -->
+                    <div id="progressBarContainer" class="mb-8 hidden">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm text-gray-400">Шаг <span id="currentStep">1</span> из 7</span>
+                            <span class="text-sm text-blue-400 font-semibold" id="progressPercent">14%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div id="progressBar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-500" style="width: 14%"></div>
+                        </div>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
-                        <!-- Left: Inputs -->
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-300 mb-2">Заявок в месяц сейчас</label>
-                                <input
-                                    type="range"
-                                    id="leads"
-                                    min="20"
-                                    max="500"
-                                    value="100"
-                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
-                                    oninput="calculateROI()"
-                                >
-                                <div class="flex justify-between text-sm text-gray-500 mt-1">
-                                    <span>20</span>
-                                    <span id="leadsValue" class="text-white font-bold text-lg">100</span>
-                                    <span>500</span>
+                    <!-- Quiz Steps Container -->
+                    <div id="quizSteps" class="min-h-[400px]">
+
+                        <!-- STEP 0: Welcome Screen -->
+                        <div class="quiz-step active" data-step="0">
+                            <div class="text-center max-w-3xl mx-auto">
+                                <!-- Badge -->
+                                <div class="inline-block bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-purple-600/20 border border-blue-500/30 rounded-full px-6 py-2 mb-6">
+                                    <span class="text-blue-400 text-sm font-semibold">⚡ Персональный расчёт за 2 минуты</span>
                                 </div>
+
+                                <!-- Main Headline -->
+                                <h3 class="text-3xl md:text-5xl font-black mb-6 text-white leading-tight">
+                                    Узнайте стоимость бота<br/>для вашего бизнеса
+                                </h3>
+
+                                <!-- Subheadline -->
+                                <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed">
+                                    Пройдите короткий квиз из 7 вопросов и получите точную оценку стоимости, сроков разработки и потенциальной экономии
+                                </p>
+
+                                <!-- Benefits Grid -->
+                                <div class="grid md:grid-cols-3 gap-6 mb-10">
+                                    <div class="glassmorphism rounded-xl p-6 border border-slate-700/50">
+                                        <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                            <i data-lucide="calculator" class="w-6 h-6 text-blue-400"></i>
+                                        </div>
+                                        <h4 class="text-white font-bold mb-2">Точная стоимость</h4>
+                                        <p class="text-sm text-gray-400">Расчёт с учётом сложности вашего бизнеса</p>
+                                    </div>
+
+                                    <div class="glassmorphism rounded-xl p-6 border border-slate-700/50">
+                                        <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                            <i data-lucide="target" class="w-6 h-6 text-indigo-400"></i>
+                                        </div>
+                                        <h4 class="text-white font-bold mb-2">Подбор тарифа</h4>
+                                        <p class="text-sm text-gray-400">LITE, PRO или ULTRA — что подходит именно вам</p>
+                                    </div>
+
+                                    <div class="glassmorphism rounded-xl p-6 border border-slate-700/50">
+                                        <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                            <i data-lucide="trending-up" class="w-6 h-6 text-purple-400"></i>
+                                        </div>
+                                        <h4 class="text-white font-bold mb-2">Прогноз экономии</h4>
+                                        <p class="text-sm text-gray-400">Сколько вы сэкономите на менеджерах в год</p>
+                                    </div>
+                                </div>
+
+                                <!-- CTA Button -->
+                                <button onclick="startQuiz()" class="btn-primary text-white px-12 py-5 rounded-xl font-bold text-xl inline-flex items-center gap-3 group hover:scale-105 transition-transform shadow-2xl shadow-blue-500/30">
+                                    <span>Начать расчёт</span>
+                                    <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+
+                                <!-- Footer Note -->
+                                <p class="text-sm text-gray-500 mt-6">
+                                    🔒 Никакой регистрации. Результат увидите сразу
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- STEP 1: Вид деятельности -->
+                        <div class="quiz-step" data-step="1">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="briefcase" class="w-8 h-8 text-blue-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Ваш вид деятельности</h3>
+                                <p class="text-gray-400">Это поможет нам лучше понять специфику вашего бизнеса</p>
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-300 mb-2">Зарплата менеджера (₽/мес)</label>
+                            <div class="max-w-lg mx-auto">
                                 <input
-                                    type="range"
-                                    id="salary"
-                                    min="50000"
-                                    max="200000"
-                                    value="120000"
-                                    step="10000"
-                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
-                                    oninput="calculateROI()"
-                                >
-                                <div class="flex justify-between text-sm text-gray-500 mt-1">
-                                    <span>50k</span>
-                                    <span id="salaryValue" class="text-white font-bold text-lg">120 000₽</span>
-                                    <span>200k</span>
+                                    type="text"
+                                    id="businessType"
+                                    placeholder="Например: Грузоперевозки, Установка окон, Детейлинг авто..."
+                                    class="w-full px-6 py-4 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors text-lg"
+                                />
+                                <p class="text-xs text-gray-500 mt-2 text-center">Введите своими словами</p>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: Сложность расчёта цены -->
+                        <div class="quiz-step" data-step="2">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="sliders" class="w-8 h-8 text-purple-400"></i>
                                 </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Насколько сложный расчёт цены в вашем бизнесе?</h3>
+                                <p class="text-gray-400">От скольких факторов зависит итоговая стоимость заказа?</p>
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-300 mb-2">Текущая конверсия в сделку (%)</label>
-                                <input
-                                    type="range"
-                                    id="conversion"
-                                    min="5"
-                                    max="50"
-                                    value="15"
-                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider"
-                                    oninput="calculateROI()"
-                                >
-                                <div class="flex justify-between text-sm text-gray-500 mt-1">
-                                    <span>5%</span>
-                                    <span id="conversionValue" class="text-white font-bold text-lg">15%</span>
-                                    <span>50%</span>
+                            <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                                <button class="quiz-option" data-value="simple" data-field="complexity">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-blue-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📊</div>
+                                        <div class="text-xl font-bold text-white mb-2">Простой</div>
+                                        <p class="text-sm text-gray-400">2-3 фактора (площадь, количество, тип услуги)</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="medium" data-field="complexity">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-blue-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📈</div>
+                                        <div class="text-xl font-bold text-white mb-2">Средний</div>
+                                        <p class="text-sm text-gray-400">4-7 факторов (материал, срочность, объём, доставка)</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="complex" data-field="complexity">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-blue-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📊📈📉</div>
+                                        <div class="text-xl font-bold text-white mb-2">Сложный</div>
+                                        <p class="text-sm text-gray-400">8+ факторов (много переменных, формулы, коэффициенты)</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: Как считаете цены -->
+                        <div class="quiz-step" data-step="3">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="calculator" class="w-8 h-8 text-green-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Как сейчас считаете цены?</h3>
+                                <p class="text-gray-400">Какой способ используете чаще всего</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+                                <button class="quiz-option" data-value="excel" data-field="currentMethod">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-green-500 transition-all hover:scale-105 text-left">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-3xl">💻</div>
+                                            <div>
+                                                <div class="text-lg font-bold text-white mb-1">Excel / Калькуляторы</div>
+                                                <p class="text-sm text-gray-400">Таблицы с формулами</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="pricelist" data-field="currentMethod">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-green-500 transition-all hover:scale-105 text-left">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-3xl">📋</div>
+                                            <div>
+                                                <div class="text-lg font-bold text-white mb-1">Прайс-листы</div>
+                                                <p class="text-sm text-gray-400">Ищем в таблицах вручную</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="manual" data-field="currentMethod">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-green-500 transition-all hover:scale-105 text-left">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-3xl">🧠</div>
+                                            <div>
+                                                <div class="text-lg font-bold text-white mb-1">В голове менеджера</div>
+                                                <p class="text-sm text-gray-400">Опыт и знания</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="chaos" data-field="currentMethod">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-green-500 transition-all hover:scale-105 text-left">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-3xl">🔀</div>
+                                            <div>
+                                                <div class="text-lg font-bold text-white mb-1">У каждого своя система</div>
+                                                <p class="text-sm text-gray-400">Нет единого стандарта</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: Смета в PDF -->
+                        <div class="quiz-step" data-step="4">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-indigo-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="file-text" class="w-8 h-8 text-indigo-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Нужна ли клиенту смета на руки?</h3>
+                                <p class="text-gray-400">Какой формат ответа предпочтительнее</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                                <button class="quiz-option" data-value="pdf" data-field="pdfRequired">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-indigo-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📄</div>
+                                        <div class="text-xl font-bold text-white mb-2">Да, в PDF</div>
+                                        <p class="text-sm text-gray-400">С печатью и подписью</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="message" data-field="pdfRequired">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-indigo-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">💬</div>
+                                        <div class="text-xl font-bold text-white mb-2">В сообщении</div>
+                                        <p class="text-sm text-gray-400">Текстовый расчёт</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="no" data-field="pdfRequired">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-indigo-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">🗣️</div>
+                                        <div class="text-xl font-bold text-white mb-2">Только озвучить</div>
+                                        <p class="text-sm text-gray-400">Без документов</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 5: Количество заявок -->
+                        <div class="quiz-step" data-step="5">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-yellow-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="trending-up" class="w-8 h-8 text-yellow-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Сколько заявок обрабатываете в месяц?</h3>
+                                <p class="text-gray-400">Примерное количество входящих обращений</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                                <button class="quiz-option" data-value="low" data-field="leadsVolume">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-yellow-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📊</div>
+                                        <div class="text-xl font-bold text-white mb-2">До 50</div>
+                                        <p class="text-sm text-gray-400">Малый поток</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="medium" data-field="leadsVolume">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-yellow-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📈</div>
+                                        <div class="text-xl font-bold text-white mb-2">50-200</div>
+                                        <p class="text-sm text-gray-400">Средний поток</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="high" data-field="leadsVolume">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-yellow-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">🚀</div>
+                                        <div class="text-xl font-bold text-white mb-2">Более 200</div>
+                                        <p class="text-sm text-gray-400">Высокая нагрузка</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 6: Куда попадает заявка -->
+                        <div class="quiz-step" data-step="6">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="send" class="w-8 h-8 text-pink-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Куда должна попадать заявка?</h3>
+                                <p class="text-gray-400">Как вы работаете с обращениями клиентов</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                                <button class="quiz-option" data-value="email" data-field="integration">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-pink-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">📧</div>
+                                        <div class="text-xl font-bold text-white mb-2">Email/Telegram</div>
+                                        <p class="text-sm text-gray-400">Простая отправка</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="crm" data-field="integration">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-pink-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">🔗</div>
+                                        <div class="text-xl font-bold text-white mb-2">В CRM-систему</div>
+                                        <p class="text-sm text-gray-400">AmoCRM, Bitrix24 и др.</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="custom" data-field="integration">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-pink-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">⚙️</div>
+                                        <div class="text-xl font-bold text-white mb-2">Своя система</div>
+                                        <p class="text-sm text-gray-400">Админ-панель / API</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 7: Количество менеджеров -->
+                        <div class="quiz-step" data-step="7">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i data-lucide="users" class="w-8 h-8 text-cyan-400"></i>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-bold mb-3 text-white">Сколько менеджеров занимаются расчётами?</h3>
+                                <p class="text-gray-400">Это влияет на экономию от автоматизации</p>
+                            </div>
+
+                            <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                                <button class="quiz-option" data-value="1" data-field="managersCount">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-cyan-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">👤</div>
+                                        <div class="text-xl font-bold text-white mb-2">1 менеджер</div>
+                                        <p class="text-sm text-gray-400">Малый отдел</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="2-3" data-field="managersCount">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-cyan-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">👥</div>
+                                        <div class="text-xl font-bold text-white mb-2">2-3 менеджера</div>
+                                        <p class="text-sm text-gray-400">Средний отдел</p>
+                                    </div>
+                                </button>
+
+                                <button class="quiz-option" data-value="4+" data-field="managersCount">
+                                    <div class="glassmorphism rounded-2xl p-6 border-2 border-slate-700 hover:border-cyan-500 transition-all hover:scale-105 h-full">
+                                        <div class="text-4xl mb-3">👥👥</div>
+                                        <div class="text-xl font-bold text-white mb-2">4+ менеджеров</div>
+                                        <p class="text-sm text-gray-400">Большой отдел</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- RESULT SCREEN -->
+                        <div class="quiz-step" data-step="result">
+                            <div class="text-center mb-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-500/50">
+                                    <i data-lucide="check-circle" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl font-black mb-3 text-white">Рекомендуемое решение</h3>
+                                <p class="text-gray-400">На основе ваших ответов</p>
+                            </div>
+
+                            <div class="max-w-3xl mx-auto">
+                                <!-- Recommended Tier -->
+                                <div class="glassmorphism rounded-3xl p-8 border-2 border-blue-500/40 mb-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <div>
+                                            <div class="text-sm text-blue-400 font-semibold mb-1">РЕКОМЕНДУЕМ</div>
+                                            <div class="text-4xl font-black gradient-text" id="recommendedTier">PRO</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-sm text-gray-400 mb-1">Стоимость</div>
+                                            <div class="text-3xl font-bold text-white" id="recommendedPrice">от 150 000₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
+                                        <i data-lucide="clock" class="w-4 h-4"></i>
+                                        <span>Срок разработки: <span class="text-white font-semibold" id="devTime">14-21 день</span></span>
+                                    </div>
+
+                                    <!-- Features -->
+                                    <div class="space-y-3 mb-6">
+                                        <div class="text-sm font-semibold text-gray-300 mb-3">Что входит:</div>
+                                        <div id="featuresList" class="space-y-2">
+                                            <!-- Динамически заполняется через JS -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Savings estimate -->
+                                    <div class="bg-gradient-to-r from-green-950/50 to-emerald-950/50 border border-green-500/30 rounded-xl p-4">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-green-300 font-semibold">Потенциальная экономия в год:</span>
+                                            <span class="text-2xl font-bold text-green-400" id="yearlySavings">~420 000₽</span>
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-2">На ФОТ менеджеров + рост конверсии</div>
+                                    </div>
+                                </div>
+
+                                <!-- CTA Buttons -->
+                                <div class="text-center space-y-4">
+                                    <!-- Primary CTA: Book Consultation -->
+                                    <button onclick="openConsultationModalFromQuiz(); ym(108506107,'reachGoal','quiz_consultation_click');" class="btn-primary text-white px-10 py-5 rounded-xl font-bold text-xl inline-flex items-center gap-3 group hover:scale-105 transition-all shadow-2xl shadow-blue-500/30">
+                                        <i data-lucide="calendar-check" class="w-6 h-6"></i>
+                                        <span>Записаться на консультацию</span>
+                                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                                    </button>
+
+                                    <!-- Secondary Actions -->
+                                    <div class="flex items-center justify-center gap-6 text-sm">
+                                        <button onclick="resetQuiz()" class="text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+                                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                            <span>Пройти заново</span>
+                                        </button>
+                                        <span class="text-gray-700">|</span>
+                                        <button onclick="ym(108506107,'reachGoal','quiz_email_click')" class="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-1">
+                                            <i data-lucide="mail" class="w-4 h-4"></i>
+                                            <span>Отправить на почту</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right: Results -->
-                        <div class="space-y-4">
-                            <div class="bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl p-6 shadow-lg shadow-green-500/30">
-                                <div class="text-sm text-green-100 mb-2">Экономия на ФОТ в год</div>
-                                <div id="savings" class="text-5xl font-bold text-white mb-2">300 000₽</div>
-                                <div class="text-xs text-green-100">2 менеджера заменяет 1 бот</div>
-                            </div>
-
-                            <div class="bg-slate-800/50 rounded-xl p-4 border border-blue-500/30">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400">Заявок с ботом</span>
-                                    <span id="newLeads" class="text-2xl font-bold text-white">150</span>
-                                </div>
-                                <div class="text-xs text-blue-400 mt-1">+50% за счет работы 24/7</div>
-                            </div>
-
-                            <div class="bg-slate-800/50 rounded-xl p-4 border border-purple-500/30">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400">Новая конверсия</span>
-                                    <span id="newConversion" class="text-2xl font-bold text-white">38%</span>
-                                </div>
-                                <div class="text-xs text-purple-400 mt-1">Улучшение за счет квалификации</div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-4">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-white font-semibold">Окупаемость бота</span>
-                                    <span id="payback" class="text-3xl font-bold text-white">2 мес</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="mt-8 text-center">
-                        <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2">
-                            <i data-lucide="download" class="w-5 h-5"></i>
-                            Получить детальный расчет
+                    <!-- Navigation Buttons -->
+                    <div class="flex items-center justify-between mt-8 pt-6 border-t border-slate-700" id="quizNavigation">
+                        <button onclick="previousStep()" id="prevBtn" class="px-6 py-3 rounded-xl font-semibold text-gray-400 hover:text-white transition-colors flex items-center gap-2 opacity-0 pointer-events-none">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            <span>Назад</span>
+                        </button>
+
+                        <button onclick="nextStep()" id="nextBtn" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-blue-500/50 transition-all flex items-center gap-2 opacity-50 pointer-events-none">
+                            <span>Далее</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -1907,7 +2273,7 @@
                 <!-- CTA after FAQ -->
                 <div class="mt-12 text-center">
                     <p class="text-gray-400 mb-6">Остались вопросы? Обсудим ваш проект лично</p>
-                    <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2 group" onclick="ym(108506107,'reachGoal','consultation_click')">
+                    <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2 group" onclick="openConsultationModal(); ym(108506107,'reachGoal','consultation_click');">
                         <i data-lucide="message-circle" class="w-5 h-5"></i>
                         Записаться на консультацию
                         <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
@@ -1994,9 +2360,9 @@
                         <h4 class="font-semibold text-lg mb-4">Контакты</h4>
                         <ul class="space-y-3 text-gray-400">
                             <li>
-                                <a href="mailto:anna_bereznyak@mail.ru" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                <a href="mailto:hello@bezk.pro" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
                                     <i data-lucide="mail" class="w-4 h-4"></i>
-                                    anna_bereznyak@mail.ru
+                                    hello@bezk.pro
                                 </a>
                             </li>
                             <li>
@@ -2107,44 +2473,451 @@
             });
         });
 
-        // ROI Calculator
-        let calculatorInitialized = false;
+        // ================================================================
+        // QUIZ CALCULATOR
+        // ================================================================
 
-        function calculateROI() {
-            const leads = parseInt(document.getElementById('leads').value);
-            const salary = parseInt(document.getElementById('salary').value);
-            const conversion = parseInt(document.getElementById('conversion').value);
-
-            // Update displayed values
-            document.getElementById('leadsValue').textContent = leads;
-            document.getElementById('salaryValue').textContent = salary.toLocaleString('ru-RU') + '₽';
-            document.getElementById('conversionValue').textContent = conversion + '%';
-
-            // Calculate new metrics
-            const newLeads = Math.round(leads * 1.5); // +50% leads with bot working 24/7
-            const newConversion = Math.min(conversion * 2.5, 45); // Improved conversion, max 45%
-            const savingsPerYear = salary * 2 * 12; // 2 managers replaced
-
-            // Calculate payback period
-            const botCost = 150000; // Average PRO tier
-            const monthlySavings = salary * 2;
-            const paybackMonths = Math.round(botCost / monthlySavings);
-
-            // Update results
-            document.getElementById('savings').textContent = Math.round(savingsPerYear / 1000) + ' 000₽';
-            document.getElementById('newLeads').textContent = newLeads;
-            document.getElementById('newConversion').textContent = Math.round(newConversion) + '%';
-            document.getElementById('payback').textContent = paybackMonths + ' мес';
-
-            // Send Yandex.Metrika event (only after user interaction, not on init)
-            if (calculatorInitialized && typeof ym !== 'undefined') {
-                ym(108506107, 'reachGoal', 'calculator_used');
+        const quizData = {
+            currentStep: 0,
+            totalSteps: 7,
+            answers: {
+                businessType: '',
+                complexity: '',
+                currentMethod: '',
+                pdfRequired: '',
+                leadsVolume: '',
+                integration: '',
+                managersCount: ''
             }
-            calculatorInitialized = true;
+        };
+
+        // Start quiz from welcome screen
+        function startQuiz() {
+            // Hide welcome screen
+            const welcomeScreen = document.querySelector('.quiz-step[data-step="0"]');
+            welcomeScreen.classList.remove('active');
+
+            // Show progress bar
+            const progressBarContainer = document.getElementById('progressBarContainer');
+            progressBarContainer.classList.remove('hidden');
+
+            // Move to step 1
+            quizData.currentStep = 1;
+            const step1 = document.querySelector('.quiz-step[data-step="1"]');
+            step1.classList.add('active');
+
+            // Update progress bar
+            updateProgressBar();
+            updateNextButtonState();
+
+            // Re-init icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Scroll to quiz
+            document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Initialize calculator on load
-        calculateROI();
+        // Initialize quiz on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgressBar();
+            setupQuizOptions();
+            updateNextButtonState();
+
+            // Text input for business type
+            const businessTypeInput = document.getElementById('businessType');
+            if (businessTypeInput) {
+                businessTypeInput.addEventListener('input', function() {
+                    quizData.answers.businessType = this.value.trim();
+                    updateNextButtonState();
+                });
+            }
+        });
+
+        function setupQuizOptions() {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const field = this.getAttribute('data-field');
+                    const value = this.getAttribute('data-value');
+
+                    // Сохранить ответ
+                    quizData.answers[field] = value;
+
+                    // Визуально выделить выбранную опцию
+                    const stepDiv = this.closest('.quiz-step');
+                    stepDiv.querySelectorAll('.quiz-option > div').forEach(div => {
+                        div.classList.remove('border-blue-500', 'border-green-500', 'border-purple-500', 'border-indigo-500', 'border-yellow-500', 'border-pink-500', 'border-cyan-500');
+                        div.classList.add('border-slate-700');
+                    });
+                    this.querySelector('div').classList.remove('border-slate-700');
+                    this.querySelector('div').classList.add('border-blue-500');
+
+                    // Активировать кнопку "Далее"
+                    updateNextButtonState();
+                });
+            });
+        }
+
+        function nextStep() {
+            if (quizData.currentStep < quizData.totalSteps) {
+                // Проверка заполнения текущего шага
+                if (!isCurrentStepValid()) {
+                    return;
+                }
+
+                // Скрыть текущий шаг
+                const currentStepDiv = document.querySelector(`.quiz-step[data-step="${quizData.currentStep}"]`);
+                currentStepDiv.classList.remove('active');
+
+                // Перейти к следующему шагу
+                quizData.currentStep++;
+
+                // Показать следующий шаг
+                const nextStepDiv = document.querySelector(`.quiz-step[data-step="${quizData.currentStep}"]`);
+                nextStepDiv.classList.add('active');
+
+                // Обновить прогресс-бар
+                updateProgressBar();
+
+                // Обновить состояние кнопок
+                updateNextButtonState();
+                updatePrevButtonState();
+
+                // Прокрутить вверх
+                document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Re-initialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            } else {
+                // Показать результат
+                showResult();
+            }
+        }
+
+        function previousStep() {
+            if (quizData.currentStep > 1) {
+                // Скрыть текущий шаг
+                const currentStepDiv = document.querySelector(`.quiz-step[data-step="${quizData.currentStep}"]`);
+                currentStepDiv.classList.remove('active');
+
+                // Вернуться на предыдущий шаг
+                quizData.currentStep--;
+
+                // Показать предыдущий шаг
+                const prevStepDiv = document.querySelector(`.quiz-step[data-step="${quizData.currentStep}"]`);
+                prevStepDiv.classList.add('active');
+
+                // Обновить прогресс-бар
+                updateProgressBar();
+
+                // Обновить состояние кнопок
+                updateNextButtonState();
+                updatePrevButtonState();
+
+                // Прокрутить вверх
+                document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function isCurrentStepValid() {
+            if (quizData.currentStep === 1) {
+                return quizData.answers.businessType.length > 0;
+            } else if (quizData.currentStep === 2) {
+                return quizData.answers.complexity !== '';
+            } else if (quizData.currentStep === 3) {
+                return quizData.answers.currentMethod !== '';
+            } else if (quizData.currentStep === 4) {
+                return quizData.answers.pdfRequired !== '';
+            } else if (quizData.currentStep === 5) {
+                return quizData.answers.leadsVolume !== '';
+            } else if (quizData.currentStep === 6) {
+                return quizData.answers.integration !== '';
+            } else if (quizData.currentStep === 7) {
+                return quizData.answers.managersCount !== '';
+            }
+            return false;
+        }
+
+        function updateProgressBar() {
+            const progress = (quizData.currentStep / quizData.totalSteps) * 100;
+            document.getElementById('progressBar').style.width = Math.round(progress) + '%';
+            document.getElementById('currentStep').textContent = quizData.currentStep;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+        }
+
+        function updateNextButtonState() {
+            const nextBtn = document.getElementById('nextBtn');
+            if (isCurrentStepValid()) {
+                nextBtn.classList.remove('opacity-50', 'pointer-events-none');
+                nextBtn.classList.add('hover:scale-105');
+            } else {
+                nextBtn.classList.add('opacity-50', 'pointer-events-none');
+                nextBtn.classList.remove('hover:scale-105');
+            }
+        }
+
+        function updatePrevButtonState() {
+            const prevBtn = document.getElementById('prevBtn');
+            if (quizData.currentStep > 1) {
+                prevBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                prevBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function calculateBotPrice() {
+            let basePrice = 50000;
+            let tier = 'LITE';
+            let devTime = '5-7 дней';
+            let complexityLevel = 'simple';
+
+            // Шаг 1: Определяем базовую цену по сложности (цены из прайса)
+            if (quizData.answers.complexity === 'simple') {
+                basePrice = 50000; // LITE: 45-60k (среднее 50k)
+                tier = 'LITE';
+                complexityLevel = 'simple';
+            } else if (quizData.answers.complexity === 'medium') {
+                basePrice = 120000; // PRO: 120-180k (минимум 120k)
+                tier = 'PRO';
+                devTime = '14-21 день';
+                complexityLevel = 'medium';
+            } else if (quizData.answers.complexity === 'complex') {
+                basePrice = 350000; // ULTRA: от 350k
+                tier = 'ULTRA';
+                devTime = 'от 1.5 месяцев';
+                complexityLevel = 'complex';
+            }
+
+            // Шаг 2: Проверяем дополнительные требования и меняем тариф если нужно
+            // PDF-генерация
+            if (quizData.answers.pdfRequired === 'pdf') {
+                if (tier === 'LITE') {
+                    basePrice = 120000; // Переходим на PRO (минимум)
+                    tier = 'PRO';
+                    devTime = '14-21 день';
+                }
+            }
+
+            // Интеграция с CRM
+            if (quizData.answers.integration === 'crm') {
+                if (tier === 'LITE') {
+                    basePrice = 120000; // Переходим на PRO (минимум)
+                    tier = 'PRO';
+                    devTime = '14-21 день';
+                }
+            }
+
+            // Своя система / API
+            if (quizData.answers.integration === 'custom') {
+                basePrice = 350000; // Всегда ULTRA (минимум)
+                tier = 'ULTRA';
+                devTime = 'от 1.5 месяцев';
+            }
+
+            // Шаг 3: Формируем диапазон цен с учетом нагрузки
+            let priceText = '';
+            let finalPrice = basePrice;
+            let hasHighLoad = quizData.answers.leadsVolume === 'high';
+
+            if (tier === 'LITE') {
+                if (hasHighLoad) {
+                    let minPrice = Math.round(45000 * 1.2);
+                    let maxPrice = Math.round(60000 * 1.2);
+                    priceText = `от ${minPrice.toLocaleString('ru-RU')}₽`;
+                    finalPrice = minPrice;
+                } else {
+                    priceText = '45 000 – 60 000₽';
+                    finalPrice = 50000;
+                }
+            } else if (tier === 'PRO') {
+                if (hasHighLoad) {
+                    let minPrice = Math.round(120000 * 1.2);
+                    let maxPrice = Math.round(180000 * 1.2);
+                    priceText = `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')}₽`;
+                    finalPrice = minPrice;
+                } else {
+                    priceText = '120 000 – 180 000₽';
+                    finalPrice = 120000;
+                }
+            } else if (tier === 'ULTRA') {
+                if (hasHighLoad) {
+                    finalPrice = Math.round(350000 * 1.2);
+                    priceText = `от ${finalPrice.toLocaleString('ru-RU')}₽`;
+                } else {
+                    priceText = 'от 350 000₽';
+                    finalPrice = 350000;
+                }
+            }
+
+            // Шаг 4: Рассчитываем экономию (не влияет на цену)
+            let yearlySavings = 0;
+            if (quizData.answers.managersCount === '1') {
+                yearlySavings = 120000 * 12;
+            } else if (quizData.answers.managersCount === '2-3') {
+                yearlySavings = 120000 * 2 * 12;
+            } else if (quizData.answers.managersCount === '4+') {
+                yearlySavings = 120000 * 3 * 12;
+            }
+
+            // Шаг 5: Формируем список фич на основе ФИНАЛЬНОГО тарифа
+            let features = [];
+
+            // Описание сложности логики
+            if (complexityLevel === 'simple') {
+                features.push('Линейный расчет (2-3 фактора)');
+            } else if (complexityLevel === 'medium') {
+                features.push('Сложная логика с ветвлениями (4-7 факторов)');
+            } else if (complexityLevel === 'complex') {
+                features.push('Многоуровневые формулы (8+ факторов)');
+            }
+
+            // Фичи по тарифам
+            if (tier === 'LITE') {
+                features.push('Сбор контактов клиента');
+                features.push('Отправка на Email/Telegram');
+                features.push('Базовая аналитика');
+                if (quizData.answers.pdfRequired === 'message') {
+                    features.push('Детальный расчёт в сообщении');
+                }
+            } else if (tier === 'PRO') {
+                features.push('Сбор и валидация данных');
+                if (quizData.answers.pdfRequired === 'pdf') {
+                    features.push('Генерация PDF-сметы на фирменном бланке');
+                }
+                if (quizData.answers.integration === 'crm') {
+                    features.push('Интеграция с CRM (AmoCRM/Bitrix24)');
+                } else {
+                    features.push('Отправка в Email/Telegram');
+                }
+                features.push('Панель управления с дашбордом');
+                if (quizData.answers.leadsVolume === 'high') {
+                    features.push('Оптимизация под высокую нагрузку');
+                }
+                features.push('Гарантия 3 месяца');
+            } else if (tier === 'ULTRA') {
+                features.push('Расширенная валидация данных');
+                if (quizData.answers.pdfRequired === 'pdf') {
+                    features.push('Генерация PDF-сметы с подписью');
+                }
+                features.push('Админ-панель с аналитикой');
+                features.push('API для интеграции с вашей системой');
+                if (quizData.answers.managersCount === '4+') {
+                    features.push('Поддержка множественных сценариев');
+                }
+                if (quizData.answers.leadsVolume === 'high') {
+                    features.push('Оптимизация под высокую нагрузку (200+ заявок/мес)');
+                }
+                features.push('Приоритетная поддержка 24/7');
+                features.push('Расширенная гарантия 6 месяцев');
+            }
+
+            return {
+                tier,
+                price: finalPrice,
+                priceText: priceText,
+                devTime,
+                features,
+                yearlySavings
+            };
+        }
+
+        function showResult() {
+            // Скрыть все шаги
+            document.querySelectorAll('.quiz-step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            // Скрыть навигацию
+            document.getElementById('quizNavigation').style.display = 'none';
+
+            // Скрыть прогресс-бар
+            document.querySelector('#quizCalculator > div:first-child').style.display = 'none';
+
+            // Показать результат
+            const resultStep = document.querySelector('.quiz-step[data-step="result"]');
+            resultStep.classList.add('active');
+
+            // Рассчитать рекомендацию
+            const result = calculateBotPrice();
+
+            // Заполнить данные
+            document.getElementById('recommendedTier').textContent = result.tier;
+            document.getElementById('recommendedPrice').textContent = result.priceText;
+            document.getElementById('devTime').textContent = result.devTime;
+            document.getElementById('yearlySavings').textContent = '~' + Math.round(result.yearlySavings / 1000) + ' 000₽';
+
+            // Заполнить список фич
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = result.features.map(feature =>
+                `<div class="flex items-start gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
+                    <span class="text-gray-300">${feature}</span>
+                </div>`
+            ).join('');
+
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Track in Yandex.Metrika
+            if (typeof ym !== 'undefined') {
+                ym(108506107, 'reachGoal', 'quiz_completed');
+                ym(108506107, 'params', {
+                    quiz_tier: result.tier,
+                    quiz_price: result.price,
+                    business_type: quizData.answers.businessType
+                });
+            }
+
+            // Прокрутить вверх
+            document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetQuiz() {
+            // Сбросить данные
+            quizData.currentStep = 1;
+            quizData.answers = {
+                businessType: '',
+                complexity: '',
+                currentMethod: '',
+                pdfRequired: '',
+                leadsVolume: '',
+                integration: '',
+                managersCount: ''
+            };
+
+            // Показать прогресс-бар и навигацию
+            document.querySelector('#quizCalculator > div:first-child').style.display = 'block';
+            document.getElementById('quizNavigation').style.display = 'flex';
+
+            // Скрыть результат
+            document.querySelector('.quiz-step[data-step="result"]').classList.remove('active');
+
+            // Показать первый шаг
+            document.querySelector('.quiz-step[data-step="1"]').classList.add('active');
+
+            // Очистить input
+            document.getElementById('businessType').value = '';
+
+            // Сбросить выделение опций
+            document.querySelectorAll('.quiz-option > div').forEach(div => {
+                div.classList.remove('border-blue-500');
+                div.classList.add('border-slate-700');
+            });
+
+            // Обновить UI
+            updateProgressBar();
+            updateNextButtonState();
+            updatePrevButtonState();
+
+            // Прокрутить вверх
+            document.getElementById('quizCalculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     </script>
 
     <!-- ================================================================
@@ -2322,6 +3095,117 @@
         </div>
     </div>
 
+    <!-- ================================================================
+         MODAL: Consultation Request Form
+         ================================================================ -->
+    <div id="consultationModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-6" onclick="closeConsultationModal(event)">
+        <div class="relative max-w-2xl w-full glassmorphism rounded-3xl p-8 md:p-10 border-2 border-blue-500/30 shadow-2xl shadow-blue-500/20 animate-modal-fade-in" onclick="event.stopPropagation()">
+
+            <!-- Close button -->
+            <button onclick="closeConsultationModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 flex items-center justify-center transition-all group">
+                <i data-lucide="x" class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="inline-block bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-purple-600/20 border border-blue-500/30 rounded-full px-6 py-2 mb-4">
+                    <span class="text-blue-400 text-sm font-semibold">✨ Бесплатная консультация</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black mb-3 text-white">
+                    Обсудим ваш проект
+                </h2>
+                <p class="text-gray-300">
+                    Оставьте контакт — свяжемся в течение 2 часов
+                </p>
+            </div>
+
+            <!-- Quiz Results Summary (if available) -->
+            <div id="quizSummaryBlock" class="hidden mb-6 glassmorphism rounded-xl p-4 border border-blue-500/20">
+                <div class="text-sm text-gray-400 mb-2">Результаты расчёта:</div>
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                        <span class="text-gray-400">Тариф:</span>
+                        <span class="text-white font-semibold ml-2" id="summaryTier">PRO</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Стоимость:</span>
+                        <span class="text-white font-semibold ml-2" id="summaryPrice">120 000₽</span>
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-gray-400">Вид деятельности:</span>
+                        <span class="text-white font-semibold ml-2" id="summaryBusiness">Не указан</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="consultationForm" class="space-y-4">
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Ваше имя *</label>
+                    <input
+                        type="text"
+                        id="clientName"
+                        required
+                        placeholder="Как к вам обращаться?"
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
+                    />
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон или Email *</label>
+                    <input
+                        type="text"
+                        id="clientContact"
+                        required
+                        placeholder="+7 или email@example.com"
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
+                    />
+                </div>
+
+                <!-- Comment (optional) -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Комментарий (необязательно)</label>
+                    <textarea
+                        id="clientComment"
+                        rows="3"
+                        placeholder="Опишите задачу или задайте вопрос..."
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors resize-none"
+                    ></textarea>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="grid md:grid-cols-2 gap-3 pt-4">
+                    <button
+                        type="button"
+                        onclick="sendToTelegram()"
+                        class="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-lg"
+                    >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        <span>Telegram</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="sendToEmail()"
+                        class="flex items-center justify-center gap-2 px-6 py-4 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold transition-all hover:scale-105"
+                    >
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                        <span>Email</span>
+                    </button>
+                </div>
+
+                <p class="text-xs text-gray-500 text-center mt-4">
+                    Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+                </p>
+            </form>
+
+        </div>
+    </div>
+
     <script>
         // ================================================================
         // Demo Bots Modal Management
@@ -2358,8 +3242,159 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeDemoBotsModal();
+                closeConsultationModal();
             }
         });
+
+        // ================================================================
+        // Consultation Modal Management
+        // ================================================================
+
+        let consultationData = {
+            tier: '',
+            price: '',
+            business: ''
+        };
+
+        function openConsultationModal(tier = '', price = '', business = '') {
+            const modal = document.getElementById('consultationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Сохранить данные
+            consultationData.tier = tier;
+            consultationData.price = price;
+            consultationData.business = business;
+
+            // Показать блок с результатами квиза если есть данные
+            const summaryBlock = document.getElementById('quizSummaryBlock');
+            if (tier && price) {
+                summaryBlock.classList.remove('hidden');
+                document.getElementById('summaryTier').textContent = tier;
+                document.getElementById('summaryPrice').textContent = price;
+                document.getElementById('summaryBusiness').textContent = business || 'Не указан';
+            } else {
+                summaryBlock.classList.add('hidden');
+            }
+
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Track in Yandex.Metrika
+            if (typeof ym !== 'undefined') {
+                ym(108506107, 'reachGoal', 'consultation_modal_opened');
+            }
+        }
+
+        // Открыть модалку с данными из квиза
+        function openConsultationModalFromQuiz() {
+            const tier = document.getElementById('recommendedTier')?.textContent || '';
+            const price = document.getElementById('recommendedPrice')?.textContent || '';
+            const business = quizData.answers.businessType || '';
+
+            openConsultationModal(tier, price, business);
+        }
+
+        function closeConsultationModal(event) {
+            if (!event || event.target.id === 'consultationModal' || event.currentTarget.tagName === 'BUTTON') {
+                const modal = document.getElementById('consultationModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+
+                // Очистить форму
+                document.getElementById('consultationForm').reset();
+            }
+        }
+
+        function sendToTelegram() {
+            const name = document.getElementById('clientName').value.trim();
+            const contact = document.getElementById('clientContact').value.trim();
+            const comment = document.getElementById('clientComment').value.trim();
+
+            if (!name || !contact) {
+                alert('Пожалуйста, заполните обязательные поля');
+                return;
+            }
+
+            // Формируем сообщение
+            let message = `🚀 Заявка на консультацию\n\n`;
+            message += `👤 Имя: ${name}\n`;
+            message += `📞 Контакт: ${contact}\n`;
+
+            if (consultationData.tier && consultationData.price) {
+                message += `\n📊 Результаты квиза:\n`;
+                message += `• Тариф: ${consultationData.tier}\n`;
+                message += `• Стоимость: ${consultationData.price}\n`;
+                if (consultationData.business) {
+                    message += `• Бизнес: ${consultationData.business}\n`;
+                }
+            }
+
+            if (comment) {
+                message += `\n💬 Комментарий: ${comment}\n`;
+            }
+
+            // Открываем Telegram с готовым текстом
+            const telegramUrl = `https://t.me/ann_bezk?text=${encodeURIComponent(message)}`;
+            window.open(telegramUrl, '_blank');
+
+            // Track
+            if (typeof ym !== 'undefined') {
+                ym(108506107, 'reachGoal', 'consultation_telegram_send');
+            }
+
+            // Закрыть модалку
+            closeConsultationModal();
+        }
+
+        function sendToEmail() {
+            const name = document.getElementById('clientName').value.trim();
+            const contact = document.getElementById('clientContact').value.trim();
+            const comment = document.getElementById('clientComment').value.trim();
+
+            if (!name || !contact) {
+                alert('Пожалуйста, заполните обязательные поля');
+                return;
+            }
+
+            // Формируем тему и тело письма
+            let subject = 'Заявка на консультацию с сайта Bereznyak AI';
+
+            let body = `Здравствуйте!\n\n`;
+            body += `Меня зовут ${name}\n`;
+            body += `Мой контакт: ${contact}\n`;
+
+            if (consultationData.tier && consultationData.price) {
+                body += `\n--- Результаты квиза ---\n`;
+                body += `Рекомендованный тариф: ${consultationData.tier}\n`;
+                body += `Стоимость: ${consultationData.price}\n`;
+                if (consultationData.business) {
+                    body += `Вид деятельности: ${consultationData.business}\n`;
+                }
+            }
+
+            if (comment) {
+                body += `\nКомментарий:\n${comment}\n`;
+            }
+
+            body += `\n---\nОтправлено с сайта bereznyak-ai.ru`;
+
+            // Открываем mailto
+            const mailtoUrl = `mailto:hello@bezk.pro?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+
+            // Track
+            if (typeof ym !== 'undefined') {
+                ym(108506107, 'reachGoal', 'consultation_email_send');
+            }
+
+            // Закрыть модалку
+            closeConsultationModal();
+        }
     </script>
 </body>
 </html>
