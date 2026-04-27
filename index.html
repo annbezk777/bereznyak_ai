@@ -1980,9 +1980,9 @@
                                             <span>Пройти заново</span>
                                         </button>
                                         <span class="text-gray-700">|</span>
-                                        <button onclick="ym(108506107,'reachGoal','quiz_email_click')" class="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-1">
+                                        <button onclick="window.location.href='mailto:hello@bezk.pro?subject=Запрос%20расчета%20с%20квиза'; ym(108506107,'reachGoal','quiz_email_click');" class="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-1">
                                             <i data-lucide="mail" class="w-4 h-4"></i>
-                                            <span>Отправить на почту</span>
+                                            <span>Написать на почту</span>
                                         </button>
                                     </div>
                                 </div>
@@ -2236,7 +2236,7 @@
                         Запустить демо-бот в мессенджере
                         <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
                     </button>
-                    <button class="glassmorphism text-gray-200 px-10 py-5 rounded-xl font-semibold text-xl hover:bg-slate-700/50 transition-all flex items-center gap-3" onclick="ym(108506107,'reachGoal','consultation_click')">
+                    <button class="glassmorphism text-gray-200 px-10 py-5 rounded-xl font-semibold text-xl hover:bg-slate-700/50 transition-all flex items-center gap-3" onclick="openConsultationModal(); ym(108506107,'reachGoal','consultation_click');">
                         <i data-lucide="phone" class="w-6 h-6"></i>
                         Заказать звонок
                     </button>
@@ -2474,6 +2474,11 @@
 
                     // Активировать кнопку "Далее"
                     updateNextButtonState();
+
+                    // Автоматически перейти к следующему шагу через 400ms
+                    setTimeout(() => {
+                        nextStep();
+                    }, 400);
                 });
             });
         }
@@ -3072,12 +3077,12 @@
 
                 <!-- Contact -->
                 <div>
-                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон или Email *</label>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон, Email или Telegram *</label>
                     <input
                         type="text"
                         id="clientContact"
                         required
-                        placeholder="+7 или email@example.com"
+                        placeholder="+7, email@example.com или @username"
                         class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                 </div>
@@ -3093,26 +3098,15 @@
                     ></textarea>
                 </div>
 
-                <!-- Submit Buttons -->
-                <div class="grid md:grid-cols-2 gap-3 pt-4">
+                <!-- Submit Button -->
+                <div class="pt-4">
                     <button
                         type="button"
-                        onclick="sendToTelegram()"
-                        class="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-lg"
+                        onclick="sendLead()"
+                        class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold text-lg transition-all hover:scale-105 shadow-lg shadow-blue-500/30"
                     >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        <span>Telegram</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="sendToEmail()"
-                        class="flex items-center justify-center gap-2 px-6 py-4 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold transition-all hover:scale-105"
-                    >
-                        <i data-lucide="mail" class="w-5 h-5"></i>
-                        <span>Email</span>
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                        <span>Отправить заявку</span>
                     </button>
                 </div>
 
@@ -3228,7 +3222,7 @@
             }
         }
 
-        function sendToTelegram() {
+        function sendLead() {
             const name = document.getElementById('clientName').value.trim();
             const contact = document.getElementById('clientContact').value.trim();
             const comment = document.getElementById('clientComment').value.trim();
@@ -3238,8 +3232,8 @@
                 return;
             }
 
-            // Формируем сообщение
-            let message = `🚀 Заявка на консультацию\n\n`;
+            // Формируем сообщение для Telegram
+            let message = `🚀 НОВАЯ ЗАЯВКА С САЙТА\n\n`;
             message += `👤 Имя: ${name}\n`;
             message += `📞 Контакт: ${contact}\n`;
 
@@ -3253,65 +3247,56 @@
             }
 
             if (comment) {
-                message += `\n💬 Комментарий: ${comment}\n`;
+                message += `\n💬 Комментарий: ${comment}`;
             }
 
-            // Открываем Telegram с готовым текстом
-            const telegramUrl = `https://t.me/ann_bezk?text=${encodeURIComponent(message)}`;
-            window.open(telegramUrl, '_blank');
+            message += `\n\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
+            message += `\n🌐 Источник: bereznyak-ai.ru`;
 
-            // Track
-            if (typeof ym !== 'undefined') {
-                ym(108506107, 'reachGoal', 'consultation_telegram_send');
-            }
+            // Отправляем в Telegram Bot API
+            const botToken = '8171742276:AAHOdnAPPql_8MEsS60bxBAa1PJoCcX7P-w';
+            const chatId = '1337987399';
 
-            // Закрыть модалку
-            closeConsultationModal();
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+
+                    // Track
+                    if (typeof ym !== 'undefined') {
+                        ym(108506107, 'reachGoal', 'consultation_telegram_send');
+                    }
+
+                    // Закрыть модалку
+                    closeConsultationModal();
+                } else {
+                    throw new Error('Telegram API error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Ошибка отправки. Попробуйте позже или напишите напрямую: hello@bezk.pro');
+            });
+        }
+
+        // Оставляем старые функции для совместимости (если где-то еще используются)
+        function sendToTelegram() {
+            sendLead();
         }
 
         function sendToEmail() {
-            const name = document.getElementById('clientName').value.trim();
-            const contact = document.getElementById('clientContact').value.trim();
-            const comment = document.getElementById('clientComment').value.trim();
-
-            if (!name || !contact) {
-                alert('Пожалуйста, заполните обязательные поля');
-                return;
-            }
-
-            // Формируем тему и тело письма
-            let subject = 'Заявка на консультацию с сайта Bereznyak AI';
-
-            let body = `Здравствуйте!\n\n`;
-            body += `Меня зовут ${name}\n`;
-            body += `Мой контакт: ${contact}\n`;
-
-            if (consultationData.tier && consultationData.price) {
-                body += `\n--- Результаты квиза ---\n`;
-                body += `Рекомендованный тариф: ${consultationData.tier}\n`;
-                body += `Стоимость: ${consultationData.price}\n`;
-                if (consultationData.business) {
-                    body += `Вид деятельности: ${consultationData.business}\n`;
-                }
-            }
-
-            if (comment) {
-                body += `\nКомментарий:\n${comment}\n`;
-            }
-
-            body += `\n---\nОтправлено с сайта bereznyak-ai.ru`;
-
-            // Открываем mailto
-            const mailtoUrl = `mailto:hello@bezk.pro?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoUrl;
-
-            // Track
-            if (typeof ym !== 'undefined') {
-                ym(108506107, 'reachGoal', 'consultation_email_send');
-            }
-
-            // Закрыть модалку
-            closeConsultationModal();
+            sendLead();
         }
     </script>
 </body>
