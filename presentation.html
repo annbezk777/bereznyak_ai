@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bereznyak AI - Презентация для продажников</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f8fafc;
+        }
+
+        /* Print styles for PDF */
+        @media print {
+            body {
+                background: white;
+            }
+            .slide {
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            .slide:last-child {
+                page-break-after: auto;
+            }
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            padding: 60px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Background gradient for cover */
+        .slide.cover {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.cover h1 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .slide.cover .subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .slide.cover .tagline {
+            font-size: 24px;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .slide.cover .contacts {
+            text-align: left;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .slide.cover .contacts div {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            color: #1e40af;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0 20px 0;
+            color: #1e293b;
+        }
+
+        h4 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 20px 0 15px 0;
+            color: #475569;
+        }
+
+        p, li {
+            font-size: 20px;
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+
+        .problem-item {
+            background: #fef2f2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #dc2626;
+        }
+
+        .solution-item {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #16a34a;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin: 20px 0;
+            border: 2px solid #3b82f6;
+        }
+
+        .price-box {
+            background: white;
+            border: 3px solid #3b82f6;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+
+        .price-box h3 {
+            color: #1e40af;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .checkmark {
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #64748b;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li:before {
+            content: "▸ ";
+            color: #3b82f6;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde047 100%);
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 24px;
+            text-align: center;
+            margin: 15px 0;
+            border: 3px solid #eab308;
+        }
+
+        .flow-diagram {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 20px 0;
+            border: 2px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- СЛАЙД 1: ОБЛОЖКА -->
+<div class="slide cover">
+    <h1>BEREZNYAK AI</h1>
+    <div class="subtitle">Боты-калькуляторы для автоматизации продаж</div>
+    <div class="tagline">Превращаем сложные расчёты в 2 минуты диалога</div>
+    <div class="contacts">
+        <div>📧 hello@bezk.pro</div>
+        <div>📞 +7 (931) 287-79-10</div>
+        <div>💬 Telegram: @ann_bezk</div>
+        <div>🌐 bereznyak-ai.ru</div>
+    </div>
+</div>
+
+<!-- СЛАЙД 2: ПРОБЛЕМА КЛИЕНТА -->
+<div class="slide">
+    <h2>❌ С ЧЕМ СТАЛКИВАЮТСЯ ВАШИ КЛИЕНТЫ</h2>
+
+    <div class="problem-item">
+        <h4>1. Долгий расчёт стоимости</h4>
+        <p>Менеджер считает в Excel/калькуляторе: <strong>20-40 минут</strong><br>
+        Клиент ждёт → раздражается → уходит к конкурентам</p>
+        <div class="stats">Потеря 30-40% лидов из-за долгого ответа</div>
+    </div>
+
+    <div class="problem-item">
+        <h4>2. Ошибки в расчётах</h4>
+        <p>Человеческий фактор: забыли про НДС, сертификацию, доставку<br>
+        Недовольные клиенты, переделка сметы</p>
+    </div>
+
+    <div class="problem-item">
+        <h4>3. Менеджеры перегружены</h4>
+        <p>50+ одинаковых вопросов в день<br>
+        Тратят время на рутину, а не на продажи</p>
+    </div>
+
+    <div class="problem-item">
+        <h4>4. Теряются лиды</h4>
+        <p>Заявка пришла ночью → ответили утром → клиент уже купил у конкурента</p>
+        <div class="stats">Потеря 20-30% заявок из-за медленной обработки</div>
+    </div>
+</div>
+
+<!-- СЛАЙД 3: РЕШЕНИЕ -->
+<div class="slide">
+    <h2>✅ ЧТО МЫ ПРЕДЛАГАЕМ</h2>
+
+    <div class="highlight-box">
+        <h3>БОТ-КАЛЬКУЛЯТОР В TELEGRAM</h3>
+        <p style="font-size: 22px; margin: 20px 0;">Это интеллектуальный помощник, который:</p>
+    </div>
+
+    <div class="two-column">
+        <div class="solution-item">
+            <h4>1. Задаёт 5-7 вопросов</h4>
+            <p>клиенту в Telegram</p>
+        </div>
+        <div class="solution-item">
+            <h4>2. Автоматически рассчитывает</h4>
+            <p>точную стоимость за 90 секунд</p>
+        </div>
+        <div class="solution-item">
+            <h4>3. Отправляет PDF-смету</h4>
+            <p>на почту клиента</p>
+        </div>
+        <div class="solution-item">
+            <h4>4. Передаёт лид</h4>
+            <p>менеджеру в CRM или Telegram</p>
+        </div>
+    </div>
+
+    <div class="stats" style="margin-top: 30px; font-size: 28px;">
+        Клиент получает ответ мгновенно<br>
+        Менеджер получает тёплый квалифицированный лид
+    </div>
+</div>
+
+<!-- СЛАЙД 4: КАК ЭТО РАБОТАЕТ -->
+<div class="slide">
+    <h2>🤖 ПРОЦЕСС РАБОТЫ БОТА</h2>
+
+    <div class="flow-diagram">
+КЛИЕНТ                          БОТ                         МЕНЕДЖЕР
+   │                              │                             │
+   │ 1. Открывает Telegram        │                             │
+   │─────────────────────────────>│                             │
+   │                              │                             │
+   │ 2. Отвечает на 5-7 вопросов  │                             │
+   │<────────────────────────────>│                             │
+   │                              │                             │
+   │ 3. Получает расчёт за 90 сек │                             │
+   │<─────────────────────────────│                             │
+   │                              │                             │
+   │ 4. PDF-смета на почту        │                             │
+   │<─────────────────────────────│                             │
+   │                              │                             │
+   │                              │ 5. Лид → CRM/Telegram       │
+   │                              │────────────────────────────>│
+   │                              │                             │
+   │                              │         6. Звонок клиенту   │
+   │<────────────────────────────────────────────────────────────
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+        <h4 style="color: #1e40af; font-size: 28px; text-align: center;">
+            Результат: Клиент доволен скоростью.<br>
+            Менеджер получает готовый лид с расчётом.
+        </h4>
+    </div>
+</div>
+
+<!-- СЛАЙД 5: ПРИМЕРЫ ПРИМЕНЕНИЯ -->
+<div class="slide">
+    <h2>📦 ДЛЯ КАКИХ БИЗНЕСОВ ПОДХОДИТ</h2>
+
+    <div class="two-column">
+        <div>
+            <div class="solution-item">
+                <h4>✅ Международная логистика</h4>
+                <p>Расчёт доставки груза: вес, маршрут, пошлины, НДС<br>
+                Автоматический поиск по кодам ТН ВЭД</p>
+                <div class="stats" style="font-size: 18px;">Вместо 40 минут → 2 минуты</div>
+            </div>
+
+            <div class="solution-item" style="margin-top: 20px;">
+                <h4>✅ Установка окон/дверей</h4>
+                <p>Расчёт по типу окна, размеру, материалу, монтажу<br>
+                Учёт сложности: первый этаж / высотка</p>
+                <div class="stats" style="font-size: 18px;">Квалифицированный лид с точной суммой</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="solution-item">
+                <h4>✅ Детейлинг авто</h4>
+                <p>Подбор услуг по марке авто и состоянию кузова<br>
+                Пакетные предложения с скидками</p>
+                <div class="stats" style="font-size: 18px;">Клиент сам выбрал нужные услуги</div>
+            </div>
+
+            <div class="solution-item" style="margin-top: 20px;">
+                <h4>✅ Ремонт/строительство</h4>
+                <p>Расчёт по площади, материалам, срокам<br>
+                Учёт дополнительных работ</p>
+                <div class="stats" style="font-size: 18px;">Прозрачная смета до встречи</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+        <h3 style="text-align: center; font-size: 32px;">
+            ✅ Любой бизнес со сложными расчётами!
+        </h3>
+        <p style="text-align: center; font-size: 24px; margin-top: 15px;">
+            Если у вас есть прайс-лист с формулами → мы автоматизируем
+        </p>
+    </div>
+</div>
+
+<!-- СЛАЙД 6: ТАРИФ LITE -->
+<div class="slide">
+    <h2>💰 ТАРИФЫ И ЦЕНЫ</h2>
+
+    <div class="price-box">
+        <h3>📦 LITE — Простые расчёты</h3>
+        <div class="stats">45 000 – 60 000₽ | 7–10 дней</div>
+
+        <h4 style="margin-top: 30px;">Что входит:</h4>
+        <ul style="font-size: 20px; line-height: 2;">
+            <li><span class="checkmark">✓</span> Простая логика расчёта (2-3 параметра)</li>
+            <li><span class="checkmark">✓</span> Отправка результата текстом в Telegram</li>
+            <li><span class="checkmark">✓</span> Уведомление менеджеру</li>
+            <li><span class="checkmark">✓</span> Базовая аналитика</li>
+            <li><span class="checkmark">✓</span> Гарантия 3 месяца</li>
+        </ul>
+
+        <div class="two-column" style="margin-top: 30px;">
+            <div>
+                <h4>Для кого:</h4>
+                <ul>
+                    <li>Небольшой бизнес</li>
+                    <li>Простой прайс-лист</li>
+                    <li>До 50 заявок/месяц</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Пример:</h4>
+                <p style="background: #eff6ff; padding: 15px; border-radius: 8px;">
+                    Расчёт доставки по городу<br>(вес + расстояние)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 7: ТАРИФ PRO -->
+<div class="slide">
+    <div class="price-box">
+        <h3>🚀 PRO — Средняя сложность</h3>
+        <div class="stats">120 000 – 180 000₽ | 14–21 день</div>
+
+        <h4 style="margin-top: 30px;">Что входит:</h4>
+        <ul style="font-size: 20px; line-height: 2;">
+            <li><span class="checkmark">✓</span> Сложная логика расчёта (4-7 параметров)</li>
+            <li><span class="checkmark">✓</span> <strong>Генерация PDF-сметы</strong> с печатью</li>
+            <li><span class="checkmark">✓</span> <strong>Интеграция с CRM</strong> (AmoCRM/Bitrix24)</li>
+            <li><span class="checkmark">✓</span> Панель управления для изменения цен</li>
+            <li><span class="checkmark">✓</span> Аналитика и отчёты</li>
+            <li><span class="checkmark">✓</span> Гарантия 3 месяца</li>
+        </ul>
+
+        <div class="two-column" style="margin-top: 30px;">
+            <div>
+                <h4>Для кого:</h4>
+                <ul>
+                    <li>Средний бизнес</li>
+                    <li>Несколько услуг/тарифов</li>
+                    <li>50-200 заявок/месяц</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Пример:</h4>
+                <p style="background: #eff6ff; padding: 15px; border-radius: 8px;">
+                    Международная логистика<br>(вес + маршрут + таможня + НДС)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 8: ТАРИФ ULTRA -->
+<div class="slide">
+    <div class="price-box">
+        <h3>⚡ ULTRA — Максимальная сложность</h3>
+        <div class="stats">от 350 000₽ | 4–6 недель</div>
+
+        <h4 style="margin-top: 30px;">Что входит:</h4>
+        <ul style="font-size: 19px; line-height: 1.9;">
+            <li><span class="checkmark">✓</span> Комплексные формулы (8+ параметров)</li>
+            <li><span class="checkmark">✓</span> Генерация PDF-сметы с брендингом</li>
+            <li><span class="checkmark">✓</span> Полная интеграция с вашими системами</li>
+            <li><span class="checkmark">✓</span> API для сторонних сервисов (курсы валют, ТН ВЭД)</li>
+            <li><span class="checkmark">✓</span> Админ-панель для управления</li>
+            <li><span class="checkmark">✓</span> Аналитика и BI-дашборды</li>
+            <li><span class="checkmark">✓</span> Гарантия 6 месяцев + поддержка</li>
+        </ul>
+
+        <div class="two-column" style="margin-top: 25px;">
+            <div>
+                <h4>Для кого:</h4>
+                <ul>
+                    <li>Крупный бизнес</li>
+                    <li>Сложные бизнес-процессы</li>
+                    <li>200+ заявок/месяц</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Пример:</h4>
+                <p style="background: #eff6ff; padding: 15px; border-radius: 8px;">
+                    Полный расчёт строительства<br>(материалы + работа + сроки + логистика)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 9: ROI -->
+<div class="slide">
+    <h2>📈 ЭКОНОМИЧЕСКИЙ ЭФФЕКТ</h2>
+
+    <h3>Расчёт ROI на примере: Логистика (150 заявок/месяц)</h3>
+
+    <div class="two-column">
+        <div class="problem-item">
+            <h4>❌ ДО ВНЕДРЕНИЯ:</h4>
+            <ul style="font-size: 18px;">
+                <li>Менеджер считает 1 заявку: <strong>30 минут</strong></li>
+                <li>Зарплата менеджера: <strong>80 000₽/мес</strong></li>
+                <li>Стоимость 1 минуты: <strong>8₽/мин</strong></li>
+            </ul>
+            <div class="stats" style="margin-top: 15px; background: #fef2f2; border-color: #dc2626;">
+                Затраты на расчёты:<br>36 000₽/мес = 432 000₽/год
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <h4>✅ ПОСЛЕ ВНЕДРЕНИЯ:</h4>
+            <ul style="font-size: 18px;">
+                <li>Бот считает автоматически: <strong>0₽/заявку</strong></li>
+                <li>Менеджер тратит 5 минут только на звонок</li>
+                <li>Экономия времени: <strong>62 часа/месяц</strong></li>
+            </ul>
+            <div class="stats" style="margin-top: 15px;">
+                Экономия денег:<br>36 000₽/мес = 432 000₽/год
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+        <h3 style="text-align: center; font-size: 36px; color: #1e40af;">
+            PRO тариф (150 000₽) окупится за 5 месяцев
+        </h3>
+    </div>
+
+    <h4 style="margin-top: 30px;">Дополнительные выгоды:</h4>
+    <div class="two-column">
+        <ul>
+            <li><strong>Рост конверсии на 40%</strong> — мгновенный ответ</li>
+            <li><strong>Снижение нагрузки</strong> на менеджеров</li>
+            <li><strong>Работа 24/7</strong> — заявки обрабатываются ночью</li>
+        </ul>
+        <ul>
+            <li><strong>Прозрачность</strong> — клиент видит расчёт</li>
+            <li><strong>Репутация</strong> — современная компания</li>
+        </ul>
+    </div>
+</div>
+
+<!-- СЛАЙД 10: КЕЙС 1 -->
+<div class="slide">
+    <h2>🏆 КЕЙС: ЛОГИСТИЧЕСКАЯ КОМПАНИЯ</h2>
+
+    <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 30px; border-radius: 16px; margin: 20px 0;">
+        <h3 style="color: #1e40af;">Prime Shift</h3>
+        <p style="font-size: 22px;">Международная логистика</p>
+    </div>
+
+    <div class="problem-item">
+        <h4>Проблема:</h4>
+        <ul>
+            <li>200+ запросов на расчёт в месяц</li>
+            <li>Менеджеры тратили 40 минут на 1 расчёт</li>
+            <li>Потеря 35% лидов из-за долгого ответа</li>
+        </ul>
+    </div>
+
+    <div class="solution-item">
+        <h4>Решение:</h4>
+        <ul>
+            <li>Бот-калькулятор PRO</li>
+            <li>Автоматический расчёт с кодами ТН ВЭД</li>
+            <li>PDF-смета с актуальными курсами валют</li>
+        </ul>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+        <h4 style="font-size: 26px;">Результаты:</h4>
+        <div class="two-column">
+            <div class="stats">Время расчёта:<br>40 минут → 2 минуты<br>(20x быстрее!)</div>
+            <div class="stats">Конверсия лид → клиент:<br>15% → 28%<br>(+87% роста!)</div>
+        </div>
+        <div class="two-column" style="margin-top: 15px;">
+            <div class="stats">Экономия времени:<br>126 часов/месяц</div>
+            <div class="stats">ROI:<br>окупился за 4 месяца</div>
+        </div>
+    </div>
+
+    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 30px; border-left: 4px solid #3b82f6;">
+        <p style="font-style: italic; font-size: 19px;">
+            "До внедрения бота мы теряли каждого третьего клиента просто потому, что не успевали быстро ответить. Теперь расчёт приходит за 90 секунд, и конверсия выросла почти в 2 раза."
+        </p>
+        <p style="margin-top: 15px; font-weight: 600;">— Алексей К., коммерческий директор</p>
+    </div>
+</div>
+
+<!-- СЛАЙД 11: ВОЗРАЖЕНИЯ -->
+<div class="slide">
+    <h2>💬 ЧАСТЫЕ ВОЗРАЖЕНИЯ И ОТВЕТЫ</h2>
+
+    <div style="background: #fef2f2; padding: 25px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #dc2626;">
+        <h4>❓ "Это слишком дорого"</h4>
+        <p style="font-size: 18px; margin-top: 15px;">
+            <strong>Ответ:</strong> Давайте посчитаем экономику:<br>
+            100 заявок × 30 минут = 50 часов/месяц = 600 часов/год<br>
+            Затраты на расчёты: 600 часов × 500₽/час = <strong>300 000₽/год</strong>
+        </p>
+        <div class="stats" style="margin-top: 15px;">
+            Бот стоимостью 150 000₽ окупится за 6 месяцев.<br>
+            Дальше — чистая экономия + рост конверсии на 30-40%
+        </div>
+    </div>
+
+    <div style="background: #fef2f2; padding: 25px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #dc2626;">
+        <h4>❓ "У нас есть калькулятор на сайте"</h4>
+        <p style="font-size: 18px; margin-top: 15px;">
+            <strong>Ответ:</strong> Отлично! Но:<br>
+            - Сколько % посетителей им пользуется? (обычно &lt; 5%)<br>
+            - Передаётся ли лид менеджеру автоматически?<br>
+            - Работает ли в мессенджерах (где 90% клиентов)?
+        </p>
+        <div class="solution-item" style="margin-top: 15px;">
+            <strong>Наш бот:</strong> Работает там, где ваш клиент (Telegram, WhatsApp, VK)<br>
+            Конверсия в мессенджерах на 40% выше, чем на сайте
+        </div>
+    </div>
+
+    <div style="background: #fef2f2; padding: 25px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #dc2626;">
+        <h4>❓ "Наши расчёты слишком сложные"</h4>
+        <p style="font-size: 18px; margin-top: 15px;">
+            <strong>Ответ:</strong> Чем сложнее расчёты — <strong>тем больше выгода от автоматизации!</strong>
+        </p>
+        <div class="solution-item" style="margin-top: 15px;">
+            Если ваш менеджер может посчитать → мы можем автоматизировать.<br>
+            Давайте созвонимся, разберём вашу логику и покажем, как это работает.
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 12: ЭТАПЫ РАБОТЫ -->
+<div class="slide">
+    <h2>🛠️ ЭТАПЫ РЕАЛИЗАЦИИ ПРОЕКТА</h2>
+
+    <div class="solution-item">
+        <h4>ШАГ 1: АНАЛИЗ (1-2 дня)</h4>
+        <ul>
+            <li>Созвон с клиентом</li>
+            <li>Изучаем бизнес-процессы и формулы расчёта</li>
+            <li>Определяем параметры и интеграции</li>
+        </ul>
+        <div class="stats" style="margin-top: 10px; font-size: 18px;">Результат: Техническое задание и смета</div>
+    </div>
+
+    <div class="solution-item">
+        <h4>ШАГ 2: ПРОТОТИП (3-5 дней)</h4>
+        <ul>
+            <li>Создаём тестовую версию бота</li>
+            <li>Настраиваем логику расчётов</li>
+            <li>Клиент тестирует на реальных данных</li>
+        </ul>
+        <div class="stats" style="margin-top: 10px; font-size: 18px;">Результат: Рабочий прототип для правок</div>
+    </div>
+
+    <div class="solution-item">
+        <h4>ШАГ 3: РАЗРАБОТКА (7-14 дней)</h4>
+        <ul>
+            <li>Финальная версия бота</li>
+            <li>Интеграции с CRM/системами</li>
+            <li>Генерация PDF-смет</li>
+            <li>Настройка аналитики</li>
+        </ul>
+        <div class="stats" style="margin-top: 10px; font-size: 18px;">Результат: Готовый бот</div>
+    </div>
+
+    <div class="two-column">
+        <div class="solution-item">
+            <h4>ШАГ 4: ТЕСТИРОВАНИЕ (2-3 дня)</h4>
+            <ul style="font-size: 18px;">
+                <li>Проверка всех сценариев</li>
+                <li>Нагрузочное тестирование</li>
+            </ul>
+        </div>
+        <div class="solution-item">
+            <h4>ШАГ 5: ЗАПУСК (1 день)</h4>
+            <ul style="font-size: 18px;">
+                <li>Публикация бота</li>
+                <li>Обучение менеджеров</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- СЛАЙД 13: СКРИПТ ХОЛОДНОГО ЗВОНКА -->
+<div class="slide">
+    <h2>📞 СКРИПТ ХОЛОДНОГО ЗВОНКА</h2>
+
+    <div class="highlight-box">
+        <h4>Шаг 1: Представление (15 секунд)</h4>
+        <p style="font-size: 18px; line-height: 1.8;">
+            "Добрый день, [Имя]! Меня зовут [Ваше имя], компания Bereznyak AI.<br><br>
+            Мы помогаем компаниям в [сфера клиента] автоматизировать расчёты для клиентов. Вместо 30-40 минут ручной работы — автоматический расчёт за 2 минуты.<br><br>
+            У вас сейчас 2 минуты?"
+        </p>
+    </div>
+
+    <div class="highlight-box">
+        <h4>Шаг 2: Квалификация (1 минута)</h4>
+        <p style="font-size: 18px; line-height: 1.8;">
+            "Скажите, у вас клиенты часто запрашивают расчёт стоимости?<br><br>
+            [ДА] → Отлично! А сколько примерно заявок в месяц?<br><br>
+            Сколько времени у менеджера уходит на 1 расчёт?<br><br>
+            [30+ минут] → Понимаю, это долго. У нас есть решение, которое сократит это время до 2 минут. Интересно послушать?"
+        </p>
+    </div>
+
+    <div class="highlight-box">
+        <h4>Шаг 3: Презентация (2 минуты)</h4>
+        <p style="font-size: 18px; line-height: 1.8;">
+            "Мы создаём бота-калькулятора в Telegram. Работает так:<br><br>
+            1. Клиент открывает бота (ссылка на сайте/в рекламе)<br>
+            2. Отвечает на 5-7 вопросов<br>
+            3. Получает точный расчёт и PDF-смету за 90 секунд<br>
+            4. Менеджер получает готовый лид с расчётом в CRM<br><br>
+            У компаний, которые внедрили это решение: конверсия выросла на 30-40%"
+        </p>
+    </div>
+</div>
+
+<!-- СЛАЙД 14: КОНТАКТЫ -->
+<div class="slide cover">
+    <h1 style="font-size: 56px;">📞 КОНТАКТЫ</h1>
+
+    <div class="contacts" style="margin: 40px 0;">
+        <div style="font-size: 24px;">📧 Email: hello@bezk.pro</div>
+        <div style="font-size: 24px;">📞 Телефон: +7 (931) 287-79-10</div>
+        <div style="font-size: 24px;">💬 Telegram: @ann_bezk</div>
+        <div style="font-size: 24px;">🌐 Сайт: bereznyak-ai.ru</div>
+        <div style="font-size: 24px;">📱 WhatsApp: wa.me/79312877910</div>
+    </div>
+
+    <div class="highlight-box" style="background: rgba(255,255,255,0.2); border-color: white; margin-top: 40px;">
+        <h3 style="color: white; font-size: 28px; text-align: center;">Демо-бот (логистика)</h3>
+        <p style="font-size: 24px; text-align: center; margin-top: 15px;">
+            https://t.me/prime_shift_bot
+        </p>
+    </div>
+
+    <div style="margin-top: 50px; font-size: 32px; font-weight: 700;">
+        🚀 УДАЧИ В ПРОДАЖАХ!
+    </div>
+</div>
+
+<!-- СЛАЙД 15: ЧЕКЛИСТ -->
+<div class="slide">
+    <h2>✅ ЧЕКЛИСТ ПРОДАЖНИКА</h2>
+
+    <div class="two-column">
+        <div>
+            <div class="highlight-box">
+                <h4>ПЕРЕД ЗВОНКОМ:</h4>
+                <ul style="font-size: 18px;">
+                    <li>☐ Изучил сайт клиента</li>
+                    <li>☐ Понял, чем занимается компания</li>
+                    <li>☐ Подготовил вопросы для квалификации</li>
+                    <li>☐ Открыл демо-бота из их сферы</li>
+                    <li>☐ Готов посчитать ROI на лету</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>ВО ВРЕМЯ ЗВОНКА:</h4>
+                <ul style="font-size: 18px;">
+                    <li>☐ Представился чётко и уверенно</li>
+                    <li>☐ Задал квалифицирующие вопросы</li>
+                    <li>☐ Показал демо-бота</li>
+                    <li>☐ Посчитал экономический эффект</li>
+                    <li>☐ Ответил на все вопросы</li>
+                    <li>☐ Договорился о следующем шаге</li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <div class="highlight-box">
+                <h4>ПОСЛЕ ЗВОНКА:</h4>
+                <ul style="font-size: 18px;">
+                    <li>☐ Отправил демо-бота в течение 5 минут</li>
+                    <li>☐ Внёс информацию в CRM</li>
+                    <li>☐ Отправил КП (если договорились)</li>
+                    <li>☐ Поставил задачу на следующий контакт</li>
+                    <li>☐ Проанализировал, что прошло хорошо/плохо</li>
+                </ul>
+            </div>
+
+            <div class="stats" style="margin-top: 30px; font-size: 22px; padding: 30px;">
+                Помните: Вы продаёте не просто бота.<br>
+                Вы продаёте:<br><br>
+                ⏰ Время (экономия часов)<br>
+                💰 Деньги (ROI 200-400%)<br>
+                😌 Спокойствие (меньше стресса)<br>
+                📈 Рост (больше прибыль)
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

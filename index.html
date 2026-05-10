@@ -1052,7 +1052,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <div class="text-4xl font-bold text-white mb-2">45 000 – 60 000 ₽</div>
+                            <div class="text-4xl font-bold text-white mb-2">60 000 ₽</div>
                             <div class="text-gray-400 text-sm">Срок: 5-7 дней</div>
                         </div>
 
@@ -1079,7 +1079,7 @@
                             <p class="text-sm text-blue-300"><strong>Для кого:</strong> Малый бизнес, частные специалисты</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('LITE', '45 000 – 60 000₽', ''); ym(108506107,'reachGoal','tariff_lite_click');">
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('LITE', '60 000₽', ''); ym(108506107,'reachGoal','tariff_lite_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1101,7 +1101,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <div class="text-4xl font-bold gradient-text mb-2">120 000 – 180 000 ₽</div>
+                            <div class="text-4xl font-bold gradient-text mb-2">120 000 ₽</div>
                             <div class="text-gray-400 text-sm">Срок: 14-21 день</div>
                         </div>
 
@@ -1137,7 +1137,7 @@
                             <p class="text-xs text-gray-400 mt-2">⚡ Окупаемость: 2-3 месяца</p>
                         </div>
 
-                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="openConsultationModal('PRO', '120 000 – 180 000₽', ''); ym(108506107,'reachGoal','tariff_pro_click');">
+                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="openConsultationModal('PRO', '120 000₽', ''); ym(108506107,'reachGoal','tariff_pro_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1155,7 +1155,7 @@
                         </div>
 
                         <div class="mb-6">
-                            <div class="text-4xl font-bold text-white mb-2">от 350 000 ₽</div>
+                            <div class="text-4xl font-bold text-white mb-2">от 200 000 ₽</div>
                             <div class="text-gray-400 text-sm">Срок: от 1.5 месяцев</div>
                         </div>
 
@@ -1190,7 +1190,7 @@
                             <p class="text-sm text-purple-300"><strong>Для кого:</strong> Enterprise, сети, холдинги</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('ULTRA', 'от 350 000₽', ''); ym(108506107,'reachGoal','tariff_ultra_click');">
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('ULTRA', 'от 200 000₽', ''); ym(108506107,'reachGoal','tariff_ultra_click');">
                             Обсудить проект
                         </button>
                     </div>
@@ -2032,9 +2032,9 @@
                         <div class="faq-answer px-8 pb-6 text-gray-400 leading-relaxed hidden">
                             <p class="mb-3">Стоимость зависит от сложности логики расчёта и количества интеграций:</p>
                             <ul class="space-y-2 ml-6 list-disc">
-                                <li><span class="text-white font-semibold">LITE - Базовый</span> (линейный расчёт, без ветвлений): 45 000 – 60 000 ₽</li>
-                                <li><span class="text-white font-semibold">PRO - Экспертный</span> (сложная логика, PDF, CRM): 120 000 – 180 000 ₽</li>
-                                <li><span class="text-white font-semibold">ULTRA - Экосистема</span> (AI, мультиязычность, личный кабинет): от 350 000 ₽</li>
+                                <li><span class="text-white font-semibold">LITE - Базовый</span> (линейный расчёт, без ветвлений): 60 000 ₽</li>
+                                <li><span class="text-white font-semibold">PRO - Экспертный</span> (сложная логика, PDF, CRM): 120 000 ₽</li>
+                                <li><span class="text-white font-semibold">ULTRA - Экосистема</span> (AI, мультиязычность, личный кабинет): от 200 000 ₽</li>
                             </ul>
                             <p class="mt-3 text-gray-400">Точная стоимость рассчитывается после анализа ваших бизнес-процессов</p>
                         </div>
@@ -2263,6 +2263,29 @@
         </div>
     </section>
 
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-700 p-6 z-50 hidden">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-200 text-sm md:text-base">
+                        Мы используем файлы cookie для улучшения работы сайта, аналитики и персонализации контента.
+                        Продолжая использовать сайт, вы соглашаетесь с нашей
+                        <a href="cookie-policy.html" class="text-blue-400 hover:text-blue-300 underline">Политикой использования cookie</a>.
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="acceptCookies()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                        Принять
+                    </button>
+                    <button onclick="declineCookies()" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
+                        Отклонить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-12 bg-slate-950 border-t border-slate-800">
         <div class="container mx-auto px-6">
@@ -2308,8 +2331,24 @@
                         </ul>
                     </div>
                 </div>
-                <div class="pt-8 border-t border-slate-800 text-center text-gray-500">
-                    <p>&copy; 2024 Bereznyak AI. Все права защищены.</p>
+
+                <!-- Legal Links -->
+                <div class="pt-6 border-t border-slate-800">
+                    <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-gray-400 mb-6">
+                        <a href="privacy-policy.html" class="hover:text-blue-400 transition-colors">Политика конфиденциальности</a>
+                        <span class="text-gray-600">•</span>
+                        <a href="terms-of-service.html" class="hover:text-blue-400 transition-colors">Условия использования</a>
+                        <span class="text-gray-600">•</span>
+                        <a href="cookie-policy.html" class="hover:text-blue-400 transition-colors">Cookie Policy</a>
+                    </div>
+                </div>
+
+                <!-- Meta Disclaimer -->
+                <div class="pt-4 border-t border-slate-800 text-center">
+                    <p class="text-xs text-gray-500 leading-relaxed mb-4">
+                        This site is not a part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
+                    </p>
+                    <p class="text-gray-500">&copy; 2024 Bereznyak AI. Все права защищены.</p>
                 </div>
             </div>
         </div>
@@ -2593,23 +2632,23 @@
         }
 
         function calculateBotPrice() {
-            let basePrice = 50000;
+            let basePrice = 60000;
             let tier = 'LITE';
             let devTime = '5-7 дней';
             let complexityLevel = 'simple';
 
             // Шаг 1: Определяем базовую цену по сложности (цены из прайса)
             if (quizData.answers.complexity === 'simple') {
-                basePrice = 50000; // LITE: 45-60k (среднее 50k)
+                basePrice = 60000; // LITE: 60k
                 tier = 'LITE';
                 complexityLevel = 'simple';
             } else if (quizData.answers.complexity === 'medium') {
-                basePrice = 120000; // PRO: 120-180k (минимум 120k)
+                basePrice = 120000; // PRO: 120k
                 tier = 'PRO';
                 devTime = '14-21 день';
                 complexityLevel = 'medium';
             } else if (quizData.answers.complexity === 'complex') {
-                basePrice = 350000; // ULTRA: от 350k
+                basePrice = 200000; // ULTRA: от 200k
                 tier = 'ULTRA';
                 devTime = 'от 1.5 месяцев';
                 complexityLevel = 'complex';
@@ -2636,7 +2675,7 @@
 
             // Своя система / API
             if (quizData.answers.integration === 'custom') {
-                basePrice = 350000; // Всегда ULTRA (минимум)
+                basePrice = 200000; // Всегда ULTRA (минимум)
                 tier = 'ULTRA';
                 devTime = 'от 1.5 месяцев';
             }
@@ -2648,31 +2687,29 @@
 
             if (tier === 'LITE') {
                 if (hasHighLoad) {
-                    let minPrice = Math.round(45000 * 1.2);
-                    let maxPrice = Math.round(60000 * 1.2);
+                    let minPrice = Math.round(60000 * 1.2);
                     priceText = `от ${minPrice.toLocaleString('ru-RU')}₽`;
                     finalPrice = minPrice;
                 } else {
-                    priceText = '45 000 – 60 000₽';
-                    finalPrice = 50000;
+                    priceText = '60 000₽';
+                    finalPrice = 60000;
                 }
             } else if (tier === 'PRO') {
                 if (hasHighLoad) {
                     let minPrice = Math.round(120000 * 1.2);
-                    let maxPrice = Math.round(180000 * 1.2);
-                    priceText = `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')}₽`;
+                    priceText = `от ${minPrice.toLocaleString('ru-RU')}₽`;
                     finalPrice = minPrice;
                 } else {
-                    priceText = '120 000 – 180 000₽';
+                    priceText = '120 000₽';
                     finalPrice = 120000;
                 }
             } else if (tier === 'ULTRA') {
                 if (hasHighLoad) {
-                    finalPrice = Math.round(350000 * 1.2);
+                    finalPrice = Math.round(200000 * 1.2);
                     priceText = `от ${finalPrice.toLocaleString('ru-RU')}₽`;
                 } else {
-                    priceText = 'от 350 000₽';
-                    finalPrice = 350000;
+                    priceText = 'от 200 000₽';
+                    finalPrice = 200000;
                 }
             }
 
@@ -3298,6 +3335,38 @@
         function sendToEmail() {
             sendLead();
         }
+
+        // Cookie Banner Management
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                // Показываем баннер через 1 секунду после загрузки
+                setTimeout(() => {
+                    document.getElementById('cookieBanner').classList.remove('hidden');
+                }, 1000);
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieBanner').classList.add('hidden');
+
+            // Здесь можно активировать аналитические скрипты
+            if (typeof ym !== 'undefined') {
+                console.log('Analytics enabled');
+            }
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieBanner').classList.add('hidden');
+
+            // Деактивировать неосновные cookie
+            console.log('Non-essential cookies disabled');
+        }
+
+        // Проверяем согласие при загрузке страницы
+        window.addEventListener('load', checkCookieConsent);
     </script>
 </body>
 </html>
