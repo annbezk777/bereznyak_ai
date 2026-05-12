@@ -3120,12 +3120,23 @@
 
                 <!-- Contact -->
                 <div>
-                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон, Email или Telegram *</label>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон или Email *</label>
                     <input
                         type="text"
                         id="clientContact"
                         required
-                        placeholder="+7, email@example.com или @username"
+                        placeholder="+7 (900) 123-45-67 или email@example.com"
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
+                    />
+                </div>
+
+                <!-- Telegram -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Telegram</label>
+                    <input
+                        type="text"
+                        id="clientTelegram"
+                        placeholder="@username или ссылка на профиль"
                         class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                 </div>
@@ -3208,7 +3219,16 @@
         let consultationData = {
             tier: '',
             price: '',
-            business: ''
+            business: '',
+            quizAnswers: {
+                businessType: '',
+                complexity: '',
+                currentMethod: '',
+                pdfRequired: '',
+                leadsVolume: '',
+                integration: '',
+                managersCount: ''
+            }
         };
 
         function openConsultationModal(tier = '', price = '', business = '') {
@@ -3250,6 +3270,9 @@
             const price = document.getElementById('recommendedPrice')?.textContent || '';
             const business = quizData.answers.businessType || '';
 
+            // Сохранить все ответы квиза
+            consultationData.quizAnswers = { ...quizData.answers };
+
             openConsultationModal(tier, price, business);
         }
 
@@ -3268,6 +3291,7 @@
         function sendLead() {
             const name = document.getElementById('clientName').value.trim();
             const contact = document.getElementById('clientContact').value.trim();
+            const telegram = document.getElementById('clientTelegram').value.trim();
             const comment = document.getElementById('clientComment').value.trim();
 
             if (!name || !contact) {
@@ -3279,6 +3303,9 @@
             let message = `🚀 НОВАЯ ЗАЯВКА С САЙТА\n\n`;
             message += `👤 Имя: ${name}\n`;
             message += `📞 Контакт: ${contact}\n`;
+            if (telegram) {
+                message += `💬 Telegram: ${telegram}\n`;
+            }
 
             if (consultationData.tier && consultationData.price) {
                 message += `\n📊 Результаты квиза:\n`;
@@ -3286,6 +3313,56 @@
                 message += `• Стоимость: ${consultationData.price}\n`;
                 if (consultationData.business) {
                     message += `• Бизнес: ${consultationData.business}\n`;
+                }
+
+                // Добавляем все ответы квиза
+                const qa = consultationData.quizAnswers;
+                if (qa && qa.businessType) {
+                    message += `\n📝 Детали квиза:\n`;
+                    message += `1️⃣ Тип бизнеса: ${qa.businessType}\n`;
+
+                    // Сложность
+                    let complexityText = qa.complexity;
+                    if (qa.complexity === 'simple') complexityText = '✅ Простой расчет';
+                    else if (qa.complexity === 'medium') complexityText = '⚙️ Средняя сложность';
+                    else if (qa.complexity === 'complex') complexityText = '🔧 Сложный расчет';
+                    message += `2️⃣ Сложность: ${complexityText}\n`;
+
+                    // Текущий метод
+                    let methodText = qa.currentMethod;
+                    if (qa.currentMethod === 'manual') methodText = '📝 Вручную';
+                    else if (qa.currentMethod === 'excel') methodText = '📊 Excel/таблицы';
+                    else if (qa.currentMethod === 'online') methodText = '🌐 Онлайн-калькулятор';
+                    else if (qa.currentMethod === 'none') methodText = '❌ Никак';
+                    message += `3️⃣ Текущий метод: ${methodText}\n`;
+
+                    // PDF
+                    let pdfText = qa.pdfRequired;
+                    if (qa.pdfRequired === 'pdf') pdfText = '📄 Да, нужен PDF';
+                    else if (qa.pdfRequired === 'message') pdfText = '💬 Достаточно сообщения';
+                    message += `4️⃣ Генерация PDF: ${pdfText}\n`;
+
+                    // Объем заявок
+                    let volumeText = qa.leadsVolume;
+                    if (qa.leadsVolume === 'low') volumeText = '📉 До 50/месяц';
+                    else if (qa.leadsVolume === 'medium') volumeText = '📊 50-100/месяц';
+                    else if (qa.leadsVolume === 'high') volumeText = '📈 100+/месяц';
+                    message += `5️⃣ Объем заявок: ${volumeText}\n`;
+
+                    // Интеграция
+                    let integrationText = qa.integration;
+                    if (qa.integration === 'telegram') integrationText = '📱 Telegram';
+                    else if (qa.integration === 'crm') integrationText = '🔗 CRM (AmoCRM/Bitrix24)';
+                    else if (qa.integration === 'custom') integrationText = '⚙️ Своя система/API';
+                    message += `6️⃣ Интеграция: ${integrationText}\n`;
+
+                    // Менеджеры
+                    let managersText = qa.managersCount;
+                    if (qa.managersCount === '1') managersText = '👤 1 менеджер';
+                    else if (qa.managersCount === '2-3') managersText = '👥 2-3 менеджера';
+                    else if (qa.managersCount === '4+') managersText = '👨‍👨‍👦‍👦 4+ менеджера';
+                    else if (qa.managersCount === 'none') managersText = '❌ Нет менеджеров';
+                    message += `7️⃣ Менеджеров: ${managersText}\n`;
                 }
             }
 
