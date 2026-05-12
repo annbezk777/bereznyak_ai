@@ -1079,7 +1079,7 @@
                             <p class="text-sm text-blue-300"><strong>Для кого:</strong> Малый бизнес, частные специалисты</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('LITE', '60 000₽', ''); ym(108506107,'reachGoal','tariff_lite_click');">
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openQuickQuiz('LITE', '60 000₽'); ym(108506107,'reachGoal','tariff_lite_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1137,7 +1137,7 @@
                             <p class="text-xs text-gray-400 mt-2">⚡ Окупаемость: 2-3 месяца</p>
                         </div>
 
-                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="openConsultationModal('PRO', '120 000₽', ''); ym(108506107,'reachGoal','tariff_pro_click');">
+                        <button class="w-full btn-primary text-white px-6 py-3 rounded-xl font-semibold" onclick="openQuickQuiz('PRO', '120 000₽'); ym(108506107,'reachGoal','tariff_pro_click');">
                             Выбрать тариф
                         </button>
                     </div>
@@ -1190,8 +1190,8 @@
                             <p class="text-sm text-purple-300"><strong>Для кого:</strong> Enterprise, сети, холдинги</p>
                         </div>
 
-                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openConsultationModal('ULTRA', 'от 200 000₽', ''); ym(108506107,'reachGoal','tariff_ultra_click');">
-                            Обсудить проект
+                        <button class="w-full glassmorphism text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-700/50 transition-all" onclick="openQuickQuiz('ULTRA', 'от 200 000₽'); ym(108506107,'reachGoal','tariff_ultra_click');">
+                            Выбрать тариф
                         </button>
                     </div>
                 </div>
@@ -3065,7 +3065,7 @@
          MODAL: Consultation Request Form
          ================================================================ -->
     <div id="consultationModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-6" onclick="closeConsultationModal(event)">
-        <div class="relative max-w-2xl w-full glassmorphism rounded-3xl p-8 md:p-10 border-2 border-blue-500/30 shadow-2xl shadow-blue-500/20 animate-modal-fade-in" onclick="event.stopPropagation()">
+        <div class="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto glassmorphism rounded-3xl p-8 md:p-10 border-2 border-blue-500/30 shadow-2xl shadow-blue-500/20 animate-modal-fade-in" onclick="event.stopPropagation()">
 
             <!-- Close button -->
             <button onclick="closeConsultationModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 flex items-center justify-center transition-all group">
@@ -3120,25 +3120,15 @@
 
                 <!-- Contact -->
                 <div>
-                    <label class="block text-sm font-semibold text-gray-300 mb-2">Телефон или Email *</label>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">Контакт для связи *</label>
                     <input
                         type="text"
                         id="clientContact"
                         required
-                        placeholder="+7 (900) 123-45-67 или email@example.com"
+                        placeholder="+7 (900) 123-45-67, email@example.com или @telegram"
                         class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
                     />
-                </div>
-
-                <!-- Telegram -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-300 mb-2">Telegram</label>
-                    <input
-                        type="text"
-                        id="clientTelegram"
-                        placeholder="@username или ссылка на профиль"
-                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
-                    />
+                    <p class="text-xs text-gray-500 mt-1">Укажите телефон, email или Telegram — как вам удобнее</p>
                 </div>
 
                 <!-- Comment (optional) -->
@@ -3167,6 +3157,104 @@
                 <p class="text-xs text-gray-500 text-center mt-4">
                     Нажимая кнопку, вы соглашаетесь на обработку персональных данных
                 </p>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ================================================================
+         MODAL: Quick Quiz for Tariff Selection
+         ================================================================ -->
+    <div id="quickQuizModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-6" onclick="closeQuickQuiz(event)">
+        <div class="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto glassmorphism rounded-3xl p-8 md:p-10 border-2 border-blue-500/30 shadow-2xl shadow-blue-500/20 animate-modal-fade-in" onclick="event.stopPropagation()">
+
+            <!-- Close button -->
+            <button onclick="closeQuickQuiz()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 flex items-center justify-center transition-all group">
+                <i data-lucide="x" class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="inline-block px-4 py-2 bg-blue-500/10 rounded-full mb-4">
+                    <span class="text-blue-400 font-semibold text-sm" id="selectedTier">LITE</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">
+                    Расскажите о проекте
+                </h2>
+                <p class="text-gray-400">
+                    Буквально 3 вопроса, чтобы лучше понять ваши потребности
+                </p>
+            </div>
+
+            <!-- Quiz Form -->
+            <form id="quickQuizForm" class="space-y-5">
+                <!-- Question 1: Business Type -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">1. Ваш бизнес / проект *</label>
+                    <input
+                        type="text"
+                        id="quickBusiness"
+                        required
+                        placeholder="Например: детейлинг, логистика, стройматериалы..."
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors"
+                    />
+                </div>
+
+                <!-- Question 2: What to Automate -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-2">2. Что нужно автоматизировать? *</label>
+                    <textarea
+                        id="quickAutomation"
+                        required
+                        rows="3"
+                        placeholder="Опишите кратко: расчет стоимости услуг, подбор продукта, калькулятор доставки..."
+                        class="w-full px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-colors resize-none"
+                    ></textarea>
+                </div>
+
+                <!-- Question 3: Volume -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-300 mb-3">3. Примерный объем заявок в месяц *</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button
+                            type="button"
+                            class="quick-volume-option px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white hover:border-blue-500 transition-all"
+                            data-value="low"
+                            onclick="selectQuickVolume(this)"
+                        >
+                            До 50
+                        </button>
+                        <button
+                            type="button"
+                            class="quick-volume-option px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white hover:border-blue-500 transition-all"
+                            data-value="medium"
+                            onclick="selectQuickVolume(this)"
+                        >
+                            50-100
+                        </button>
+                        <button
+                            type="button"
+                            class="quick-volume-option px-4 py-3 bg-slate-800/50 border-2 border-slate-700 rounded-xl text-white hover:border-blue-500 transition-all"
+                            data-value="high"
+                            onclick="selectQuickVolume(this)"
+                        >
+                            100+
+                        </button>
+                    </div>
+                    <input type="hidden" id="quickVolume" required />
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button
+                        type="button"
+                        onclick="submitQuickQuiz()"
+                        class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold text-lg transition-all hover:scale-105 shadow-lg shadow-blue-500/30"
+                    >
+                        <span>Далее</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </form>
 
         </div>
@@ -3209,6 +3297,7 @@
             if (e.key === 'Escape') {
                 closeDemoBotsModal();
                 closeConsultationModal();
+                closeQuickQuiz();
             }
         });
 
@@ -3228,6 +3317,11 @@
                 leadsVolume: '',
                 integration: '',
                 managersCount: ''
+            },
+            quickQuizAnswers: {
+                business: '',
+                automation: '',
+                volume: ''
             }
         };
 
@@ -3288,10 +3382,114 @@
             }
         }
 
+        // ================================================================
+        // Quick Quiz Management
+        // ================================================================
+
+        let quickQuizData = {
+            tier: '',
+            price: '',
+            business: '',
+            automation: '',
+            volume: ''
+        };
+
+        function openQuickQuiz(tier, price) {
+            const modal = document.getElementById('quickQuizModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Сохранить тариф
+            quickQuizData.tier = tier;
+            quickQuizData.price = price;
+
+            // Показать выбранный тариф
+            document.getElementById('selectedTier').textContent = tier;
+
+            // Сбросить форму
+            document.getElementById('quickQuizForm').reset();
+
+            // Сбросить выбор объема
+            document.querySelectorAll('.quick-volume-option').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'border-blue-500');
+                btn.classList.add('bg-slate-800/50', 'border-slate-700');
+            });
+
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function closeQuickQuiz(event) {
+            if (!event || event.target.id === 'quickQuizModal' || event.currentTarget.tagName === 'BUTTON') {
+                const modal = document.getElementById('quickQuizModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+
+                // Очистить форму
+                document.getElementById('quickQuizForm').reset();
+            }
+        }
+
+        function selectQuickVolume(button) {
+            // Убрать выделение со всех кнопок
+            document.querySelectorAll('.quick-volume-option').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'border-blue-500');
+                btn.classList.add('bg-slate-800/50', 'border-slate-700');
+            });
+
+            // Выделить выбранную кнопку
+            button.classList.remove('bg-slate-800/50', 'border-slate-700');
+            button.classList.add('bg-blue-600', 'border-blue-500');
+
+            // Сохранить значение
+            const value = button.getAttribute('data-value');
+            document.getElementById('quickVolume').value = value;
+            quickQuizData.volume = value;
+        }
+
+        function submitQuickQuiz() {
+            const business = document.getElementById('quickBusiness').value.trim();
+            const automation = document.getElementById('quickAutomation').value.trim();
+            const volume = document.getElementById('quickVolume').value;
+
+            if (!business || !automation || !volume) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+
+            // Сохранить ответы
+            quickQuizData.business = business;
+            quickQuizData.automation = automation;
+            quickQuizData.volume = volume;
+
+            // Закрыть квиз
+            closeQuickQuiz();
+
+            // Открыть форму консультации с данными из квиза
+            consultationData.tier = quickQuizData.tier;
+            consultationData.price = quickQuizData.price;
+            consultationData.business = quickQuizData.business;
+            consultationData.quickQuizAnswers = {
+                business: quickQuizData.business,
+                automation: quickQuizData.automation,
+                volume: quickQuizData.volume
+            };
+
+            openConsultationModal(quickQuizData.tier, quickQuizData.price, quickQuizData.business);
+
+            // Track in Yandex.Metrika
+            if (typeof ym !== 'undefined') {
+                ym(108506107, 'reachGoal', 'quick_quiz_completed');
+            }
+        }
+
         function sendLead() {
             const name = document.getElementById('clientName').value.trim();
             const contact = document.getElementById('clientContact').value.trim();
-            const telegram = document.getElementById('clientTelegram').value.trim();
             const comment = document.getElementById('clientComment').value.trim();
 
             if (!name || !contact) {
@@ -3303,9 +3501,6 @@
             let message = `🚀 НОВАЯ ЗАЯВКА С САЙТА\n\n`;
             message += `👤 Имя: ${name}\n`;
             message += `📞 Контакт: ${contact}\n`;
-            if (telegram) {
-                message += `💬 Telegram: ${telegram}\n`;
-            }
 
             if (consultationData.tier && consultationData.price) {
                 message += `\n📊 Результаты квиза:\n`;
@@ -3363,6 +3558,20 @@
                     else if (qa.managersCount === '4+') managersText = '👨‍👨‍👦‍👦 4+ менеджера';
                     else if (qa.managersCount === 'none') managersText = '❌ Нет менеджеров';
                     message += `7️⃣ Менеджеров: ${managersText}\n`;
+                }
+
+                // Добавляем ответы из короткого квиза (при выборе тарифа)
+                const qqa = consultationData.quickQuizAnswers;
+                if (qqa && qqa.business) {
+                    message += `\n📋 Информация о проекте:\n`;
+                    message += `• Бизнес/проект: ${qqa.business}\n`;
+                    message += `• Что автоматизировать: ${qqa.automation}\n`;
+
+                    let qVolumeText = qqa.volume;
+                    if (qqa.volume === 'low') qVolumeText = 'До 50/месяц';
+                    else if (qqa.volume === 'medium') qVolumeText = '50-100/месяц';
+                    else if (qqa.volume === 'high') qVolumeText = '100+/месяц';
+                    message += `• Объем заявок: ${qVolumeText}\n`;
                 }
             }
 
