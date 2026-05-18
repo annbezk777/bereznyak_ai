@@ -1,0 +1,7 @@
+ID,Тип ошибки,URL страницы,Элемент (Селектор/Код),Найдено значение,Ожидаемое значение / Суть проблемы,Severity,Статус исправления
+E001,DATA_MISMATCH,/index.html,"div.text-gray-300 (строка 2218)","Бесплатный месяц техподдержки при заказе бота до 30 апреля","до 31 мая или актуальная дата - акция УСТАРЕЛА",CRITICAL,ИСПРАВЛЕНО ✅
+E002,SECURITY,/index.html,"const botToken (строка 3596)","8171742276:AAHOdnAPPql_8MEsS60bxBAa1PJoCcX7P-w",Обфусцировать через atob() или перенести на backend,CRITICAL,ИСПРАВЛЕНО ✅
+E003,DATA_OUTDATED,/index.html,"footer p.text-gray-500 (строка 2357)","© 2024 Bereznyak AI","© 2026 Bereznyak AI - актуальный год",MEDIUM,PENDING ⏳
+E004,HTTP_ERROR,/demo,URL редирект,404 Not Found,Настроить редирект /demo → /demo.html на сервере,MEDIUM,PENDING ⏳
+E005,SEO_MISSING,/,robots.txt,Файл отсутствует,Создать robots.txt для SEO,LOW,PENDING ⏳
+E006,SEO_MISSING,/,sitemap.xml,Файл отсутствует,Создать sitemap.xml для индексации,LOW,PENDING ⏳

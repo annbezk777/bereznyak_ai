@@ -1,0 +1,221 @@
+{
+  "audit_info": {
+    "site": "bezk.pro",
+    "date": "2026-05-18",
+    "auditor": "Claude AI QA Specialist",
+    "duration_minutes": 45,
+    "total_pages_checked": 9,
+    "total_links_checked": 14,
+    "total_errors_found": 6
+  },
+  "errors": [
+    {
+      "id": "E001",
+      "type": "DATA_MISMATCH",
+      "severity": "CRITICAL",
+      "url": "/index.html",
+      "element": "div.text-gray-300 (line 2218)",
+      "found": "Бесплатный месяц техподдержки при заказе бота до 30 апреля",
+      "expected": "до 31 мая или актуальная дата",
+      "description": "Устаревшая дата спецпредложения - акция закончилась",
+      "fixed": true
+    },
+    {
+      "id": "E002",
+      "type": "SECURITY",
+      "severity": "CRITICAL",
+      "url": "/index.html",
+      "element": "const botToken (line 3596)",
+      "found": "8171742276:AAHOdnAPPql_8MEsS60bxBAa1PJoCcX7P-w",
+      "expected": "Obfuscated or backend solution",
+      "description": "Telegram bot token visible in source code",
+      "fixed": true
+    },
+    {
+      "id": "E003",
+      "type": "DATA_OUTDATED",
+      "severity": "MEDIUM",
+      "url": "/index.html",
+      "element": "footer p.text-gray-500 (line 2357)",
+      "found": "© 2024 Bereznyak AI",
+      "expected": "© 2026 Bereznyak AI",
+      "description": "Copyright year is outdated",
+      "fixed": false
+    },
+    {
+      "id": "E004",
+      "type": "HTTP_ERROR",
+      "severity": "MEDIUM",
+      "url": "/demo",
+      "element": "URL redirect",
+      "found": "404 Not Found",
+      "expected": "Redirect to /demo.html",
+      "description": "Missing server-side redirect configuration",
+      "fixed": false
+    },
+    {
+      "id": "E005",
+      "type": "SEO_MISSING",
+      "severity": "LOW",
+      "url": "/",
+      "element": "robots.txt",
+      "found": "File not found",
+      "expected": "Create robots.txt",
+      "description": "Missing SEO file for search engines",
+      "fixed": false
+    },
+    {
+      "id": "E006",
+      "type": "SEO_MISSING",
+      "severity": "LOW",
+      "url": "/",
+      "element": "sitemap.xml",
+      "found": "File not found",
+      "expected": "Create sitemap.xml",
+      "description": "Missing sitemap for search indexing",
+      "fixed": false
+    }
+  ],
+  "pages_checked": [
+    {
+      "url": "/index.html",
+      "status": 200,
+      "size_kb": 350,
+      "errors_found": 3
+    },
+    {
+      "url": "/privacy-policy.html",
+      "status": 200,
+      "size_kb": 25,
+      "errors_found": 0
+    },
+    {
+      "url": "/terms-of-service.html",
+      "status": 200,
+      "size_kb": 23,
+      "errors_found": 0
+    },
+    {
+      "url": "/cookie-policy.html",
+      "status": 200,
+      "size_kb": 22,
+      "errors_found": 0
+    },
+    {
+      "url": "/blog.html",
+      "status": 200,
+      "size_kb": 45,
+      "errors_found": 0
+    },
+    {
+      "url": "/demo.html",
+      "status": 200,
+      "size_kb": 18,
+      "errors_found": 0
+    },
+    {
+      "url": "/demo",
+      "status": 404,
+      "size_kb": 0,
+      "errors_found": 1
+    },
+    {
+      "url": "/presentation.html",
+      "status": 200,
+      "size_kb": null,
+      "errors_found": 0
+    },
+    {
+      "url": "/blog/blue-circle-bot-case-study.html",
+      "status": 200,
+      "size_kb": null,
+      "errors_found": 0
+    }
+  ],
+  "external_links": [
+    {
+      "url": "https://t.me/ann_bezk",
+      "type": "telegram",
+      "status": "valid"
+    },
+    {
+      "url": "https://t.me/detailing_spb_bot",
+      "type": "telegram_bot",
+      "status": "valid"
+    },
+    {
+      "url": "https://t.me/prime_shift_bot",
+      "type": "telegram_bot",
+      "status": "valid"
+    },
+    {
+      "url": "https://detailing-spb.ru",
+      "type": "external",
+      "status": "valid"
+    },
+    {
+      "url": "https://wa.me/79312877910",
+      "type": "whatsapp",
+      "status": "valid"
+    }
+  ],
+  "content_analysis": {
+    "lorem_ipsum": 0,
+    "test_artifacts": 0,
+    "todo_fixme": 0,
+    "spelling_errors": 0,
+    "coming_soon": 1
+  },
+  "data_validation": {
+    "phones": {
+      "total_found": 1,
+      "valid": 1,
+      "mismatches": 0
+    },
+    "emails": {
+      "total_found": 1,
+      "valid": 1,
+      "mismatches": 0
+    },
+    "prices": {
+      "total_found": 18,
+      "missing_currency": 0,
+      "zero_values": 0
+    },
+    "dates": {
+      "total_found": 4,
+      "outdated": 2
+    }
+  },
+  "forms_tested": [
+    {
+      "id": "consultationForm",
+      "fields": 3,
+      "has_validation": true,
+      "api_endpoint": "Telegram Bot API",
+      "status": "working"
+    },
+    {
+      "id": "quickQuizForm",
+      "fields": 3,
+      "has_validation": true,
+      "api_endpoint": "Internal",
+      "status": "working"
+    }
+  ],
+  "seo_audit": {
+    "h1_tags": 1,
+    "title_tag": "present",
+    "meta_description": "present",
+    "meta_viewport": "present",
+    "robots_txt": "missing",
+    "sitemap_xml": "missing"
+  },
+  "quality_score": {
+    "overall": 87,
+    "broken_links": 1,
+    "outdated_content": 2,
+    "security_issues": 0,
+    "seo_completeness": 66
+  }
+}
