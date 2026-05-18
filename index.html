@@ -2914,8 +2914,8 @@
             <div class="grid md:grid-cols-3 gap-6">
 
                 <!-- BOT 1: Детейлинг-центр (ACTIVE) -->
-                <a href="https://t.me/detailing_spb_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_click')" class="group relative block">
-                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/30">
+                <div class="group relative">
+                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-300">
 
                         <!-- Active badge -->
                         <div class="absolute -top-3 -right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
@@ -2923,7 +2923,7 @@
                         </div>
 
                         <!-- Icon -->
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/50 group-hover:scale-110 transition-transform">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/50">
                             <i data-lucide="car" class="w-8 h-8 text-white"></i>
                         </div>
 
@@ -2934,32 +2934,38 @@
 
                         <!-- Description -->
                         <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                            Подбор услуг по марке авто, классу и состоянию кузова с автоматическим расчётом
+                            Расчёт услуг детейлинга и запись на осмотр автомобиля
                         </p>
 
                         <!-- Features -->
                         <ul class="space-y-2 mb-6">
                             <li class="flex items-center gap-2 text-xs text-gray-300">
                                 <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>80+ марок авто</span>
+                                <span>Создание сайта</span>
                             </li>
                             <li class="flex items-center gap-2 text-xs text-gray-300">
                                 <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>PDF-КП с прайсом</span>
+                                <span>Интеграция калькулятора</span>
                             </li>
                             <li class="flex items-center gap-2 text-xs text-gray-300">
                                 <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Интеграция с сайтом</span>
+                                <span>Автоматический расчёт</span>
                             </li>
                         </ul>
 
-                        <!-- CTA -->
-                        <div class="flex items-center justify-between text-purple-400 font-semibold text-sm group-hover:text-purple-300">
-                            <span>Запустить в Telegram</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <!-- CTA Buttons -->
+                        <div class="space-y-3">
+                            <a href="https://detailing-spb.ru" target="_blank" class="flex items-center justify-between text-purple-400 hover:text-purple-300 font-semibold text-sm border border-purple-500/40 rounded-lg px-4 py-2 hover:bg-purple-500/10 transition-all">
+                                <span>Посмотреть сайт</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://t.me/detailing_spb_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_click')" class="flex items-center justify-between text-white bg-purple-600 hover:bg-purple-500 font-semibold text-sm rounded-lg px-4 py-2 transition-all">
+                                <span>Запустить бот</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
                     </div>
-                </a>
+                </div>
 
                 <!-- BOT 2: Международная логистика (ACTIVE) -->
                 <a href="https://t.me/prime_shift_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_logistics_click')" class="group relative block">
