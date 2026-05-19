@@ -50,6 +50,13 @@
 
     <!-- Case Studies -->
     <url>
+        <loc>https://bezk.pro/blog/detailing-spb-case-study.html</loc>
+        <lastmod>2026-05-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://bezk.pro/blog/blue-circle-bot-case-study.html</loc>
         <lastmod>2026-05-15</lastmod>
         <changefreq>monthly</changefreq>

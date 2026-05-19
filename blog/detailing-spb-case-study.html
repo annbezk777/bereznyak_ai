@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кейс: Детейлинг-центр СПб - Bereznyak AI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23B91C1C'/%3E%3Ctext x='50' y='50' font-family='Arial,sans-serif' font-size='70' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EB%3C/text%3E%3C/svg%3E">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="Как собрать комплексный digital-проект с нуля за 7 дней в условиях импортозамещения. Гео-распределенная архитектура на Next.js 16.">
+    <meta name="keywords" content="Next.js, детейлинг, кейс, Telegram бот, калькулятор, импортозамещение">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        .glassmorphism {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-content {
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #60a5fa;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #818cf8;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            margin-left: 1.5rem;
+            color: #cbd5e1;
+        }
+
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content code {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #60a5fa;
+        }
+
+        .article-content pre {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .article-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #94a3b8;
+        }
+
+        .stats-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+        }
+
+        .architecture-diagram {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-family: 'Courier New', monospace;
+            color: #94a3b8;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .problem-solution-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .solution-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+    </style>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108506107', 'ym');
+
+        ym(108506107, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108506107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+<body class="text-gray-100">
+
+    <!-- Header -->
+    <header class="py-6 border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="text-2xl font-bold gradient-text">
+                    Bereznyak AI
+                </a>
+                <nav class="flex items-center gap-6">
+                    <a href="../index.html" class="text-gray-300 hover:text-white transition-colors">Главная</a>
+                    <a href="../blog.html" class="text-gray-300 hover:text-white transition-colors">Блог</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Article Hero -->
+    <section class="py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-emerald-950/20 to-slate-950"></div>
+        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-full blur-[120px] animate-pulse"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="px-4 py-1.5 bg-emerald-500/20 text-emerald-400 text-sm font-semibold rounded-full border border-emerald-500/30">КЕЙС</span>
+                    <span class="text-gray-500">•</span>
+                    <span class="text-gray-500">18 мая 2026</span>
+                    <span class="text-gray-500">•</span>
+                    <span class="text-gray-400">15 минут чтения</span>
+                </div>
+
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    Кейс: Детейлинг-центр СПб. <span class="gradient-text">Как собрать комплексный digital-проект с нуля за 7 дней</span> в условиях импортозамещения
+                </h1>
+
+                <p class="text-xl text-gray-300 mb-8">
+                    Когда локальному бизнесу нужна цифровая экосистема, стандартный подход «развернуть CMS и склеить плагинами» часто упирается в ограничения: то калькулятор стоимости работает криво, то уведомления в Telegram застревают из-за сетевых блокировок, то аналитика не собирает данные.
+                </p>
+
+                <div class="stats-box">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <div class="text-3xl font-bold text-emerald-400 mb-1">7 дней</div>
+                            <div class="text-sm text-gray-400">от идеи до старта рекламы</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-emerald-400 mb-1">1 разработчик</div>
+                            <div class="text-sm text-gray-400">+ Claude Code (AI-ассистент)</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-emerald-400 mb-1">&lt; $10</div>
+                            <div class="text-sm text-gray-400">бюджет на инфраструктуру в месяц</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-gray-300">
+                    В этом кейсе мы расскажем, как с нуля разработали и запустили отказоустойчивую ИТ-инфраструктуру для детейлинг-центра в Санкт-Петербурге.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="pb-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <article class="glassmorphism rounded-2xl p-8 md:p-12 article-content">
+
+                    <h2>🛠 Технологический стек</h2>
+                    <p>Чтобы обеспечить максимальную скорость разработки, мгновенный отклик интерфейса и стабильность в РФ, мы выбрали современный и легковесный стек:</p>
+                    <ul>
+                        <li><strong>Frontend:</strong> Next.js 16 (с компилятором Turbopack), TypeScript, Tailwind CSS v4.</li>
+                        <li><strong>Backend:</strong> Next.js API Routes (Node.js).</li>
+                        <li><strong>Автоматизация (боты):</strong> Пакет Telegraf (Node.js) — развернуты 2 раздельных бота (клиентский для записи и админский для управления заявками).</li>
+                        <li><strong>Хостинг:</strong> Распределенная гео-архитектура: <strong>TimeWeb</strong> (РФ) для фронтенда и API + <strong>IONOS</strong> (США) для бесперебойной работы Telegram-ботов.</li>
+                        <li><strong>Интеграции:</strong> Яндекс.Метрика, SMTP (TimeWeb), REST API для связи между серверами.</li>
+                    </ul>
+
+                    <h2>📐 Архитектура решения: Географическое распределение</h2>
+                    <p>Главная архитектурная особенность проекта — <strong>гибридный гео-распределенный хостинг</strong>. Из-за сетевых особенностей и блокировок Telegram API на территории РФ, стандартное размещение «всё на одном сервере» привело бы либо к недоступности сайта, либо к падению ботов.</p>
+
+                    <p>Мы разделили инфраструктуру:</p>
+
+                    <div class="architecture-diagram">[Пользователь в РФ]
+       │
+       ▼
+[Сайт на TimeWeb (РФ)] ──(REST API)──> [Telegram-боты на IONOS (США)]
+       │                                         │
+       ├──> [SMTP TimeWeb]                       ├──> [Admin Bot]
+       │         │                               │         │
+       ▼         ▼                               ▼         ▼
+[Email-уведомления]                     [Запись клиентов] [Уведомления в ТГ]</div>
+
+                    <h2>🛑 Ключевые проблемы и их инженерные решения</h2>
+
+                    <h3>Проблема 1: Блокировки и сетевой тупик</h3>
+                    <div class="problem-solution-box">
+                        <p><strong>Ситуация:</strong> После тестового деплоя на зарубежный хостинг под защитой Cloudflare сайт в РФ открывался с ошибкой 502 или бесконечно грузился у части пользователей. При этом Telegram-боты требовали стабильного зарубежного IP для работы с Telegram API.</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <p><strong>Решение:</strong> Мы полностью отказались от проксирования Cloudflare для веб-версии и мигрировали сайт на чистый <strong>TimeWeb</strong> в российском дата-центре. При этом бэкенд Telegram-ботов оставили на VPS от <strong>IONOS</strong> (США). Синхронизация данных между сайтом и ботами была настроена через защищенный REST API.</p>
+                        <p><strong>Результат:</strong> Сайт мгновенно открывается в РФ без VPN, а боты стабильно держат вебхуки с серверами Telegram.</p>
+                    </div>
+
+                    <h3>Проблема 2: Медленный калькулятор (Speed Index)</h3>
+                    <div class="problem-solution-box">
+                        <p><strong>Ситуация:</strong> Сердце сайта — интерактивный калькулятор. На этапе MVP тяжелые исходные изображения силуэтов автомобилей (седан, кроссовер, SUV) весили от 515 КБ до 1.5 МБ. При переключении вкладок была заметна задержка в 1–2 секунды — недопустимо для UX.</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <p><strong>Решение:</strong></p>
+                        <ol>
+                            <li>Изображения были пакетно оптимизированы через утилиту sips (размеры снизились до <strong>119–220 КБ</strong>).</li>
+                            <li>Внедрен компонент &lt;Image/&gt; из Next.js с флагом priority.</li>
+                        </ol>
+                        <p><strong>Результат:</strong> Рендеринг стал мгновенным, задержки полностью исчезли, а оценка Lighthouse в зоне Performance поднялась выше <strong>95</strong>.</p>
+                    </div>
+
+                    <h3>Проблема 3: 7 критических багов за 24 часа до релиза</h3>
+                    <p>Перед запуском контекстной рекламы мы провели стресс-тест по 47-пунктному QA-чеклисту и выявили пул критических уязвимостей:</p>
+                    <ul>
+                        <li>API бэкенда возвращал статус success: true даже при сбое отправки.</li>
+                        <li>Отсутствовала маска телефона (пользователи путались в форматах и вводили буквы).</li>
+                        <li>Не было чекбокса согласия на обработку персональных данных (риск по 152-ФЗ).</li>
+                        <li>При определенных комбинациях в калькуляторе вылетал NaN в итоговой стоимости.</li>
+                        <li>Отсутствовал сброс параметров и не была подключена аналитика.</li>
+                    </ul>
+
+                    <div class="solution-box">
+                        <p><strong>Как исправили (за 4 часа интенсивного кодинга):</strong></p>
+                        <ul>
+                            <li>Интегрировали react-input-mask для строгого формата +7 (999) 999-99-99.</li>
+                            <li>Добавили обязательный валидируемый чекбокс политики конфиденциальности.</li>
+                            <li>Переписали расчетную логику калькулятора с жесткими проверками типов в TypeScript.</li>
+                            <li>Внедрили <strong>Яндекс.Метрику</strong> и настроили 5 ключевых микро- и макро-конверсий: calculator_submit, open_form, phone_click, telegram_click, whatsapp_click.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Проблема 4: Риск потери лидов (Dual-Channel система)</h3>
+                    <div class="problem-solution-box">
+                        <p><strong>Ситуация:</strong> Изначально заявки летели напрямую в Telegram-канал администратора через API зарубежного сервера. Если бы на сервере IONOS произошел сбой или сетевой лаг, бизнес потерял бы клиента, за которого уже заплатил в Яндекс.Директ.</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <p><strong>Решение:</strong> Реализована архитектура дублирования каналов (Dual-Channel). Заявка считается успешной, если сработал хотя бы один метод:</p>
+                        <pre><code>// TypeScript
+// 1. Моментальное уведомление в Telegram через API ботов
+// 2. Гарантированный бэкап-канал через локальный SMTP TimeWeb</code></pre>
+                        <p><strong>Результат:</strong> Достигнута 100% отказоустойчивость. Даже если зарубежный сервер уйдет на обслуживание, заявка упадет на почту и в архив базы данных.</p>
+                    </div>
+
+                    <h2>🧮 Интерактивный калькулятор — сердце конверсии</h2>
+                    <p>Калькулятор не просто считает сумму, он работает на основе динамической матрицы данных:</p>
+                    <ul>
+                        <li>Под капотом база из <strong>25 автомобильных брендов</strong> и более <strong>150 моделей</strong>.</li>
+                        <li>Все машины разделены на <strong>4 класса (A/B/C/D)</strong> с повышающими коэффициентами: от ×1.0 до ×1.45.</li>
+                        <li>Предусмотрены кастомные исключения (например, за сложные кузова <em>Range Rover</em> или специфику материалов <em>Tesla</em> заложена автоматическая надбавка +25%).</li>
+                        <li>Охвачено <strong>7 категорий услуг</strong> (керамика, полировка, химчистка, пленки и т.д.) — всего около 40 позиций.</li>
+                    </ul>
+                    <p>Каждый шаг пользователя прозрачен: он видит реальную стоимость услуг <em>до</em> звонка менеджера. Это отсекает нецелевой трафик и генерирует горячие, прогретые лиды.</p>
+
+                    <h3>Глубокая сквозная аналитика</h3>
+                    <p>Для отслеживания эффективности в Яндекс.Метрику передаются не просто факты кликов, а развернутые E-commerce-like параметры. Пример отправки цели при отправке расчета:</p>
+                    <pre><code>// JavaScript
+ym(109284242, 'reachGoal', 'calculator_submit', {
+  total_price: 65000,
+  services_count: 2,
+  car_class: 'D',
+  car_brand: 'Porsche',
+  car_model: 'Taycan'
+});</code></pre>
+                    <p>С помощью Вебвизора и структуры этих целей мы точно видим, на каком этапе калькулятора пользователи сомневаются, какие услуги комбинируют чаще всего и каков средний чек на входе.</p>
+
+                    <h2>📈 Итоги и метрики проекта</h2>
+                    <p>Благодаря связке Next.js 16, TypeScript и плотной работе с CLI-агентом Claude Code, нам удалось показать рекордные темпы развертывания продакшн-системы.</p>
+
+                    <h3>Скорость разработки</h3>
+                    <ul>
+                        <li><strong>MVP (сайт + 2 работающих бота):</strong> 3 дня.</li>
+                        <li><strong>Полировка, QA, закрытие 7 багов и аналитика:</strong> 2 дня.</li>
+                        <li><strong>Итого от пустой папки до старта трафика:</strong> 7 дней.</li>
+                    </ul>
+
+                    <h3>Технические показатели</h3>
+                    <ul>
+                        <li><strong>Lighthouse Score:</strong> 95+ по всем фронтам.</li>
+                        <li><strong>Время до полной отрисовки (LCP):</strong> &lt; 1.5 секунды.</li>
+                        <li><strong>Оптимизация веса ассетов:</strong> Снижение веса графики на 80%.</li>
+                    </ul>
+
+                    <h2>💡 Главные инсайты кейса</h2>
+                    <ol>
+                        <li><strong>Разделяй и властвуй:</strong> В текущих реалиях гибридная архитектура (Фронтенд в РФ, API-боты за рубежом) — самый дешевый и стабильный способ подружить локальный веб-трафик с зарубежными сервисами без костылей с прокси.</li>
+                        <li><strong>Отказоустойчивость не стоит дорого:</strong> Написание резервного канала отправки через SMTP занимает 30 минут, но гарантирует бизнесу безопасность данных при любых сетевых штормах.</li>
+                        <li><strong>Современный стек решает:</strong> Next.js 16 в связке с Turbopack компилирует проект за 3 секунды вместо привычных 40. Это кратно увеличивает фокус разработчика и скорость итераций, позволяя собирать сложные экосистемы в одиночку за неделю.</li>
+                    </ol>
+
+                    <p class="text-xl font-semibold text-emerald-400 mt-8">Бизнес получил готовую независимую ИТ-инфраструктуру, которая генерирует лиды, автоматически распределяет их по менеджерам и предоставляет полную прозрачность для аналитики рекламы.</p>
+
+                    <div class="mt-12 pt-8 border-t border-slate-700">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-full flex items-center justify-center text-2xl font-bold">
+                                AB
+                            </div>
+                            <div>
+                                <div class="font-semibold text-lg">Anna Bereznyak</div>
+                                <div class="text-gray-400">AI Engineer @ Bereznyak AI</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- CTA Section -->
+                <div class="mt-12 glassmorphism rounded-2xl p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-4">Нужен похожий проект?</h3>
+                    <p class="text-gray-300 mb-6">Разработаем AI-бота с интерактивным калькулятором для вашего бизнеса</p>
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <a href="https://t.me/ann_bezk" target="_blank" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                            Написать в Telegram
+                        </a>
+                        <a href="https://wa.me/79312877910" target="_blank" class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition-all flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Back to Blog -->
+                <div class="mt-8 text-center">
+                    <a href="../blog.html" class="text-blue-400 hover:text-blue-300 flex items-center gap-2 justify-center font-medium">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        Вернуться в блог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-slate-950 border-t border-slate-800">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-2xl font-bold gradient-text mb-4">Bereznyak AI</h3>
+                        <p class="text-gray-400">
+                            Интеллектуальные боты-калькуляторы для автоматизации B2B продаж
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-4">Контакты</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li>
+                                <a href="mailto:anna_bereznyak@mail.ru" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    <i data-lucide="mail" class="w-4 h-4"></i>
+                                    anna_bereznyak@mail.ru
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/79312877910" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
+                                    WhatsApp
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://t.me/ann_bezk" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                    </svg>
+                                    Telegram
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-8 border-t border-slate-800 text-center text-gray-500">
+                    <p>&copy; 2026 Bereznyak AI. Все права защищены.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
