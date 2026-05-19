@@ -3456,23 +3456,44 @@
 
             // Отправляем в Telegram Bot API
             const botToken = atob('ODE3MTc0MjI3NjpBQUhPZG5BUFBxbF84TUVzUzYwYnhCQWExUEpvQ2NYN1Atdw==');
-            const chatId = '1337987399';
+            // Список менеджеров для получения уведомлений
+            const chatIds = [
+                '1337987399',  // Основной админ
+                '1336680373'   // Katrina (менеджер)
+            ];
 
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'HTML'
+            // Отправляем сообщение всем менеджерам параллельно
+            const sendPromises = chatIds.map(chatId =>
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
+                .then(response => response.json())
+                .then(data => ({ chatId, success: data.ok, error: data.description }))
+                .catch(error => ({ chatId, success: false, error: error.message }))
+            );
+
+            Promise.all(sendPromises)
+            .then(results => {
+                // Проверяем, отправилось ли хотя бы одному получателю
+                const successCount = results.filter(r => r.success).length;
+                const failedRecipients = results.filter(r => !r.success);
+
+                if (successCount > 0) {
+                    // Заявка отправлена хотя бы одному менеджеру
                     alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+
+                    // Логируем в консоль, если были проблемы с некоторыми получателями
+                    if (failedRecipients.length > 0) {
+                        console.warn('⚠️ Не удалось отправить некоторым получателям:', failedRecipients);
+                    }
 
                     // Track
                     if (typeof ym !== 'undefined') {
@@ -3482,7 +3503,9 @@
                     // Закрыть модалку
                     closeConsultationModal();
                 } else {
-                    throw new Error('Telegram API error');
+                    // Не удалось отправить ни одному получателю
+                    console.error('❌ Ошибки отправки:', failedRecipients);
+                    throw new Error('Все получатели недоступны');
                 }
             })
             .catch(error => {
