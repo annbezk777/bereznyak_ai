@@ -3454,27 +3454,35 @@
             message += `\n\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
             message += `\n🌐 Источник: bezk.pro`;
 
-            // Отправляем через backend PHP скрипт
-            console.log('📤 Начинаю отправку заявки...', { name, contact });
+            // Отправляем в Telegram Bot API напрямую (как работало раньше)
+            const botToken = '8171742276:AAHOdnAPPql_8MEsS60bxBAa1PJoCcX7P-w';
+            const chatIds = [
+                '1337987399',  // Основной админ (Анна)
+                '1336680373'   // Katrina (менеджер)
+            ];
 
-            fetch('/send-lead.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: message
+            // Отправляем сообщение всем получателям
+            const sendPromises = chatIds.map(chatId =>
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
                 })
-            })
-            .then(response => {
-                console.log('📨 Ответ от сервера:', response.status);
-                return response.json();
-            })
-            .then(data => {
-                console.log('📬 Данные ответа:', data);
+                .then(response => response.json())
+                .then(data => ({ chatId, success: data.ok, error: data.description }))
+                .catch(error => ({ chatId, success: false, error: error.message }))
+            );
 
-                if (data.success) {
-                    console.log(`✅ Успешно отправлено ${data.sent} из ${data.total} получателей`);
+            Promise.all(sendPromises)
+            .then(results => {
+                const successCount = results.filter(r => r.success).length;
+
+                if (successCount > 0) {
                     alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
 
                     // Track
@@ -3485,11 +3493,11 @@
                     // Закрыть модалку
                     closeConsultationModal();
                 } else {
-                    throw new Error(data.error || 'Ошибка отправки');
+                    throw new Error('Все получатели недоступны');
                 }
             })
             .catch(error => {
-                console.error('❌ Ошибка отправки:', error);
+                console.error('Error:', error);
                 alert('❌ Ошибка отправки. Попробуйте позже или напишите напрямую: hello@bezk.pro');
             });
         }
