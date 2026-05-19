@@ -3452,48 +3452,30 @@
             }
 
             message += `\n\n⏰ Время: ${new Date().toLocaleString('ru-RU')}`;
-            message += `\n🌐 Источник: bereznyak-ai.ru`;
+            message += `\n🌐 Источник: bezk.pro`;
 
-            // Отправляем в Telegram Bot API
-            const botToken = atob('ODE3MTc0MjI3NjpBQUhPZG5BUFBxbF84TUVzUzYwYnhCQWExUEpvQ2NYN1Atdw==');
-            // Список менеджеров для получения уведомлений
-            const chatIds = [
-                '1337987399',  // Основной админ
-                '1336680373'   // Katrina (менеджер)
-            ];
+            // Отправляем через backend PHP скрипт
+            console.log('📤 Начинаю отправку заявки...', { name, contact });
 
-            // Отправляем сообщение всем менеджерам параллельно
-            const sendPromises = chatIds.map(chatId =>
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
+            fetch('/send-lead.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message
                 })
-                .then(response => response.json())
-                .then(data => ({ chatId, success: data.ok, error: data.description }))
-                .catch(error => ({ chatId, success: false, error: error.message }))
-            );
+            })
+            .then(response => {
+                console.log('📨 Ответ от сервера:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('📬 Данные ответа:', data);
 
-            Promise.all(sendPromises)
-            .then(results => {
-                // Проверяем, отправилось ли хотя бы одному получателю
-                const successCount = results.filter(r => r.success).length;
-                const failedRecipients = results.filter(r => !r.success);
-
-                if (successCount > 0) {
-                    // Заявка отправлена хотя бы одному менеджеру
+                if (data.success) {
+                    console.log(`✅ Успешно отправлено ${data.sent} из ${data.total} получателей`);
                     alert('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-
-                    // Логируем в консоль, если были проблемы с некоторыми получателями
-                    if (failedRecipients.length > 0) {
-                        console.warn('⚠️ Не удалось отправить некоторым получателям:', failedRecipients);
-                    }
 
                     // Track
                     if (typeof ym !== 'undefined') {
@@ -3503,13 +3485,11 @@
                     // Закрыть модалку
                     closeConsultationModal();
                 } else {
-                    // Не удалось отправить ни одному получателю
-                    console.error('❌ Ошибки отправки:', failedRecipients);
-                    throw new Error('Все получатели недоступны');
+                    throw new Error(data.error || 'Ошибка отправки');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('❌ Ошибка отправки:', error);
                 alert('❌ Ошибка отправки. Попробуйте позже или напишите напрямую: hello@bezk.pro');
             });
         }
