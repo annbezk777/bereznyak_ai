@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детейлинг Центр | СПб - Демо</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23B91C1C'/%3E%3Ctext x='50' y='50' font-family='Arial,sans-serif' font-size='70' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EB%3C/text%3E%3C/svg%3E">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+        }
+
+        .hero-bg::after {
+            content: 'PORSCHE';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            letter-spacing: 0.2em;
+            white-space: nowrap;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            padding: 6rem 2rem;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: white;
+            color: black;
+        }
+
+        .btn-outline {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Section */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.125rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-card {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            background: #1a1a1a;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-card:hover .service-image {
+            transform: scale(1.05);
+        }
+
+        .service-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4));
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .service-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.75rem;
+        }
+
+        .service-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        /* Advantages Section */
+        .advantages {
+            position: relative;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+
+        .advantages-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        }
+
+        .advantages-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .advantage-item h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .advantage-item p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Process Section */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .process-step {
+            position: relative;
+        }
+
+        .process-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .process-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            position: relative;
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 320px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #1a1a1a;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .calculator h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .services-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover {
+            border-color: rgba(250, 112, 154, 0.5);
+            background: rgba(250, 112, 154, 0.05);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 0.2rem;
+            cursor: pointer;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-info .service-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .service-info .service-price {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+
+        .calc-result {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(250, 112, 154, 0.1) 0%, rgba(254, 225, 64, 0.1) 100%);
+            border: 2px solid rgba(250, 112, 154, 0.3);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .calc-result h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .calc-result .total {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+
+        .show-more-btn {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-checkboxes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">DETAILING SPB</div>
+            <nav class="nav">
+                <a href="#services">Услуги</a>
+                <a href="#calculator">Калькулятор</a>
+                <a href="#portfolio">Работы</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>Детейлинг Центр | СПб</h1>
+            <p>Профессиональная защита, эстетика и безупречный вид вашего автомобиля.</p>
+            <div class="hero-buttons">
+                <a href="#calculator" class="btn btn-primary">Рассчитать стоимость</a>
+                <a href="#portfolio" class="btn btn-outline">Наши работы</a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div>
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">лет на рынке</div>
+                </div>
+                <div>
+                    <div class="stat-value">1000+</div>
+                    <div class="stat-label">довольных клиентов</div>
+                </div>
+                <div>
+                    <div class="stat-value">СПб</div>
+                    <div class="stat-label">центральные районы</div>
+                </div>
+                <div>
+                    <div class="stat-value">30+</div>
+                    <div class="stat-label">видов услуг</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <h2 class="section-title">Услуги</h2>
+        <p class="section-description">Предлагаем вам широкий спектр по защите и уходу за вашим автомобилем</p>
+
+        <div class="services-grid" id="servicesGrid">
+            <!-- Services will be rendered here -->
+        </div>
+
+        <div class="show-more-btn">
+            <button class="btn btn-outline" id="showMoreServices" style="display: none;">Показать еще</button>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="advantages">
+        <div class="advantages-bg"></div>
+        <div class="advantages-content">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <p class="section-description">Мы гарантируем высочайшее качество работ и индивидуальный подход к каждому автомобилю</p>
+
+            <div class="advantages-grid">
+                <div class="advantage-item">
+                    <h3>Гарантия качества</h3>
+                    <p>Гарантия на все виды работ до года</p>
+                </div>
+                <div class="advantage-item">
+                    <h3>Опыт 10+ лет</h3>
+                    <p>Работаем с автомобилями премиум класса Mercedes, Porsche, BMW, Bentley, Lamborghini</p>
+                </div>
+                <div class="advantage-item">
+                    <h3>Центральные районы СПб</h3>
+                    <p>Работаем во всех центральных районах Санкт-Петербурга</p>
+                </div>
+                <div class="advantage-item">
+                    <h3>Качественные материалы</h3>
+                    <p>Используем только сертифицированные материалы</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section">
+        <h2 class="section-title">Процесс работы</h2>
+        <p class="section-description">Прозрачный процесс от консультации до гарантийного обслуживания</p>
+
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="process-number">01</div>
+                <h3 class="process-title">Консультация</h3>
+                <p class="process-description">Детальное обсуждение ваших пожеланий и подбор оптимальных решений</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">02</div>
+                <h3 class="process-title">Оценка</h3>
+                <p class="process-description">Осмотр автомобиля и составление точной сметы работ</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">03</div>
+                <h3 class="process-title">Выполнение</h3>
+                <p class="process-description">Профессиональное выполнение работ с контролем качества</p>
+            </div>
+            <div class="process-step">
+                <div class="process-number">04</div>
+                <h3 class="process-title">Гарантия</h3>
+                <p class="process-description">Предоставление гарантии и рекомендаций по уходу</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="section">
+        <div class="calculator">
+            <h3>Калькулятор стоимости</h3>
+
+            <div class="form-group">
+                <label for="carBrand">Марка автомобиля</label>
+                <select id="carBrand">
+                    <option value="">Выберите марку</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="mercedes">Mercedes-Benz</option>
+                    <option value="bmw">BMW</option>
+                    <option value="audi">Audi</option>
+                    <option value="porsche">Porsche</option>
+                    <option value="bentley">Bentley</option>
+                    <option value="lamborghini">Lamborghini</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="carModel">Модель автомобиля</label>
+                <select id="carModel">
+                    <option value="">Сначала выберите марку</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Выберите услуги</label>
+                <div class="services-checkboxes" id="servicesCheckboxes">
+                    <!-- Checkboxes will be rendered here -->
+                </div>
+            </div>
+
+            <div id="calcResult" style="display: none;" class="calc-result">
+                <h4>Итоговая стоимость</h4>
+                <div class="total" id="totalPrice">0 ₽</div>
+                <p style="margin-top: 1rem; color: rgba(255,255,255,0.7); font-size: 0.875rem;">* Точная стоимость определяется после осмотра автомобиля</p>
+                <div style="margin-top: 1.5rem;">
+                    <button class="btn btn-primary" onclick="submitRequest()">Отправить заявку</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-bg"></div>
+        <div class="cta-content">
+            <h2>Готовы преобразить<br>ваш автомобиль?</h2>
+            <p>Получите бесплатную консультацию и точный расчет стоимости</p>
+            <div class="cta-buttons">
+                <a href="#calculator" class="btn btn-primary">Рассчитать стоимость</a>
+                <button class="btn btn-outline" onclick="submitRequest()">Оставить заявку</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <h2 class="section-title">Наши работы</h2>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+            <!-- Portfolio items will be rendered here -->
+        </div>
+
+        <div class="show-more-btn">
+            <button class="btn btn-outline" id="showMorePortfolio" style="display: none;">Показать еще</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacts" class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>О компании</h4>
+                <p style="color: rgba(255,255,255,0.7);">
+                    Профессиональный детейлинг центр в Санкт-Петербурге. 10+ лет опыта работы с премиум автомобилями.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Услуги</h4>
+                <ul>
+                    <li><a href="#services">Оклейка PPF</a></li>
+                    <li><a href="#services">Оклейка винилом</a></li>
+                    <li><a href="#services">Полировка</a></li>
+                    <li><a href="#services">Керамика</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <ul>
+                    <li style="color: rgba(255,255,255,0.7);">Санкт-Петербург</li>
+                    <li style="color: rgba(255,255,255,0.7);">Центральные районы</li>
+                    <li><a href="tel:+78121234567">+7 (812) 123-45-67</a></li>
+                    <li><a href="mailto:info@detailing-spb.ru">info@detailing-spb.ru</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Детейлинг Центр СПб. Все права защищены. | Демо-версия для презентации
+        </div>
+    </footer>
+
+    <script>
+        // Services data
+        const services = [
+            {
+                name: 'Полная оклейка PPF пленкой',
+                description: 'Полная защита кузова полиуретановой пленкой (глянцевая или матовая)',
+                price: 'от 215 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><rect x="100" y="80" width="200" height="160" rx="10" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="3"/><text x="200" y="170" font-size="24" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">PPF</text></svg>`
+            },
+            {
+                name: 'Комплекс "Standard" PPF',
+                description: 'Бампер, капот, крылья, зеркала, фары - защита зоны риска',
+                price: 'от 80 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="22" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">STANDARD</text></svg>`
+            },
+            {
+                name: 'Комплекс "Premium" PPF',
+                description: 'Расширенная защита: Standard + стойки, ручки, пороги, крыша',
+                price: 'от 100 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="22" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">PREMIUM</text></svg>`
+            },
+            {
+                name: 'Детейлинг полировка и керамика 9H',
+                description: 'Полный комплекс: детейлинг полировка кузова + керамическое покрытие 9H',
+                price: 'от 30 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><circle cx="200" cy="160" r="60" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="3"/><text x="200" y="170" font-size="20" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">9H</text></svg>`
+            },
+            {
+                name: 'Глянцевая полировка и кварцевое покрытие',
+                description: 'Восстановление блеска + кварцевая защита',
+                price: 'от 15 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><path d="M150,100 L250,100 L220,220 L180,220 Z" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="2"/></svg>`
+            },
+            {
+                name: 'Перешив кожи салона',
+                description: 'Локальный перешив (руль) или полная смена салона. Эко-кожа или натуральная кожа',
+                price: 'от 15 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="20" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">INTERIOR</text></svg>`
+            },
+            {
+                name: 'Реставрация дисков',
+                description: 'Ремонт геометрии, алмазная обточка, покраска (4 шт)',
+                price: 'от 25 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><circle cx="200" cy="160" r="50" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="3"/><circle cx="200" cy="160" r="30" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="2"/></svg>`
+            },
+            {
+                name: 'Оклейка виниловой пленкой',
+                description: 'Полная оклейка кузова в цвет (глянец/мат/сатин/хамелеон/кэнди)',
+                price: 'от 240 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="24" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">VINYL</text></svg>`
+            },
+            {
+                name: 'Дополнительное оборудование',
+                description: 'Шумоизоляция, доводчики, противоугонные системы, подсветка, звездное небо',
+                price: 'по запросу',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="18" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">EQUIPMENT</text></svg>`
+            },
+            {
+                name: 'Бронирование лобового стекла',
+                description: 'Защита стекла прочной пленкой от сколов и трещин',
+                price: 'от 40 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><rect x="100" y="80" width="200" height="160" rx="10" fill="none" stroke="#ffffff" opacity="0.3" stroke-width="2"/><text x="200" y="170" font-size="18" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">GLASS</text></svg>`
+            },
+            {
+                name: 'Локальная окраска',
+                description: 'Реставрация сколов и притёртостей для предотвращения коррозии',
+                price: 'от 10 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><path d="M200,100 L220,150 L180,150 Z M200,150 L200,220" stroke="#ffffff" opacity="0.3" stroke-width="2" fill="none"/></svg>`
+            },
+            {
+                name: 'Выпрямление вмятин (PDR)',
+                description: 'Восстановление геометрии поверхности без покраски',
+                price: 'от 5 000 ₽',
+                svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="28" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">PDR</text></svg>`
+            }
+        ];
+
+        // Portfolio data
+        const portfolio = [
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="32" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">PORSCHE</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="28" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">MERCEDES</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="32" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">Li L9</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="20" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">DETAIL WORK 1</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="20" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">PPF WORK</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="22" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">VINYL WRAP</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="24" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">POLISHING</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="24" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">CERAMIC</text></svg>` },
+            { svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320"><rect fill="#1a1a1a" width="400" height="320"/><text x="200" y="160" font-size="22" fill="#ffffff" opacity="0.3" text-anchor="middle" dominant-baseline="middle">INTERIOR</text></svg>` }
+        ];
+
+        // Car models data
+        const carModels = {
+            toyota: [
+                { name: 'Camry', class: 'II' },
+                { name: 'RAV4', class: 'III' },
+                { name: 'Land Cruiser', class: 'IV' }
+            ],
+            mercedes: [
+                { name: 'C-Class', class: 'III' },
+                { name: 'E-Class', class: 'IV' },
+                { name: 'S-Class', class: 'V' }
+            ],
+            bmw: [
+                { name: '3 Series', class: 'III' },
+                { name: '5 Series', class: 'IV' },
+                { name: 'X5', class: 'IV' }
+            ],
+            audi: [
+                { name: 'A4', class: 'III' },
+                { name: 'A6', class: 'IV' },
+                { name: 'Q7', class: 'IV' }
+            ],
+            porsche: [
+                { name: 'Cayenne', class: 'V' },
+                { name: 'Panamera', class: 'V' },
+                { name: '911', class: 'V' }
+            ],
+            bentley: [
+                { name: 'Continental GT', class: 'V' },
+                { name: 'Bentayga', class: 'V' },
+                { name: 'Flying Spur', class: 'V' }
+            ],
+            lamborghini: [
+                { name: 'Urus', class: 'V' },
+                { name: 'Huracan', class: 'V' },
+                { name: 'Aventador', class: 'V' }
+            ]
+        };
+
+        // Calculator services
+        const calculatorServices = [
+            { id: 'ppf-full', name: 'Полная оклейка PPF пленкой', prices: { I: 215000, II: 240000, III: 260000, IV: 280000, V: 330000 } },
+            { id: 'ppf-standard', name: 'Комплекс "Standard" PPF', prices: { I: 65000, II: 80000, III: 90000, IV: 100000, V: 120000 } },
+            { id: 'ppf-premium', name: 'Комплекс "Premium" PPF', prices: { I: 85000, II: 100000, III: 110000, IV: 120000, V: 145000 } },
+            { id: 'detailing-ceramic', name: 'Детейлинг полировка и керамика 9H', prices: { I: 25000, II: 30000, III: 35000, IV: 40000, V: 50000 } },
+            { id: 'polishing-quartz', name: 'Глянцевая полировка и кварцевое покрытие', prices: { I: 12000, II: 15000, III: 18000, IV: 20000, V: 25000 } },
+            { id: 'vinyl-full', name: 'Полная оклейка виниловой пленкой', prices: { I: 200000, II: 240000, III: 260000, IV: 280000, V: 330000 } },
+            { id: 'glass-armor', name: 'Бронирование лобового стекла', prices: { I: 35000, II: 40000, III: 45000, IV: 50000, V: 60000 } },
+            { id: 'wheels-resto', name: 'Реставрация дисков (4 шт)', prices: { I: 20000, II: 25000, III: 30000, IV: 35000, V: 40000 } }
+        ];
+
+        // Render services
+        const servicesGrid = document.getElementById('servicesGrid');
+        let showAllServices = false;
+        const SERVICES_TO_SHOW = 4;
+
+        function renderServices() {
+            const servicesToDisplay = showAllServices ? services : services.slice(0, SERVICES_TO_SHOW);
+            servicesGrid.innerHTML = servicesToDisplay.map(service => `
+                <div class="service-card">
+                    <img class="service-image" src="data:image/svg+xml,${encodeURIComponent(service.svg)}" alt="${service.name}">
+                    <div class="service-overlay">
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-description">${service.description}</div>
+                        <div class="service-price">${service.price}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const showMoreBtn = document.getElementById('showMoreServices');
+            if (services.length > SERVICES_TO_SHOW) {
+                showMoreBtn.style.display = 'block';
+                showMoreBtn.textContent = showAllServices ? 'Свернуть' : `Показать еще (${services.length - SERVICES_TO_SHOW})`;
+            }
+        }
+
+        document.getElementById('showMoreServices').addEventListener('click', () => {
+            showAllServices = !showAllServices;
+            renderServices();
+        });
+
+        // Render portfolio
+        const portfolioGrid = document.getElementById('portfolioGrid');
+        let showAllPortfolio = false;
+        const PORTFOLIO_TO_SHOW = 4;
+
+        function renderPortfolio() {
+            const itemsToDisplay = showAllPortfolio ? portfolio : portfolio.slice(0, PORTFOLIO_TO_SHOW);
+            portfolioGrid.innerHTML = itemsToDisplay.map((item, i) => `
+                <div class="portfolio-item">
+                    <img src="data:image/svg+xml,${encodeURIComponent(item.svg)}" alt="Пример работы ${i + 1}">
+                    <div class="portfolio-overlay"></div>
+                </div>
+            `).join('');
+
+            const showMoreBtn = document.getElementById('showMorePortfolio');
+            if (portfolio.length > PORTFOLIO_TO_SHOW) {
+                showMoreBtn.style.display = 'block';
+                showMoreBtn.textContent = showAllPortfolio ? 'Свернуть' : `Показать еще (${portfolio.length - PORTFOLIO_TO_SHOW})`;
+            }
+        }
+
+        document.getElementById('showMorePortfolio').addEventListener('click', () => {
+            showAllPortfolio = !showAllPortfolio;
+            renderPortfolio();
+        });
+
+        // Calculator logic
+        let selectedCarClass = '';
+        const carBrandSelect = document.getElementById('carBrand');
+        const carModelSelect = document.getElementById('carModel');
+        const servicesCheckboxesContainer = document.getElementById('servicesCheckboxes');
+        const calcResult = document.getElementById('calcResult');
+        const totalPriceEl = document.getElementById('totalPrice');
+
+        carBrandSelect.addEventListener('change', function() {
+            const brand = this.value;
+            carModelSelect.innerHTML = '<option value="">Выберите модель</option>';
+
+            if (brand && carModels[brand]) {
+                carModels[brand].forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.class;
+                    option.textContent = model.name;
+                    carModelSelect.appendChild(option);
+                });
+            }
+
+            selectedCarClass = '';
+            renderCalculatorServices();
+            updateTotal();
+        });
+
+        carModelSelect.addEventListener('change', function() {
+            selectedCarClass = this.value;
+            renderCalculatorServices();
+            updateTotal();
+        });
+
+        function renderCalculatorServices() {
+            if (!selectedCarClass) {
+                servicesCheckboxesContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); padding: 1rem;">Сначала выберите марку и модель автомобиля</p>';
+                return;
+            }
+
+            servicesCheckboxesContainer.innerHTML = calculatorServices.map(service => {
+                const price = service.prices[selectedCarClass];
+                return `
+                    <label class="checkbox-item">
+                        <input type="checkbox" data-service="${service.id}" data-price="${price}" onchange="updateTotal()">
+                        <div class="service-info">
+                            <div class="service-name">${service.name}</div>
+                            <div class="service-price">${price.toLocaleString('ru-RU')} ₽</div>
+                        </div>
+                    </label>
+                `;
+            }).join('');
+        }
+
+        function updateTotal() {
+            const checkboxes = servicesCheckboxesContainer.querySelectorAll('input[type="checkbox"]:checked');
+            let total = 0;
+
+            checkboxes.forEach(cb => {
+                total += parseInt(cb.dataset.price);
+            });
+
+            if (total > 0) {
+                calcResult.style.display = 'block';
+                totalPriceEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+            } else {
+                calcResult.style.display = 'none';
+            }
+        }
+
+        function submitRequest() {
+            alert('Это демо-версия! В реальном сайте здесь будет отправка заявки менеджеру.');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize
+        renderServices();
+        renderPortfolio();
+        renderCalculatorServices();
+    </script>
+</body>
+</html>
