@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детейлинг Центр - Демо</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23B91C1C'/%3E%3Ctext x='50' y='50' font-family='Arial,sans-serif' font-size='70' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EB%3C/text%3E%3C/svg%3E">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', sans-serif;
+            background: #0e1621;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .tg-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 500px;
+            margin: 0 auto;
+            background: #0e1621;
+        }
+
+        .tg-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .tg-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .tg-info {
+            flex: 1;
+        }
+
+        .tg-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .tg-status {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .tg-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: #0e1621;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tg-message {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+            max-width: 85%;
+            width: fit-content;
+        }
+
+        .tg-message.incoming {
+            align-self: flex-start;
+        }
+
+        .tg-message.outgoing {
+            align-self: flex-end;
+        }
+
+        .tg-bubble {
+            padding: 8px 12px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .tg-message.incoming .tg-bubble {
+            background: #182533;
+            color: #e9ecef;
+            border-radius: 12px 12px 12px 4px;
+        }
+
+        .tg-message.outgoing .tg-bubble {
+            background: linear-gradient(135deg, #fa709a 0%, #fd8c73 100%);
+            color: white;
+            border-radius: 12px 12px 4px 12px;
+        }
+
+        .tg-keyboard {
+            display: grid;
+            gap: 6px;
+            margin-top: 6px;
+            width: 100%;
+        }
+
+        .tg-keyboard.cols-1 { grid-template-columns: 1fr; }
+        .tg-keyboard.cols-2 { grid-template-columns: 1fr 1fr; }
+        .tg-keyboard.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .tg-btn {
+            background: #2b5278;
+            color: #e9ecef;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .tg-btn:hover {
+            background: #3d6a94;
+        }
+
+        .tg-btn:active {
+            transform: scale(0.98);
+        }
+
+        .tg-btn.selected {
+            background: linear-gradient(135deg, #fa709a 0%, #fd8c73 100%);
+            color: white;
+        }
+
+        .tg-btn.primary {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tg-typing {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: #182533;
+            border-radius: 12px;
+            width: fit-content;
+            margin-bottom: 8px;
+        }
+
+        .tg-typing span {
+            width: 8px;
+            height: 8px;
+            background: #6c757d;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .tg-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .tg-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-4px); }
+        }
+
+        .service-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #182533;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .service-checkbox:hover {
+            background: #1e2d3d;
+        }
+
+        .service-checkbox.selected {
+            background: #2b5278;
+            border-color: #fa709a;
+        }
+
+        .checkbox-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6c757d;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .service-checkbox.selected .checkbox-icon {
+            background: #fa709a;
+            border-color: #fa709a;
+        }
+
+        .service-checkbox.selected .checkbox-icon::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-name {
+            color: #e9ecef;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .service-price {
+            color: #adb5bd;
+            font-size: 12px;
+        }
+
+        .result-card {
+            background: #182533;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 8px;
+        }
+
+        .result-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fa709a;
+            margin-bottom: 12px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2b3844;
+            color: #e9ecef;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fa709a;
+            padding-top: 12px;
+        }
+
+        .result-label {
+            color: #adb5bd;
+        }
+
+        @media (max-width: 768px) {
+            .tg-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tg-container">
+        <!-- Header -->
+        <div class="tg-header">
+            <div style="width: 48px;"></div>
+            <div class="tg-avatar">🚗</div>
+            <div class="tg-info">
+                <div class="tg-name">Детейлинг Центр</div>
+                <div class="tg-status">онлайн</div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="tg-messages" id="messages"></div>
+    </div>
+
+    <script>
+        // Данные по машинам (упрощённые для демо)
+        const carsData = {
+            "toyota": {
+                name: "Toyota",
+                models: [
+                    { id: "camry", name: "Camry", class: "II" },
+                    { id: "rav4", name: "RAV4", class: "III" },
+                    { id: "land-cruiser", name: "Land Cruiser", class: "IV", special: "+25%" }
+                ]
+            },
+            "bmw": {
+                name: "BMW",
+                models: [
+                    { id: "3-series", name: "3 Series", class: "II" },
+                    { id: "x5", name: "X5", class: "IV" },
+                    { id: "x7", name: "X7", class: "IV" }
+                ]
+            },
+            "mercedes": {
+                name: "Mercedes-Benz",
+                models: [
+                    { id: "c-class", name: "C-Class", class: "II" },
+                    { id: "gle", name: "GLE", class: "IV" },
+                    { id: "g-class", name: "G-Class", class: "V" }
+                ]
+            },
+            "audi": {
+                name: "Audi",
+                models: [
+                    { id: "a4", name: "A4", class: "II" },
+                    { id: "q5", name: "Q5", class: "III" },
+                    { id: "q7", name: "Q7", class: "IV" }
+                ]
+            },
+            "lexus": {
+                name: "Lexus",
+                models: [
+                    { id: "es", name: "ES", class: "II" },
+                    { id: "rx", name: "RX", class: "IV" },
+                    { id: "lx", name: "LX", class: "IV" }
+                ]
+            },
+            "tesla": {
+                name: "Tesla",
+                models: [
+                    { id: "model-3", name: "Model 3", class: "II", special: "+25%" },
+                    { id: "model-x", name: "Model X", class: "IV", special: "+25%" }
+                ]
+            }
+        };
+
+        // Категории услуг (упрощённые)
+        const servicesData = {
+            "ppf": {
+                name: "Оклейка PPF пленкой",
+                services: [
+                    { id: "full", name: "Полная оклейка кузова (глянцевая)", prices: { "I": 215000, "II": 240000, "III": 260000, "IV": 280000, "V": 330000 } },
+                    { id: "zone", name: "Зона риска (капот, крылья, бампер)", prices: { "I": 80000, "II": 85000, "III": 90000, "IV": 95000, "V": 100000 } },
+                    { id: "hood", name: "Капот", prices: { "I": 22000, "II": 24000, "III": 25000, "IV": 28000, "V": 30000 } },
+                    { id: "bumper", name: "Бампер", prices: { "I": 22000, "II": 24000, "III": 25000, "IV": 28000, "V": 30000 } }
+                ]
+            },
+            "ceramic": {
+                name: "Керамические покрытия",
+                services: [
+                    { id: "full-ceramic", name: "Полное покрытие кузова", prices: { "I": 45000, "II": 50000, "III": 55000, "IV": 60000, "V": 70000 } },
+                    { id: "glass", name: "Жидкое стекло", prices: { "I": 25000, "II": 28000, "III": 30000, "IV": 35000, "V": 40000 } },
+                    { id: "wheels", name: "Керамика дисков (4 шт)", prices: { "I": 15000, "II": 15000, "III": 15000, "IV": 15000, "V": 15000 } }
+                ]
+            },
+            "polishing": {
+                name: "Полировка и детейлинг",
+                services: [
+                    { id: "polish-3stage", name: "Полировка (3 этапа)", prices: { "I": 30000, "II": 35000, "III": 40000, "IV": 45000, "V": 50000 } },
+                    { id: "polish-1stage", name: "Полировка (1 этап)", prices: { "I": 15000, "II": 18000, "III": 20000, "IV": 22000, "V": 25000 } },
+                    { id: "interior", name: "Химчистка салона", prices: { "I": 12000, "II": 14000, "III": 16000, "IV": 18000, "V": 20000 } }
+                ]
+            }
+        };
+
+        // Состояние
+        let currentStep = 'start';
+        let selectedBrand = null;
+        let selectedModel = null;
+        let selectedCategory = null;
+        let selectedServices = new Set();
+        let carClass = null;
+        let specialCondition = null;
+
+        const messagesContainer = document.getElementById('messages');
+
+        // Добавление сообщения
+        function addMessage(text, type = 'incoming', buttons = null, isHtml = false) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `tg-message ${type}`;
+
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = 'tg-bubble';
+
+            if (isHtml) {
+                bubbleEl.innerHTML = text;
+            } else {
+                bubbleEl.textContent = text;
+            }
+
+            messageEl.appendChild(bubbleEl);
+
+            if (buttons) {
+                const keyboardEl = document.createElement('div');
+                keyboardEl.className = `tg-keyboard cols-${buttons.cols || 2}`;
+
+                buttons.items.forEach(btn => {
+                    const btnEl = document.createElement('button');
+                    btnEl.className = `tg-btn ${btn.primary ? 'primary' : ''} ${btn.selected ? 'selected' : ''}`;
+                    btnEl.textContent = btn.text;
+                    btnEl.onclick = btn.action;
+                    keyboardEl.appendChild(btnEl);
+                });
+
+                messageEl.appendChild(keyboardEl);
+            }
+
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Typing indicator
+        function showTyping() {
+            const typingEl = document.createElement('div');
+            typingEl.className = 'tg-typing';
+            typingEl.id = 'typing';
+            typingEl.innerHTML = '<span></span><span></span><span></span>';
+            messagesContainer.appendChild(typingEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTyping() {
+            const typingEl = document.getElementById('typing');
+            if (typingEl) typingEl.remove();
+        }
+
+        // Очистка сообщений
+        function clearMessages() {
+            messagesContainer.innerHTML = '';
+        }
+
+        // Добавление ответа пользователя
+        function addUserMessage(text) {
+            addMessage(text, 'outgoing');
+        }
+
+        // Задержка с typing
+        async function botReply(text, buttons = null, delay = 800, isHtml = false) {
+            showTyping();
+            await new Promise(resolve => setTimeout(resolve, delay));
+            hideTyping();
+            addMessage(text, 'incoming', buttons, isHtml);
+        }
+
+        // Шаг 1: Приветствие
+        async function start() {
+            await botReply('👋 Добро пожаловать в Детейлинг Центр!\n\nРассчитаем стоимость услуг для вашего автомобиля.', null, 500);
+            await botReply('🚗 Выберите марку автомобиля:', {
+                cols: 2,
+                items: [
+                    { text: 'Toyota', action: () => selectBrand('toyota') },
+                    { text: 'BMW', action: () => selectBrand('bmw') },
+                    { text: 'Mercedes-Benz', action: () => selectBrand('mercedes') },
+                    { text: 'Audi', action: () => selectBrand('audi') },
+                    { text: 'Lexus', action: () => selectBrand('lexus') },
+                    { text: 'Tesla', action: () => selectBrand('tesla') }
+                ]
+            }, 600);
+        }
+
+        // Шаг 2: Выбор марки
+        async function selectBrand(brandId) {
+            selectedBrand = brandId;
+            const brand = carsData[brandId];
+            clearMessages();
+            addUserMessage(brand.name);
+
+            await botReply(`Отлично! Марка: ${brand.name}\n\nВыберите модель:`, {
+                cols: 1,
+                items: brand.models.map(model => ({
+                    text: model.name + (model.special ? ' ⭐' : ''),
+                    action: () => selectModel(brandId, model.id)
+                }))
+            });
+        }
+
+        // Шаг 3: Выбор модели
+        async function selectModel(brandId, modelId) {
+            const brand = carsData[brandId];
+            const model = brand.models.find(m => m.id === modelId);
+            selectedModel = model;
+            carClass = model.class;
+            specialCondition = model.special || null;
+
+            clearMessages();
+            addUserMessage(`${brand.name} ${model.name}`);
+
+            let info = `🚗 Автомобиль: ${brand.name} ${model.name}\n📊 Класс: ${carClass}`;
+            if (specialCondition) {
+                info += `\n⭐ Специальные условия: ${specialCondition}`;
+            }
+
+            await botReply(info + '\n\nВыберите категорию услуг:', {
+                cols: 1,
+                items: [
+                    { text: '🛡️ Оклейка PPF пленкой', action: () => selectCategory('ppf') },
+                    { text: '💎 Керамические покрытия', action: () => selectCategory('ceramic') },
+                    { text: '✨ Полировка и детейлинг', action: () => selectCategory('polishing') }
+                ]
+            });
+        }
+
+        // Шаг 4: Выбор категории
+        async function selectCategory(categoryId) {
+            selectedCategory = categoryId;
+            const category = servicesData[categoryId];
+
+            clearMessages();
+            addUserMessage(category.name);
+
+            await botReply(`${category.name}\n\nВыберите услуги (можно несколько):`, null, 600);
+
+            // Создаём чекбоксы для услуг
+            const servicesList = document.createElement('div');
+            servicesList.className = 'tg-message incoming';
+
+            const servicesContainer = document.createElement('div');
+            servicesContainer.style.cssText = 'display: flex; flex-direction: column; gap: 8px; margin-top: 8px; width: 100%;';
+
+            category.services.forEach(service => {
+                const checkbox = document.createElement('div');
+                checkbox.className = 'service-checkbox';
+                checkbox.dataset.serviceId = service.id;
+
+                const price = service.prices[carClass];
+                let finalPrice = price;
+                if (specialCondition === '+25%') {
+                    finalPrice = Math.round(price * 1.25);
+                }
+
+                checkbox.innerHTML = `
+                    <div class="checkbox-icon"></div>
+                    <div class="service-info">
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-price">${finalPrice.toLocaleString('ru-RU')} ₽</div>
+                    </div>
+                `;
+
+                checkbox.onclick = () => toggleService(service.id, checkbox);
+                servicesContainer.appendChild(checkbox);
+            });
+
+            servicesList.appendChild(servicesContainer);
+
+            // Кнопка расчёта
+            const keyboard = document.createElement('div');
+            keyboard.className = 'tg-keyboard cols-1';
+            keyboard.style.marginTop = '12px';
+
+            const calculateBtn = document.createElement('button');
+            calculateBtn.className = 'tg-btn primary';
+            calculateBtn.textContent = '💰 Рассчитать стоимость';
+            calculateBtn.onclick = calculate;
+            keyboard.appendChild(calculateBtn);
+
+            const backBtn = document.createElement('button');
+            backBtn.className = 'tg-btn';
+            backBtn.textContent = '← Выбрать другую категорию';
+            backBtn.onclick = () => selectModel(selectedBrand, selectedModel.id);
+            keyboard.appendChild(backBtn);
+
+            servicesList.appendChild(keyboard);
+            messagesContainer.appendChild(servicesList);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Переключение услуги
+        function toggleService(serviceId, checkbox) {
+            if (selectedServices.has(serviceId)) {
+                selectedServices.delete(serviceId);
+                checkbox.classList.remove('selected');
+            } else {
+                selectedServices.add(serviceId);
+                checkbox.classList.add('selected');
+            }
+        }
+
+        // Шаг 5: Расчёт
+        async function calculate() {
+            if (selectedServices.size === 0) {
+                alert('Выберите хотя бы одну услугу');
+                return;
+            }
+
+            clearMessages();
+            addUserMessage('Рассчитать стоимость');
+
+            await botReply('⏳ Рассчитываю стоимость...', null, 1500);
+
+            const category = servicesData[selectedCategory];
+            const brand = carsData[selectedBrand];
+
+            let total = 0;
+            let servicesText = '';
+
+            selectedServices.forEach(serviceId => {
+                const service = category.services.find(s => s.id === serviceId);
+                if (service) {
+                    let price = service.prices[carClass];
+                    if (specialCondition === '+25%') {
+                        price = Math.round(price * 1.25);
+                    }
+                    total += price;
+                    servicesText += `• ${service.name}: ${price.toLocaleString('ru-RU')} ₽\n`;
+                }
+            });
+
+            let resultHtml = `
+                <div class="result-card">
+                    <div class="result-header">💰 РАСЧЕТ СТОИМОСТИ</div>
+                    <div class="result-row">
+                        <span class="result-label">Автомобиль:</span>
+                        <span>${brand.name} ${selectedModel.name}</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Класс:</span>
+                        <span>${carClass}</span>
+                    </div>
+                    ${specialCondition ? `<div class="result-row"><span class="result-label">Условия:</span><span>${specialCondition}</span></div>` : ''}
+                </div>
+            `;
+
+            resultHtml += `\n<b>Выбранные услуги:</b>\n\n${servicesText}`;
+            resultHtml += `\n<b>═══════════════════</b>`;
+            resultHtml += `\n<b>💎 ИТОГО: ${total.toLocaleString('ru-RU')} ₽</b>`;
+            resultHtml += `\n<b>═══════════════════</b>`;
+            resultHtml += `\n\n<i>Точная стоимость определяется после осмотра автомобиля</i>`;
+
+            await botReply(resultHtml, {
+                cols: 1,
+                items: [
+                    { text: '📧 Отправить расчёт на email', action: () => sendEmail(), primary: false },
+                    { text: '📄 Скачать PDF', action: () => downloadPDF(), primary: false },
+                    { text: '💬 Связаться с менеджером', action: () => contactManager(), primary: false },
+                    { text: '🔄 Новый расчёт', action: restart, primary: true }
+                ]
+            }, 800, true);
+        }
+
+        // Действия после расчёта
+        async function sendEmail() {
+            clearMessages();
+            addUserMessage('Отправить расчёт на email');
+            await botReply('📧 Введите ваш email, и мы отправим подробный расчёт.\n\nНапишите email в чате или нажмите "Новый расчёт"', {
+                cols: 1,
+                items: [{ text: '🔄 Новый расчёт', action: restart, primary: true }]
+            });
+        }
+
+        async function downloadPDF() {
+            clearMessages();
+            addUserMessage('Скачать PDF');
+            await botReply('📄 Генерирую PDF с расчётом...\n\nВ реальном боте здесь будет ссылка на скачивание PDF-файла с детальным расчётом.', {
+                cols: 1,
+                items: [{ text: '🔄 Новый расчёт', action: restart, primary: true }]
+            }, 1200);
+        }
+
+        async function contactManager() {
+            clearMessages();
+            addUserMessage('Связаться с менеджером');
+            await botReply('💬 Отлично! Наш менеджер свяжется с вами в ближайшее время.\n\n📞 Телефон: +7 (812) 123-45-67\n📧 Email: detailing@example.com\n\nЧем ещё могу помочь?', {
+                cols: 1,
+                items: [{ text: '🔄 Новый расчёт', action: restart, primary: true }]
+            });
+        }
+
+        async function restart() {
+            selectedBrand = null;
+            selectedModel = null;
+            selectedCategory = null;
+            selectedServices = new Set();
+            carClass = null;
+            specialCondition = null;
+            clearMessages();
+            start();
+        }
+
+        // Запуск бота
+        start();
+    </script>
+</body>
+</html>
