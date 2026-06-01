@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо-прототипы чат-ботов | bezk.pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .prototypes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .prototype-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .prototype-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .prototype-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-logistics {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .icon-hvac {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .icon-detailing {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .prototype-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1a202c;
+        }
+
+        .prototype-description {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .prototype-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .prototype-features li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+        }
+
+        .prototype-features li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .prototype-card:hover .cta-button {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .prototypes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Демо-прототипы чат-ботов</h1>
+        <p class="subtitle">Интерактивные прототипы для презентации клиентам</p>
+
+        <div class="prototypes-grid">
+            <!-- Международная логистика -->
+            <a href="logistics.html" class="prototype-card">
+                <div class="prototype-icon icon-logistics">🛫</div>
+                <h2 class="prototype-title">Международная логистика</h2>
+                <p class="prototype-description">
+                    Полный расчет импорта за 2 минуты: доставка, пошлины, НДС, КИЗ и сертификация в одном боте.
+                </p>
+                <ul class="prototype-features">
+                    <li>Автоматический поиск по кодам ТН ВЭД</li>
+                    <li>Расчет таможенных платежей</li>
+                    <li>Все виды транспорта</li>
+                </ul>
+                <div class="cta-button">Открыть прототип →</div>
+            </a>
+
+            <!-- Кондиционеры -->
+            <a href="hvac.html" class="prototype-card">
+                <div class="prototype-icon icon-hvac">❄️</div>
+                <h2 class="prototype-title">Кондиционеры под ключ</h2>
+                <p class="prototype-description">
+                    Онлайн-калькулятор + smart-календарь бригад + цифровой контроль качества монтажа.
+                </p>
+                <ul class="prototype-features">
+                    <li>Интеграция с Bitrix24</li>
+                    <li>Запись бригад через календарь</li>
+                    <li>Чек-листы контроля качества</li>
+                </ul>
+                <div class="cta-button">Открыть прототип →</div>
+            </a>
+
+            <!-- Детейлинг -->
+            <a href="detailing.html" class="prototype-card">
+                <div class="prototype-icon icon-detailing">🚗</div>
+                <h2 class="prototype-title">Детейлинг Центр</h2>
+                <p class="prototype-description">
+                    Расчет и запись за 2 минуты: интеллектуальный подбор по классу авто, управление боксами, видео-контроль.
+                </p>
+                <ul class="prototype-features">
+                    <li>Интеллектуальный подбор по марке</li>
+                    <li>Календарь боксов</li>
+                    <li>Допродажи и уведомления</li>
+                </ul>
+                <div class="cta-button">Открыть прототип →</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

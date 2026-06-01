@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Логистический Бот - Демо</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', sans-serif;
+            background: #0e1621;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Telegram Chat Container */
+        .telegram-chat {
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            background: #0e1621;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header (как в Telegram) */
+        .tg-header {
+            background: #17212b;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px 0 4px;
+            border-bottom: 1px solid #0f1419;
+        }
+
+        .tg-back {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8a96a2;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .tg-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .tg-info {
+            flex: 1;
+        }
+
+        .tg-name {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+        }
+
+        .tg-status {
+            color: #8a96a2;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .tg-menu {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a96a2;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Messages Area */
+        .tg-messages {
+            flex: 1;
+            overflow-y: auto;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);
+            background-color: #0e1621;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tg-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tg-messages::-webkit-scrollbar-thumb {
+            background: #2b5278;
+            border-radius: 3px;
+        }
+
+        /* Message */
+        .tg-message {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+            animation: messageSlide 0.2s ease;
+            max-width: 85%;
+            width: fit-content;
+        }
+
+        .tg-message.incoming {
+            align-items: flex-start;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tg-message.outgoing {
+            align-items: flex-end;
+            align-self: flex-end;
+        }
+
+        .tg-bubble {
+            padding: 7px 12px 8px 12px;
+            border-radius: 12px;
+            position: relative;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        /* Incoming (Bot) Messages */
+        .tg-message.incoming .tg-bubble {
+            background: #182533;
+            color: #fff;
+            border-radius: 12px 12px 12px 2px;
+        }
+
+        /* Outgoing (User) Messages */
+        .tg-message.outgoing .tg-bubble {
+            background: #2b5278;
+            color: #fff;
+            border-radius: 12px 12px 2px 12px;
+        }
+
+        .tg-time {
+            font-size: 12px;
+            color: #8a96a2;
+            margin-top: 4px;
+            text-align: right;
+            opacity: 0.7;
+        }
+
+        /* Typing Indicator */
+        .tg-typing {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 16px;
+            max-width: fit-content;
+        }
+
+        .tg-typing.active {
+            display: flex;
+        }
+
+        .tg-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #8a96a2;
+            border-radius: 50%;
+            animation: typingAnim 1.4s infinite;
+        }
+
+        .tg-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .tg-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnim {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+
+        /* Inline Keyboard (Telegram buttons) */
+        .tg-keyboard {
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+        }
+
+        .tg-keyboard-row {
+            display: flex;
+            gap: 2px;
+        }
+
+        .tg-btn {
+            flex: 1;
+            padding: 10px 16px;
+            background: #182533;
+            border: none;
+            border-radius: 8px;
+            color: #50a8eb;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s;
+            text-align: center;
+        }
+
+        .tg-btn:hover {
+            background: #1e2f3f;
+        }
+
+        .tg-btn:active {
+            background: #0e1621;
+        }
+
+        /* Input Area */
+        .tg-input-area {
+            background: #17212b;
+            padding: 8px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid #0f1419;
+        }
+
+        .tg-input-area.active {
+            display: flex;
+        }
+
+        .tg-attach {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a96a2;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .tg-input-wrapper {
+            flex: 1;
+            background: #0e1621;
+            border-radius: 21px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tg-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 11px 0;
+        }
+
+        .tg-input::placeholder {
+            color: #8a96a2;
+        }
+
+        .tg-send {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #50a8eb;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .tg-send:hover {
+            background: #3d8fd1;
+        }
+
+        .tg-send:disabled {
+            background: #2b5278;
+            cursor: not-allowed;
+        }
+
+        /* Restart Button */
+        .restart-fab {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #50a8eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .restart-fab:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .telegram-chat {
+                max-width: 100%;
+            }
+
+            .tg-bubble {
+                max-width: 85%;
+            }
+        }
+
+        /* Calculation Result Styling */
+        .calc-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .calc-divider {
+            border-top: 1px solid rgba(255,255,255,0.3);
+            margin: 12px 0;
+        }
+
+        .calc-total {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="telegram-chat">
+        <!-- Header -->
+        <div class="tg-header">
+            <a href="index.html" class="tg-back">‹</a>
+            <div class="tg-avatar">🛫</div>
+            <div class="tg-info">
+                <div class="tg-name">Логистический Бот</div>
+                <div class="tg-status" id="status">онлайн</div>
+            </div>
+            <div class="tg-menu">⋮</div>
+        </div>
+
+        <!-- Messages -->
+        <div class="tg-messages" id="messages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="tg-input-area" id="inputArea">
+            <div class="tg-attach">📎</div>
+            <div class="tg-input-wrapper">
+                <input type="text" class="tg-input" id="userInput" placeholder="Сообщение">
+            </div>
+            <div class="tg-send" id="sendBtn">➤</div>
+        </div>
+    </div>
+
+    <!-- Restart FAB -->
+    <div class="restart-fab" onclick="restartChat()" title="Начать заново">
+        🔄
+    </div>
+
+    <script>
+        // Dialog Flow (на основе реального бота)
+        const dialogFlow = {
+            start: {
+                text: `Добро пожаловать в Международная логистика
+
+Рассчитаю стоимость импорта за 2 минуты:
+• Доставка
+• Пошлины и НДС
+• КИЗ и сертификация`,
+                keyboard: [
+                    [{text: 'Рассчитать', callback: 'step1_country'}]
+                ]
+            },
+
+            consultation: {
+                text: `✅ Ваше сообщение передано менеджеру.
+
+Свяжемся с вами в ближайшее время!
+
+📱 Контакты:
+• Telegram: @ann_bezk
+• Email: hello@bezk.pro`,
+                keyboard: [
+                    [{text: '🔄 Новый расчет', callback: 'start'}]
+                ]
+            },
+
+            about: {
+                text: `ℹ️ О компании
+
+Здесь может быть описание вашей компании.`,
+                keyboard: [
+                    [{text: '🔄 Новый расчет', callback: 'start'}]
+                ]
+            },
+
+            step1_country: {
+                text: `ШАГ 1 из 7
+Маршрут доставки
+
+Выберите страну отправления`,
+                keyboard: [
+                    [{text: '🇨🇳 Китай', callback: 'step2_origin'}]
+                ]
+            },
+
+            step2_origin: {
+                text: `ШАГ 2 из 7
+Город отправления
+
+Выберите город в Китае
+
+💡 Демо-версия: показаны 3 популярных города. В полной версии доступно 50+ городов.`,
+                keyboard: [
+                    [{text: 'Шанхай', callback: 'step3_destination'}],
+                    [{text: 'Гуанчжоу', callback: 'step3_destination'}],
+                    [{text: 'Шэньчжэнь', callback: 'step3_destination'}],
+                    [{text: '← Назад', callback: 'step1_country'}]
+                ]
+            },
+
+            step3_destination: {
+                text: `ШАГ 3 из 7
+Город назначения
+
+Выберите город в России
+
+💡 Демо-версия: показаны популярные направления.`,
+                keyboard: [
+                    [{text: '📍 Москва', callback: 'step4_search_method'}],
+                    [{text: '📍 Санкт-Петербург', callback: 'step4_search_method'}],
+                    [{text: '📍 Екатеринбург', callback: 'step4_search_method'}],
+                    [{text: '📍 Новосибирск', callback: 'step4_search_method'}],
+                    [{text: '← Назад', callback: 'step2_origin'}]
+                ]
+            },
+
+            step4_search_method: {
+                dynamic: true,
+                generate: (data) => {
+                    return {
+                        text: `Откуда: ${data.originCity || 'Guangzhou'}
+Куда: ${data.destinationCity || 'Москва'}
+
+ШАГ 4 из 7
+Поиск товара
+
+Как вы хотите найти товар?`,
+                        keyboard: [
+                            [{text: '🔍 Поиск по названию', callback: 'search_by_name'}],
+                            [{text: '📚 Выбор по каталогу', callback: 'catalog_sections'}],
+                            [{text: '← Назад', callback: 'step3_destination'}]
+                        ]
+                    };
+                }
+            },
+
+            search_by_name: {
+                text: `🔍 Поиск по названию
+
+Введите название товара или код ТН ВЭД:
+
+💡 Примеры:
+• ноутбуки
+• смартфоны
+• 8471300000`,
+                input: true,
+                next: 'search_results'
+            },
+
+            catalog_sections: {
+                text: `📚 Выбор по каталогу ТН ВЭД
+
+Выберите раздел:`,
+                keyboard: [
+                    [{text: '📦 Раздел 16: Машины, оборудование', callback: 'catalog_section_16'}],
+                    [{text: '📦 Раздел 11: Текстиль, одежда', callback: 'catalog_section_11'}],
+                    [{text: '📦 Раздел 7: Пластмассы, каучук', callback: 'catalog_section_7'}],
+                    [{text: '← Назад', callback: 'step4_search_method'}]
+                ]
+            },
+
+            catalog_section_16: {
+                text: `📦 Раздел 16: Машины, оборудование и механизмы
+
+Найдено групп: 8
+
+Выберите группу:`,
+                keyboard: [
+                    [{text: '💻 84: Промышленное оборудование', callback: 'catalog_group_84'}],
+                    [{text: '📱 85: Электрооборудование', callback: 'catalog_group_85'}],
+                    [{text: '← К разделам', callback: 'catalog_sections'}]
+                ]
+            },
+
+            catalog_section_11: {
+                text: `📦 Раздел 11: Текстиль, одежда
+
+Выберите группу:`,
+                keyboard: [
+                    [{text: '👕 62: Одежда текстильная', callback: 'catalog_group_62'}],
+                    [{text: '👔 61: Одежда трикотажная', callback: 'catalog_group_61'}],
+                    [{text: '← К разделам', callback: 'catalog_sections'}]
+                ]
+            },
+
+            catalog_section_7: {
+                text: `📦 Раздел 7: Пластмассы и изделия
+
+Выберите группу:`,
+                keyboard: [
+                    [{text: '🧪 39: Пластмассы и изделия', callback: 'catalog_group_39'}],
+                    [{text: '← К разделам', callback: 'catalog_sections'}]
+                ]
+            },
+
+            catalog_group_84: {
+                text: `💻 Группа 84: Промышленное оборудование
+
+Популярные товары:`,
+                keyboard: [
+                    [{text: '8471300000 - Портативные ЭВМ', callback: 'product_8471300000'}],
+                    [{text: '8473300000 - Части для ЭВМ', callback: 'product_8473300000'}],
+                    [{text: '← К подгруппам', callback: 'catalog_section_16'}]
+                ]
+            },
+
+            catalog_group_85: {
+                text: `📱 Группа 85: Электрооборудование
+
+Популярные товары:`,
+                keyboard: [
+                    [{text: '8517120000 - Смартфоны', callback: 'product_8517120000'}],
+                    [{text: '8528720000 - Телевизоры', callback: 'product_8528720000'}],
+                    [{text: '← К подгруппам', callback: 'catalog_section_16'}]
+                ]
+            },
+
+            catalog_group_62: {
+                text: `👕 Группа 62: Одежда текстильная
+
+Популярные товары:`,
+                keyboard: [
+                    [{text: '6203420000 - Брюки мужские', callback: 'product_6203420000'}],
+                    [{text: '← К подгруппам', callback: 'catalog_section_11'}]
+                ]
+            },
+
+            catalog_group_61: {
+                text: `👔 Группа 61: Одежда трикотажная
+
+Популярные товары:`,
+                keyboard: [
+                    [{text: '6203420000 - Брюки мужские', callback: 'product_6203420000'}],
+                    [{text: '← К подгруппам', callback: 'catalog_section_11'}]
+                ]
+            },
+
+            catalog_group_39: {
+                text: `🧪 Группа 39: Пластмассы и изделия
+
+Популярные товары:`,
+                keyboard: [
+                    [{text: '3926909790 - Изделия из пластмасс', callback: 'product_3926909790'}],
+                    [{text: '← К подгруппам', callback: 'catalog_section_7'}]
+                ]
+            },
+
+            search_results: {
+                dynamic: true,
+                generate: (data) => {
+                    const query = data.userInput.toLowerCase();
+                    let productCode = 'product_8471300000';
+
+                    if (query.includes('смартфон') || query.includes('телефон') || query.includes('8517')) {
+                        productCode = 'product_8517120000';
+                    } else if (query.includes('одежда') || query.includes('брюки') || query.includes('6203')) {
+                        productCode = 'product_6203420000';
+                    }
+
+                    return {
+                        text: `🔍 Найдено товаров: 1
+
+Переходим к карточке товара...`,
+                        keyboard: [],
+                        autoNext: productCode,
+                        delay: 1000
+                    };
+                }
+            },
+
+            product_8471300000: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '8471300000';
+                    data.productName = 'Портативные ЭВМ массой не более 10 кг (ноутбуки)';
+                    data.dutyRate = 0;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ЕАЭС 037/2016';
+                    data.certCost = 300;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 8471300000
+Наименование: Портативные ЭВМ массой не более 10 кг (ноутбуки, лэптопы)
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 0%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ЕАЭС 037/2016
+• Стоимость: ~$300
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Не требуется
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            product_8517120000: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '8517120000';
+                    data.productName = 'Телефоны для сотовых сетей (смартфоны)';
+                    data.dutyRate = 0;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ЕАЭС 020/2011';
+                    data.certCost = 250;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 8517120000
+Наименование: Телефоны для сотовых сетей связи (смартфоны)
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 0%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ЕАЭС 020/2011
+• Стоимость: ~$250
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Не требуется
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            product_6203420000: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '6203420000';
+                    data.productName = 'Брюки мужские из хлопка';
+                    data.dutyRate = 10;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ТС 017/2011';
+                    data.certCost = 150;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 6203420000
+Наименование: Брюки мужские из хлопчатобумажных тканей
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 10%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ТС 017/2011
+• Стоимость: ~$150
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Требуется ($5 за единицу)
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            product_3926909790: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '3926909790';
+                    data.productName = 'Изделия из пластмасс прочие';
+                    data.dutyRate = 6.5;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ТС 019/2011';
+                    data.certCost = 180;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 3926909790
+Наименование: Изделия из пластмасс прочие
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 6.5%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ТС 019/2011
+• Стоимость: ~$180
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Не требуется
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            product_8473300000: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '8473300000';
+                    data.productName = 'Части и принадлежности для ЭВМ';
+                    data.dutyRate = 0;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ЕАЭС 037/2016';
+                    data.certCost = 280;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 8473300000
+Наименование: Части и принадлежности для ЭВМ
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 0%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ЕАЭС 037/2016
+• Стоимость: ~$280
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Не требуется
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            product_8528720000: {
+                dynamic: true,
+                generate: (data) => {
+                    data.tnvedCode = '8528720000';
+                    data.productName = 'Телевизоры и мониторы';
+                    data.dutyRate = 0;
+                    data.vatRate = 20;
+                    data.cert = 'ТР ЕАЭС 037/2016';
+                    data.certCost = 280;
+
+                    return {
+                        text: `📋 КАРТОЧКА ТОВАРА
+
+Код ТН ВЭД: 8528720000
+Наименование: Телевизоры и мониторы
+
+💰 ТАМОЖЕННЫЕ ПЛАТЕЖИ:
+• Ставка пошлины: 0%
+• Ставка НДС: 20%
+
+✅ СЕРТИФИКАЦИЯ:
+• Требуется: Да
+• Тип: ТР ЕАЭС 037/2016
+• Стоимость: ~$280
+
+🏷️ МАРКИРОВКА:
+• КИЗ: Не требуется
+
+➡️ Выбрать этот товар?`,
+                        keyboard: [
+                            [{text: '✅ Да, выбрать', callback: 'step5_weight'}],
+                            [{text: '← Выбрать другой', callback: 'catalog_sections'}]
+                        ]
+                    };
+                }
+            },
+
+            step5_weight: {
+                text: `ШАГ 5 из 7
+Параметры груза
+
+Введите вес и объем через пробел:
+
+💡 Формат: вес(кг) объем(м³)
+Например: 150 1.2`,
+                input: true,
+                next: 'step6_value'
+            },
+
+            step6_value: {
+                dynamic: true,
+                generate: (data) => {
+                    const parts = data.userInput.split(' ');
+                    data.weight = parseFloat(parts[0]) || 150;
+                    data.volume = parseFloat(parts[1]) || 1.0;
+
+                    return {
+                        text: `✅ Параметры груза:
+• Вес: ${data.weight} кг
+• Объем: ${data.volume} м³
+
+ШАГ 6 из 7
+Стоимость товара
+
+Введите таможенную стоимость товара:
+
+💡 Например: 2000`,
+                        input: true,
+                        next: 'step7_currency'
+                    };
+                }
+            },
+
+            step7_currency: {
+                dynamic: true,
+                generate: (data) => {
+                    data.customsValue = parseFloat(data.userInput) || 2000;
+
+                    return {
+                        text: `ШАГ 7 из 7
+Валюта
+
+Выберите валюту таможенной стоимости:`,
+                        keyboard: [
+                            [{text: 'USD $', callback: 'calc_usd'}, {text: 'CNY ¥', callback: 'calc_cny'}],
+                            [{text: 'EUR €', callback: 'calc_eur'}, {text: 'RUB ₽', callback: 'calc_rub'}]
+                        ]
+                    };
+                }
+            },
+
+            calc_usd: {
+                dynamic: true,
+                generate: (data) => {
+                    data.currency = 'USD';
+                    return calculateFinal(data);
+                }
+            },
+
+            calc_cny: {
+                dynamic: true,
+                generate: (data) => {
+                    data.currency = 'CNY';
+                    data.customsValue = Math.round(data.customsValue * 0.14); // Convert to USD
+                    return calculateFinal(data);
+                }
+            },
+
+            calc_eur: {
+                dynamic: true,
+                generate: (data) => {
+                    data.currency = 'EUR';
+                    data.customsValue = Math.round(data.customsValue * 1.08); // Convert to USD
+                    return calculateFinal(data);
+                }
+            },
+
+            calc_rub: {
+                dynamic: true,
+                generate: (data) => {
+                    data.currency = 'RUB';
+                    data.customsValue = Math.round(data.customsValue * 0.011); // Convert to USD
+                    return calculateFinal(data);
+                }
+            }
+        };
+
+        function calculateFinal(data) {
+            const deliveryCost = Math.round(data.weight * 4.5);
+            const packagingCost = 50;
+            const customsClearance = 200;
+            const dutyAmount = Math.round(data.customsValue * (data.dutyRate / 100));
+            const vatAmount = Math.round((data.customsValue + dutyAmount) * (data.vatRate / 100));
+            const certCost = data.certCost || 300;
+            const totalCost = deliveryCost + packagingCost + customsClearance + dutyAmount + vatAmount + certCost;
+
+            setTimeout(() => {
+                clearMessages();
+                addMessage(`💰 РАСЧЕТ ЗАВЕРШЕН!
+
+📊 ДЕТАЛИ РАСЧЕТА:
+
+Груз:
+• Код ТН ВЭД: ${data.tnvedCode}
+• Наименование: ${data.productName}
+• Вес: ${data.weight} кг
+• Объем: ${data.volume} м³
+• Маршрут: ${data.originCity || 'Гуанчжоу'} → ${data.destinationCity || 'Москва'}
+
+Стоимость доставки:
+✈️ Авиаперевозка: $${deliveryCost}
+📦 Упаковка: $${packagingCost}
+🏢 Таможенное оформление: $${customsClearance}
+
+Таможенные платежи:
+🧾 Пошлина (${data.dutyRate}%): $${dutyAmount}
+💵 НДС (${data.vatRate}%): $${vatAmount}
+
+Сертификация:
+📄 ${data.cert}: $${certCost}
+
+═══════════════════
+💎 ИТОГО: $${totalCost}
+⏱️ Срок доставки: 7-10 дней
+═══════════════════
+
+📩 Хотите получить детальный расчет на email?`, true, [
+                    [{text: '📧 Отправить на email', callback: 'email'}],
+                    [{text: '🔄 Новый расчет', callback: 'start'}],
+                    [{text: 'ℹ️ О компании', callback: 'about'}, {text: '📞 Консультация', callback: 'consultation'}]
+                ]);
+            }, 2000);
+
+            return {
+                text: '⏳ Рассчитываю стоимость...',
+                keyboard: []
+            };
+        }
+
+        // Add email steps
+        dialogFlow.email = {
+            text: `📧 Введите ваш email:
+
+💡 Например: your@email.com
+
+Мы отправим вам PDF с детальным расчетом`,
+            input: true,
+            next: 'sent'
+        };
+
+        dialogFlow.sent = {
+            dynamic: true,
+            generate: (data) => {
+                return {
+                    text: `✅ Расчет отправлен на ${data.userInput}!
+
+📄 Проверьте почту - вы получите PDF с детальным расчетом.`,
+                    keyboard: [
+                        [{text: '🔄 Новый расчет', callback: 'start'}],
+                        [{text: 'ℹ️ О компании', callback: 'about'}, {text: '📞 Консультация', callback: 'consultation'}]
+                    ]
+                };
+            }
+        };
+
+        // Chat Engine
+        let chatData = {};
+        let currentInputStep = null;
+        const messagesDiv = document.getElementById('messages');
+        const inputArea = document.getElementById('inputArea');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const statusDiv = document.getElementById('status');
+
+        function addMessage(text, isBot = true, keyboard = null) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `tg-message ${isBot ? 'incoming' : 'outgoing'}`;
+
+            const bubble = document.createElement('div');
+            bubble.className = 'tg-bubble';
+            bubble.textContent = text;
+
+            const time = document.createElement('div');
+            time.className = 'tg-time';
+            time.textContent = new Date().toLocaleTimeString('ru', {hour: '2-digit', minute: '2-digit'});
+
+            bubble.appendChild(time);
+            msgDiv.appendChild(bubble);
+
+            if (keyboard && keyboard.length > 0) {
+                const keyboardDiv = document.createElement('div');
+                keyboardDiv.className = 'tg-keyboard';
+
+                keyboard.forEach(row => {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'tg-keyboard-row';
+
+                    row.forEach(btn => {
+                        const button = document.createElement('button');
+                        button.className = 'tg-btn';
+                        button.textContent = btn.text;
+                        button.onclick = () => handleCallback(btn.callback, btn.text);
+                        rowDiv.appendChild(button);
+                    });
+
+                    keyboardDiv.appendChild(rowDiv);
+                });
+
+                msgDiv.appendChild(keyboardDiv);
+            }
+
+            messagesDiv.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function showTyping() {
+            statusDiv.textContent = 'печатает...';
+        }
+
+        function hideTyping() {
+            statusDiv.textContent = 'онлайн';
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 100);
+        }
+
+        function clearMessages() {
+            messagesDiv.innerHTML = '';
+        }
+
+        function showInput() {
+            inputArea.classList.add('active');
+            userInput.value = '';
+            userInput.focus();
+        }
+
+        function hideInput() {
+            inputArea.classList.remove('active');
+        }
+
+        async function processStep(stepKey) {
+            const step = dialogFlow[stepKey];
+            if (!step) return;
+
+            showTyping();
+            await sleep(800);
+            hideTyping();
+
+            let stepData;
+            if (step.dynamic) {
+                stepData = step.generate(chatData);
+            } else {
+                stepData = step;
+            }
+
+            addMessage(stepData.text, true, stepData.keyboard);
+
+            // Check for input in both step and stepData (for dynamic steps)
+            const needsInput = step.input || stepData.input;
+            const nextStep = step.next || stepData.next;
+
+            if (needsInput) {
+                currentInputStep = nextStep;
+                showInput();
+            } else {
+                hideInput();
+            }
+
+            // Handle autoNext for automatic transitions
+            if (stepData.autoNext) {
+                setTimeout(() => {
+                    processStep(stepData.autoNext);
+                }, stepData.delay || 1000);
+            }
+        }
+
+        function handleCallback(callback, btnText) {
+            // Store city names
+            if (['Шанхай', 'Гуанчжоу', 'Шэньчжэнь'].includes(btnText)) {
+                chatData.originCity = btnText;
+            } else if (btnText.startsWith('📍')) {
+                chatData.destinationCity = btnText.replace('📍 ', '');
+            }
+
+            // Clear previous messages first
+            clearMessages();
+
+            // Then add user message
+            addMessage(btnText, false);
+
+            setTimeout(() => {
+                processStep(callback);
+            }, 300);
+        }
+
+        function handleUserInput() {
+            const value = userInput.value.trim();
+            if (!value) return;
+
+            // Clear previous messages
+            clearMessages();
+
+            // Add user message
+            addMessage(value, false);
+            chatData.userInput = value;
+            hideInput();
+
+            if (currentInputStep) {
+                setTimeout(() => {
+                    processStep(currentInputStep);
+                    currentInputStep = null;
+                }, 300);
+            }
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function restartChat() {
+            messagesDiv.innerHTML = '';
+            chatData = {};
+            currentInputStep = null;
+            hideInput();
+            processStep('start');
+        }
+
+        // Event Listeners
+        sendBtn.addEventListener('click', handleUserInput);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleUserInput();
+        });
+
+        // Start
+        window.addEventListener('load', () => {
+            setTimeout(() => processStep('start'), 500);
+        });
+    </script>
+</body>
+</html>
