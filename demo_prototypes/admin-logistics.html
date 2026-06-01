@@ -116,6 +116,15 @@
             padding: 32px;
         }
 
+        /* Page sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
         /* Stats Cards */
         .stats-grid {
             display: grid;
@@ -151,18 +160,13 @@
             color: #10b981;
         }
 
-        /* Sections Grid */
-        .sections-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 24px;
-        }
-
+        /* Section Card */
         .section-card {
             background: white;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             overflow: hidden;
+            margin-bottom: 24px;
         }
 
         .section-header {
@@ -182,51 +186,11 @@
             gap: 8px;
         }
 
-        .section-link {
-            color: #3b82f6;
-            font-size: 14px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
         .section-body {
-            padding: 0;
-        }
-
-        /* Top Routes */
-        .route-item {
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .route-item:last-child {
-            border-bottom: none;
-        }
-
-        .route-name {
-            color: #1e293b;
-            font-size: 14px;
-        }
-
-        .route-count {
-            background: #eff6ff;
-            color: #3b82f6;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 24px;
         }
 
         /* Table */
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -259,26 +223,145 @@
             font-weight: 500;
         }
 
-        .order-link:hover {
-            text-decoration: underline;
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .route-text {
-            white-space: nowrap;
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
         }
 
-        .amount {
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        /* Calculator Grid */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        /* Result Card */
+        .result-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 24px;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 12px;
+        }
+
+        /* Route Card */
+        .route-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+        }
+
+        .route-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .route-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .route-types {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .transport-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .date {
-            color: #64748b;
-            white-space: nowrap;
+        .badge-air {
+            background: #dbeafe;
+            color: #1e40af;
         }
 
-        /* Responsive */
+        .badge-sea {
+            background: #ddd6fe;
+            color: #5b21b6;
+        }
+
+        .badge-rail {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-road {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* TNVED Table */
+        .tnved-search {
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 1024px) {
-            .sections-grid {
+            .calc-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -286,10 +369,6 @@
         @media (max-width: 768px) {
             .sidebar {
                 display: none;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -303,177 +382,452 @@
                 <div class="sidebar-title">Логистика</div>
             </div>
             <div class="sidebar-menu">
-                <a href="#" class="menu-item active">
+                <div class="menu-item active" data-page="dashboard">
                     <div class="menu-icon">📊</div>
                     <span>Dashboard</span>
-                </a>
-                <a href="#" class="menu-item">
+                </div>
+                <div class="menu-item" data-page="calculations">
                     <div class="menu-icon">📋</div>
                     <span>Расчёты</span>
-                </a>
-                <a href="#" class="menu-item">
+                </div>
+                <div class="menu-item" data-page="calculator">
                     <div class="menu-icon">🧮</div>
                     <span>Калькулятор</span>
-                </a>
-                <a href="#" class="menu-item">
+                </div>
+                <div class="menu-item" data-page="routes">
                     <div class="menu-icon">🗺️</div>
                     <span>Маршруты</span>
-                </a>
-                <a href="#" class="menu-item">
+                </div>
+                <div class="menu-item" data-page="tnved">
                     <div class="menu-icon">📦</div>
                     <span>Коды ТН ВЭД</span>
-                </a>
+                </div>
             </div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
-            <div class="content-header">
-                <h1 class="content-title">
-                    📊 Dashboard
-                </h1>
-            </div>
-
-            <div class="content-body">
-                <!-- Stats Cards -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Расчётов сегодня</div>
-                        <div class="stat-value blue">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Заявок оформлено</div>
-                        <div class="stat-value green">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Новых пользователей</div>
-                        <div class="stat-value blue">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Всего расчётов</div>
-                        <div class="stat-value">9</div>
+            <!-- Dashboard Page -->
+            <div class="page-section active" id="dashboard">
+                <div class="content-header">
+                    <h1 class="content-title">📊 Dashboard</h1>
+                </div>
+                <div class="content-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Расчётов сегодня</div>
+                            <div class="stat-value blue">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Заявок оформлено</div>
+                            <div class="stat-value green">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Новых пользователей</div>
+                            <div class="stat-value blue">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Всего расчётов</div>
+                            <div class="stat-value">9</div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Sections -->
-                <div class="sections-grid">
-                    <!-- Top Routes -->
+            <!-- Calculations Page -->
+            <div class="page-section" id="calculations">
+                <div class="content-header">
+                    <h1 class="content-title">📋 Расчёты</h1>
+                </div>
+                <div class="content-body">
                     <div class="section-card">
                         <div class="section-header">
-                            <div class="section-title">
-                                🗺️ Топ маршруты
+                            <div class="section-title">История расчётов</div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№ Заявки</th>
+                                    <th>Клиент</th>
+                                    <th>Маршрут</th>
+                                    <th>Товар</th>
+                                    <th>Сумма</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#" class="order-link">20260531-0001</a></td>
+                                    <td>Admin Calculator</td>
+                                    <td>Chongqing → Москва</td>
+                                    <td>Портативные ЭВМ</td>
+                                    <td>2452002 ₽</td>
+                                    <td>31.05 20:38</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" class="order-link">20260421-0002</a></td>
+                                    <td>Игорь</td>
+                                    <td>Qingdao → Новосибирск</td>
+                                    <td>Смартфоны</td>
+                                    <td>3905751 ₽</td>
+                                    <td>21.04 08:29</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" class="order-link">20260421-0001</a></td>
+                                    <td>Aleksei Tomkin</td>
+                                    <td>Qingdao → Казань</td>
+                                    <td>Автозапчасти</td>
+                                    <td>766674 ₽</td>
+                                    <td>21.04 08:05</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" class="order-link">20260408-0001</a></td>
+                                    <td>SERGEY GIL</td>
+                                    <td>Chongqing → Москва</td>
+                                    <td>Брюки мужские</td>
+                                    <td>1913624 ₽</td>
+                                    <td>08.04 12:18</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" class="order-link">20260331-0001</a></td>
+                                    <td>Aleksei Tomkin</td>
+                                    <td>Wuhan → Москва</td>
+                                    <td>Телевизоры</td>
+                                    <td>487321 ₽</td>
+                                    <td>31.03 19:04</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Page -->
+            <div class="page-section" id="calculator">
+                <div class="content-header">
+                    <h1 class="content-title">🧮 Калькулятор</h1>
+                </div>
+                <div class="content-body">
+                    <div class="calc-grid">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <div class="section-title">Параметры расчета</div>
+                            </div>
+                            <div class="section-body">
+                                <form id="calcForm">
+                                    <div class="form-group">
+                                        <label class="form-label">Код ТН ВЭД</label>
+                                        <select class="form-select" id="tnvedCode">
+                                            <option value="8471300000">8471300000 - Портативные ЭВМ (ноутбуки)</option>
+                                            <option value="8517120000">8517120000 - Смартфоны</option>
+                                            <option value="6203420000">6203420000 - Брюки мужские</option>
+                                            <option value="8528720000">8528720000 - Телевизоры</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Маршрут</label>
+                                        <select class="form-select" id="route">
+                                            <option value="guangzhou_moscow">Гуанчжоу → Москва</option>
+                                            <option value="shanghai_spb">Шанхай → Санкт-Петербург</option>
+                                            <option value="qingdao_kazan">Циндао → Казань</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Вес груза (кг)</label>
+                                        <input type="number" class="form-input" id="weight" value="150" min="1">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Объем (м³)</label>
+                                        <input type="number" class="form-input" id="volume" value="1.0" step="0.1" min="0.1">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Таможенная стоимость ($)</label>
+                                        <input type="number" class="form-input" id="customsValue" value="2000" min="1">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Рассчитать</button>
+                                </form>
                             </div>
                         </div>
-                        <div class="section-body">
-                            <div class="route-item">
-                                <div class="route-name">Jinan → Санкт-Петербург</div>
-                                <div class="route-count">2</div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <div class="section-title">Результат расчета</div>
                             </div>
-                            <div class="route-item">
-                                <div class="route-name">Chongqing → Москва</div>
-                                <div class="route-count">2</div>
-                            </div>
-                            <div class="route-item">
-                                <div class="route-name">Qingdao → Казань</div>
-                                <div class="route-count">1</div>
+                            <div class="section-body">
+                                <div id="calcResult" style="color: #64748b; text-align: center; padding: 40px 0;">
+                                    Заполните форму и нажмите "Рассчитать"
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Recent Calculations -->
+            <!-- Routes Page -->
+            <div class="page-section" id="routes">
+                <div class="content-header">
+                    <h1 class="content-title">🗺️ Маршруты</h1>
+                </div>
+                <div class="content-body">
                     <div class="section-card">
                         <div class="section-header">
-                            <div class="section-title">
-                                🕒 Последние расчёты
-                            </div>
-                            <a href="#" class="section-link">
-                                Все расчёты →
-                            </a>
+                            <div class="section-title">Доступные маршруты</div>
                         </div>
                         <div class="section-body">
-                            <div class="table-wrapper">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>№ Заявки</th>
-                                            <th>Клиент</th>
-                                            <th>Маршрут</th>
-                                            <th>Сумма</th>
-                                            <th>Дата</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260531-0001</a></td>
-                                            <td>Admin Calculator</td>
-                                            <td class="route-text">Chongqing → Москва</td>
-                                            <td class="amount">2452002 ₽</td>
-                                            <td class="date">31.05 20:38</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260421-0002</a></td>
-                                            <td>Игорь</td>
-                                            <td class="route-text">Qingdao → Новосибирск</td>
-                                            <td class="amount">3905751 ₽</td>
-                                            <td class="date">21.04 08:29</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260421-0001</a></td>
-                                            <td>Aleksei Tomkin</td>
-                                            <td class="route-text">Qingdao → Казань</td>
-                                            <td class="amount">766674 ₽</td>
-                                            <td class="date">21.04 08:05</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260408-0001</a></td>
-                                            <td>SERGEY GIL</td>
-                                            <td class="route-text">Chongqing → Москва</td>
-                                            <td class="amount">1913624 ₽</td>
-                                            <td class="date">08.04 12:18</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260331-0001</a></td>
-                                            <td>Aleksei Tomkin</td>
-                                            <td class="route-text">Wuhan → Москва</td>
-                                            <td class="amount">487321 ₽</td>
-                                            <td class="date">31.03 19:04</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260330-0003</a></td>
-                                            <td>Анна Березняк</td>
-                                            <td class="route-text">Jinan → Санкт-Петербург</td>
-                                            <td class="amount">2236249 ₽</td>
-                                            <td class="date">30.03 16:35</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260330-0002</a></td>
-                                            <td>Анна Березняк</td>
-                                            <td class="route-text">Nanchang → Новосибирск</td>
-                                            <td class="amount">495252 ₽</td>
-                                            <td class="date">30.03 15:26</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260330-0001</a></td>
-                                            <td>Анна Березняк</td>
-                                            <td class="route-text">Jinan → Санкт-Петербург</td>
-                                            <td class="amount">885701 ₽</td>
-                                            <td class="date">30.03 14:06</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#" class="order-link">20260328-0001</a></td>
-                                            <td>Анна Березняк</td>
-                                            <td class="route-text">Jinan → Москва</td>
-                                            <td class="amount">477062 ₽</td>
-                                            <td class="date">28.03 08:20</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <div class="route-name">🇨🇳 Гуанчжоу → 🇷🇺 Москва</div>
+                                </div>
+                                <div class="route-types">
+                                    <span class="transport-badge badge-air">✈️ Авиа (7-10 дней)</span>
+                                    <span class="transport-badge badge-sea">🚢 Море (35-45 дней)</span>
+                                    <span class="transport-badge badge-rail">🚂 ЖД (20-25 дней)</span>
+                                    <span class="transport-badge badge-road">🚛 Авто (15-20 дней)</span>
+                                </div>
                             </div>
+
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <div class="route-name">🇨🇳 Шанхай → 🇷🇺 Санкт-Петербург</div>
+                                </div>
+                                <div class="route-types">
+                                    <span class="transport-badge badge-air">✈️ Авиа (8-12 дней)</span>
+                                    <span class="transport-badge badge-sea">🚢 Море (40-50 дней)</span>
+                                    <span class="transport-badge badge-rail">🚂 ЖД (22-28 дней)</span>
+                                </div>
+                            </div>
+
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <div class="route-name">🇨🇳 Циндао → 🇷🇺 Казань</div>
+                                </div>
+                                <div class="route-types">
+                                    <span class="transport-badge badge-air">✈️ Авиа (7-10 дней)</span>
+                                    <span class="transport-badge badge-rail">🚂 ЖД (18-22 дня)</span>
+                                    <span class="transport-badge badge-road">🚛 Авто (12-16 дней)</span>
+                                </div>
+                            </div>
+
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <div class="route-name">🇨🇳 Шэньчжэнь → 🇷🇺 Новосибирск</div>
+                                </div>
+                                <div class="route-types">
+                                    <span class="transport-badge badge-air">✈️ Авиа (9-13 дней)</span>
+                                    <span class="transport-badge badge-sea">🚢 Море (38-48 дней)</span>
+                                    <span class="transport-badge badge-rail">🚂 ЖД (23-27 дней)</span>
+                                </div>
+                            </div>
+
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <div class="route-name">🇨🇳 Ухань → 🇷🇺 Екатеринбург</div>
+                                </div>
+                                <div class="route-types">
+                                    <span class="transport-badge badge-air">✈️ Авиа (8-11 дней)</span>
+                                    <span class="transport-badge badge-rail">🚂 ЖД (19-24 дня)</span>
+                                    <span class="transport-badge badge-road">🚛 Авто (14-18 дней)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TNVED Page -->
+            <div class="page-section" id="tnved">
+                <div class="content-header">
+                    <h1 class="content-title">📦 Коды ТН ВЭД</h1>
+                </div>
+                <div class="content-body">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-title">База кодов ТН ВЭД</div>
+                        </div>
+                        <div class="section-body">
+                            <div class="tnved-search">
+                                <input type="text" class="form-input" id="tnvedSearch" placeholder="🔍 Поиск по коду или названию...">
+                            </div>
+                            <table id="tnvedTable">
+                                <thead>
+                                    <tr>
+                                        <th>Код ТН ВЭД</th>
+                                        <th>Наименование</th>
+                                        <th>Пошлина</th>
+                                        <th>НДС</th>
+                                        <th>Сертификация</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>8471300000</td>
+                                        <td>Портативные ЭВМ массой не более 10 кг</td>
+                                        <td>0%</td>
+                                        <td>20%</td>
+                                        <td>ТР ЕАЭС 037/2016</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8517120000</td>
+                                        <td>Телефоны для сотовых сетей (смартфоны)</td>
+                                        <td>0%</td>
+                                        <td>20%</td>
+                                        <td>ТР ЕАЭС 020/2011</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8708299000</td>
+                                        <td>Прочие части и принадлежности кузовов</td>
+                                        <td>5%</td>
+                                        <td>20%</td>
+                                        <td>Не требуется</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6203420000</td>
+                                        <td>Брюки мужские из хлопчатобумажных тканей</td>
+                                        <td>10%</td>
+                                        <td>20%</td>
+                                        <td>ТР ТС 017/2011</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8414510000</td>
+                                        <td>Вентиляторы и кондиционеры</td>
+                                        <td>7.5%</td>
+                                        <td>20%</td>
+                                        <td>ТР ЕАЭС 004/2011</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9403600000</td>
+                                        <td>Мебель деревянная прочая</td>
+                                        <td>15%</td>
+                                        <td>20%</td>
+                                        <td>Не требуется</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3304990000</td>
+                                        <td>Средства косметические и для ухода за кожей</td>
+                                        <td>6.5%</td>
+                                        <td>20%</td>
+                                        <td>ТР ТС 009/2011</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8528720000</td>
+                                        <td>Аппаратура приемная для телевизионной связи</td>
+                                        <td>0%</td>
+                                        <td>20%</td>
+                                        <td>ТР ЕАЭС 037/2016</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Navigation
+        const menuItems = document.querySelectorAll('.menu-item');
+        const pageSections = document.querySelectorAll('.page-section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const pageId = item.getAttribute('data-page');
+
+                menuItems.forEach(mi => mi.classList.remove('active'));
+                item.classList.add('active');
+
+                pageSections.forEach(ps => ps.classList.remove('active'));
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+
+        // Calculator
+        const tnvedData = {
+            '8471300000': { name: 'Портативные ЭВМ', duty: 0, vat: 20, cert: 300 },
+            '8517120000': { name: 'Смартфоны', duty: 0, vat: 20, cert: 250 },
+            '6203420000': { name: 'Брюки мужские', duty: 10, vat: 20, cert: 150 },
+            '8528720000': { name: 'Телевизоры', duty: 0, vat: 20, cert: 280 }
+        };
+
+        document.getElementById('calcForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const tnvedCode = document.getElementById('tnvedCode').value;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const volume = parseFloat(document.getElementById('volume').value);
+            const customsValue = parseFloat(document.getElementById('customsValue').value);
+
+            const product = tnvedData[tnvedCode];
+            const deliveryCost = Math.round(weight * 4.5);
+            const packagingCost = 50;
+            const customsClearance = 200;
+            const dutyAmount = Math.round(customsValue * (product.duty / 100));
+            const vatAmount = Math.round((customsValue + dutyAmount) * (product.vat / 100));
+            const certCost = product.cert;
+            const totalCost = deliveryCost + packagingCost + customsClearance + dutyAmount + vatAmount + certCost;
+
+            document.getElementById('calcResult').innerHTML = `
+                <div class="result-card">
+                    <h3 style="margin-bottom: 16px; font-size: 20px;">💰 Результат расчёта</h3>
+                    <div class="result-row">
+                        <span>Товар:</span>
+                        <span>${product.name}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Вес:</span>
+                        <span>${weight} кг</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Объем:</span>
+                        <span>${volume} м³</span>
+                    </div>
+                    <div class="result-row">
+                        <span>✈️ Авиаперевозка:</span>
+                        <span>$${deliveryCost}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>📦 Упаковка:</span>
+                        <span>$${packagingCost}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>🏢 Таможенное оформление:</span>
+                        <span>$${customsClearance}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>🧾 Пошлина (${product.duty}%):</span>
+                        <span>$${dutyAmount}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>💵 НДС (${product.vat}%):</span>
+                        <span>$${vatAmount}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>📄 Сертификация:</span>
+                        <span>$${certCost}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>💎 ИТОГО:</span>
+                        <span>$${totalCost}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        // TNVED Search
+        document.getElementById('tnvedSearch').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#tnvedTable tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>
