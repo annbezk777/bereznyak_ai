@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Международная логистика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fa;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .admin-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .sidebar-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: #334155;
+            color: white;
+        }
+
+        .menu-item.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .menu-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            background: #f5f7fa;
+        }
+
+        .content-header {
+            background: white;
+            padding: 24px 32px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-body {
+            padding: 32px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .stat-value.blue {
+            color: #3b82f6;
+        }
+
+        .stat-value.green {
+            color: #10b981;
+        }
+
+        /* Sections Grid */
+        .sections-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 24px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-link {
+            color: #3b82f6;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .section-body {
+            padding: 0;
+        }
+
+        /* Top Routes */
+        .route-item {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .route-item:last-child {
+            border-bottom: none;
+        }
+
+        .route-name {
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .route-count {
+            background: #eff6ff;
+            color: #3b82f6;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th {
+            padding: 16px 24px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 24px;
+            border-top: 1px solid #f1f5f9;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .order-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .order-link:hover {
+            text-decoration: underline;
+        }
+
+        .route-text {
+            white-space: nowrap;
+        }
+
+        .amount {
+            font-weight: 600;
+        }
+
+        .date {
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">🛫</div>
+                <div class="sidebar-title">Логистика</div>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <div class="menu-icon">📊</div>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-icon">📋</div>
+                    <span>Расчёты</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-icon">🧮</div>
+                    <span>Калькулятор</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-icon">🗺️</div>
+                    <span>Маршруты</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <div class="menu-icon">📦</div>
+                    <span>Коды ТН ВЭД</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">
+                    📊 Dashboard
+                </h1>
+            </div>
+
+            <div class="content-body">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Расчётов сегодня</div>
+                        <div class="stat-value blue">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Заявок оформлено</div>
+                        <div class="stat-value green">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Новых пользователей</div>
+                        <div class="stat-value blue">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Всего расчётов</div>
+                        <div class="stat-value">9</div>
+                    </div>
+                </div>
+
+                <!-- Sections -->
+                <div class="sections-grid">
+                    <!-- Top Routes -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-title">
+                                🗺️ Топ маршруты
+                            </div>
+                        </div>
+                        <div class="section-body">
+                            <div class="route-item">
+                                <div class="route-name">Jinan → Санкт-Петербург</div>
+                                <div class="route-count">2</div>
+                            </div>
+                            <div class="route-item">
+                                <div class="route-name">Chongqing → Москва</div>
+                                <div class="route-count">2</div>
+                            </div>
+                            <div class="route-item">
+                                <div class="route-name">Qingdao → Казань</div>
+                                <div class="route-count">1</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Calculations -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div class="section-title">
+                                🕒 Последние расчёты
+                            </div>
+                            <a href="#" class="section-link">
+                                Все расчёты →
+                            </a>
+                        </div>
+                        <div class="section-body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>№ Заявки</th>
+                                            <th>Клиент</th>
+                                            <th>Маршрут</th>
+                                            <th>Сумма</th>
+                                            <th>Дата</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260531-0001</a></td>
+                                            <td>Admin Calculator</td>
+                                            <td class="route-text">Chongqing → Москва</td>
+                                            <td class="amount">2452002 ₽</td>
+                                            <td class="date">31.05 20:38</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260421-0002</a></td>
+                                            <td>Игорь</td>
+                                            <td class="route-text">Qingdao → Новосибирск</td>
+                                            <td class="amount">3905751 ₽</td>
+                                            <td class="date">21.04 08:29</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260421-0001</a></td>
+                                            <td>Aleksei Tomkin</td>
+                                            <td class="route-text">Qingdao → Казань</td>
+                                            <td class="amount">766674 ₽</td>
+                                            <td class="date">21.04 08:05</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260408-0001</a></td>
+                                            <td>SERGEY GIL</td>
+                                            <td class="route-text">Chongqing → Москва</td>
+                                            <td class="amount">1913624 ₽</td>
+                                            <td class="date">08.04 12:18</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260331-0001</a></td>
+                                            <td>Aleksei Tomkin</td>
+                                            <td class="route-text">Wuhan → Москва</td>
+                                            <td class="amount">487321 ₽</td>
+                                            <td class="date">31.03 19:04</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260330-0003</a></td>
+                                            <td>Анна Березняк</td>
+                                            <td class="route-text">Jinan → Санкт-Петербург</td>
+                                            <td class="amount">2236249 ₽</td>
+                                            <td class="date">30.03 16:35</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260330-0002</a></td>
+                                            <td>Анна Березняк</td>
+                                            <td class="route-text">Nanchang → Новосибирск</td>
+                                            <td class="amount">495252 ₽</td>
+                                            <td class="date">30.03 15:26</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260330-0001</a></td>
+                                            <td>Анна Березняк</td>
+                                            <td class="route-text">Jinan → Санкт-Петербург</td>
+                                            <td class="amount">885701 ₽</td>
+                                            <td class="date">30.03 14:06</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="order-link">20260328-0001</a></td>
+                                            <td>Анна Березняк</td>
+                                            <td class="route-text">Jinan → Москва</td>
+                                            <td class="amount">477062 ₽</td>
+                                            <td class="date">28.03 08:20</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
