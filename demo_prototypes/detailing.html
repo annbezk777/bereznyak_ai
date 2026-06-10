@@ -422,6 +422,16 @@
 
         async function start() {
             clearMessages();
+            addMessage('Привет! 👋<br><br>Я помогу рассчитать стоимость услуг детейлинга для вашего автомобиля.<br><br>Нажмите кнопку ниже, чтобы начать:', {
+                cols: 1,
+                items: [
+                    { text: '🚗 Выбор марки и модели', action: showBrandSelection }
+                ]
+            });
+        }
+
+        async function showBrandSelection() {
+            clearMessages();
             addMessage('Выберите марку автомобиля:', {
                 cols: 2,
                 items: [
@@ -447,7 +457,7 @@
                         action: () => selectModel(brandId, model.id)
                     })),
                     { text: '❗ Другая модель', class: 'other', action: () => alert('Функция в разработке') },
-                    { text: '🔙 Назад', class: 'back', action: start }
+                    { text: '🔙 Назад', class: 'back', action: showBrandSelection }
                 ]
             });
         }
