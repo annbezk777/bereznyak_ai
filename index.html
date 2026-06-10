@@ -2017,7 +2017,7 @@
                         <i data-lucide="zap" class="w-6 h-6 text-red-400"></i>
                         <div class="text-left">
                             <div class="text-red-300 font-bold text-lg">Специальное предложение до конца месяца</div>
-                            <div class="text-gray-300 text-sm">Бесплатный месяц техподдержки при заказе бота до 31 мая</div>
+                            <div class="text-gray-300 text-sm" id="special-offer-date">Бесплатный месяц техподдержки при заказе бота до 31 мая</div>
                         </div>
                         <div class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm">
                             -15 000₽
@@ -2165,6 +2165,33 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+
+        // Update special offer date automatically
+        function updateSpecialOfferDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+
+            // Get last day of current month
+            const lastDay = new Date(year, month + 1, 0).getDate();
+
+            // Russian month names in genitive case (родительный падеж)
+            const monthsGenitive = [
+                'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+                'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+            ];
+
+            const monthName = monthsGenitive[month];
+            const offerText = `Бесплатный месяц техподдержки при заказе бота до ${lastDay} ${monthName}`;
+
+            const offerElement = document.getElementById('special-offer-date');
+            if (offerElement) {
+                offerElement.textContent = offerText;
+            }
+        }
+
+        // Call on page load
+        updateSpecialOfferDate();
 
         // Smooth scroll for anchor links (if you add them later)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2758,14 +2785,14 @@
                         </ul>
 
                         <!-- CTA Buttons -->
-                        <div class="space-y-3">
-                            <a href="demo_prototypes/detailing-site-demo.html" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_site_click')" class="flex items-center justify-between text-purple-400 hover:text-purple-300 font-semibold text-sm border border-purple-500/40 rounded-lg px-4 py-2 hover:bg-purple-500/10 transition-all">
-                                <span>Демо-сайт детейлинга</span>
-                                <i data-lucide="monitor" class="w-4 h-4"></i>
-                            </a>
+                        <div class="grid grid-cols-2 gap-2">
                             <a href="demo_prototypes/detailing.html" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_click')" class="flex items-center justify-between text-white bg-purple-600 hover:bg-purple-500 font-semibold text-sm rounded-lg px-4 py-2 transition-all">
                                 <span>Запустить демо-бот</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="demo_prototypes/detailing-site-demo.html" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_site_click')" class="flex items-center justify-between text-purple-400 hover:text-purple-300 font-semibold text-sm border border-purple-500/40 rounded-lg px-4 py-2 hover:bg-purple-500/10 transition-all">
+                                <span>Демо-сайт детейлинга</span>
+                                <i data-lucide="monitor" class="w-4 h-4"></i>
                             </a>
                         </div>
                     </div>
@@ -2812,7 +2839,7 @@
                         </ul>
 
                         <!-- CTA Buttons -->
-                        <div class="space-y-2">
+                        <div class="grid grid-cols-2 gap-2">
                             <a href="demo_prototypes/logistics.html" target="_blank" onclick="ym(108506107,'reachGoal','demo_logistics_click')" class="flex items-center justify-between text-white bg-blue-600 hover:bg-blue-500 font-semibold text-sm rounded-lg px-4 py-2 transition-all">
                                 <span>Запустить демо-бот</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
