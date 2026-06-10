@@ -17,10 +17,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            background: #bdd2a7;
-            background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' opacity='0.05'%3E%3Ctext x='10' y='50' font-size='40'%3E🚗%3C/text%3E%3C/svg%3E");
+            background: #0e1621;
             height: 100vh;
             overflow: hidden;
         }
@@ -31,31 +28,28 @@
             height: 100vh;
             max-width: 500px;
             margin: 0 auto;
-            background: #bdd2a7;
+            background: #0e1621;
         }
 
         .tg-header {
-            background: #527f3e;
-            color: white;
-            padding: 10px 16px;
+            background: #17212b;
+            height: 56px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 0 8px 0 4px;
+            border-bottom: 1px solid #0f1419;
         }
 
         .tg-avatar {
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: #3d5f2f;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
-            font-weight: 600;
-            flex-shrink: 0;
+            font-size: 20px;
+            margin-right: 10px;
         }
 
         .tg-info {
@@ -63,24 +57,36 @@
         }
 
         .tg-name {
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 18px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
         }
 
         .tg-status {
-            font-size: 13px;
-            opacity: 0.8;
-            line-height: 16px;
+            color: #8a96a2;
+            font-size: 14px;
+            line-height: 18px;
         }
 
         .tg-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 8px;
-            background: #bdd2a7;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);
+            background-color: #0e1621;
+            padding: 12px;
             display: flex;
             flex-direction: column;
+        }
+
+        .tg-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tg-messages::-webkit-scrollbar-thumb {
+            background: #2b5278;
+            border-radius: 3px;
         }
 
         .tg-date {
@@ -89,8 +95,8 @@
         }
 
         .tg-date-badge {
-            background: rgba(0,0,0,0.2);
-            color: white;
+            background: rgba(255,255,255,0.1);
+            color: #8a96a2;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 13px;
@@ -123,17 +129,23 @@
         }
 
         .tg-message.incoming .tg-bubble {
-            background: white;
-            color: #000;
-            border-radius: 0 12px 12px 12px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            background: #182533;
+            color: #fff;
+            border-radius: 12px 12px 12px 2px;
+        }
+
+        .tg-message.outgoing .tg-bubble {
+            background: #2b5278;
+            color: #fff;
+            border-radius: 12px 12px 2px 12px;
         }
 
         .tg-time {
-            font-size: 11px;
-            color: #999;
-            margin-top: 2px;
+            font-size: 12px;
+            color: #8a96a2;
+            margin-top: 4px;
             text-align: right;
+            opacity: 0.7;
         }
 
         .tg-keyboard {
@@ -147,33 +159,33 @@
         .tg-keyboard.cols-2 { grid-template-columns: 1fr 1fr; }
 
         .tg-btn {
-            background: rgba(82, 127, 62, 0.85);
-            color: white;
+            flex: 1;
+            padding: 10px 16px;
+            background: #182533;
             border: none;
-            padding: 10px 14px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
+            color: #50a8eb;
+            font-size: 15px;
             font-weight: 500;
-            transition: all 0.2s;
+            cursor: pointer;
+            transition: background 0.15s;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
 
         .tg-btn:hover {
-            background: rgba(82, 127, 62, 0.95);
+            background: #1e2f3f;
         }
 
         .tg-btn:active {
-            transform: scale(0.98);
+            background: #0e1621;
         }
 
         .tg-btn.back {
-            background: rgba(82, 127, 62, 0.7);
+            color: #8a96a2;
         }
 
         .tg-btn.other {
-            background: rgba(127, 82, 62, 0.75);
+            color: #50a8eb;
         }
 
         .service-checkbox {
@@ -181,27 +193,26 @@
             align-items: center;
             gap: 10px;
             padding: 10px 12px;
-            background: rgba(82, 127, 62, 0.75);
+            background: #182533;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
             margin-bottom: 4px;
-            color: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            color: #fff;
         }
 
         .service-checkbox:hover {
-            background: rgba(82, 127, 62, 0.85);
+            background: #1e2f3f;
         }
 
         .service-checkbox.selected {
-            background: rgba(82, 127, 62, 0.95);
+            background: #2b5278;
         }
 
         .checkbox-icon {
             width: 18px;
             height: 18px;
-            border: 2px solid rgba(255,255,255,0.7);
+            border: 2px solid #50a8eb;
             border-radius: 3px;
             display: flex;
             align-items: center;
@@ -210,8 +221,8 @@
         }
 
         .service-checkbox.selected .checkbox-icon {
-            background: white;
-            border-color: white;
+            background: #50a8eb;
+            border-color: #50a8eb;
         }
 
         .service-checkbox.selected .checkbox-icon::after {
