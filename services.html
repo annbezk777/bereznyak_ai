@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги - Bereznyak AI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23B91C1C'/%3E%3Ctext x='50' y='50' font-family='Arial,sans-serif' font-size='70' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EB%3C/text%3E%3C/svg%3E">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="Разработка интеллектуальных систем автоматизации для бизнеса. Боты, калькуляторы, веб-приложения и админ-панели под ключ.">
+    <meta name="keywords" content="автоматизация бизнеса, разработка ботов, веб-приложения, admin панели, кастомная разработка">
+    <link rel="canonical" href="https://bezk.pro/services.html">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(108506107, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108506107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glassmorphism {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0b0f19]/70 border-b border-slate-800/50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="/" class="text-2xl font-black text-white hover:text-blue-400 transition-colors">
+                    Bereznyak<span class="text-blue-500">AI</span>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-gray-300 hover:text-white transition-colors font-medium">
+                        Главная
+                    </a>
+                    <a href="/services.html" class="text-white font-semibold border-b-2 border-blue-500">
+                        Услуги
+                    </a>
+                    <a href="/#demo" class="text-gray-300 hover:text-white transition-colors font-medium">
+                        Демо-зона
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-slate-800/50 pt-4">
+                <nav class="flex flex-col gap-4">
+                    <a href="/" class="text-gray-300 hover:text-white transition-colors font-medium">
+                        Главная
+                    </a>
+                    <a href="/services.html" class="text-white font-semibold">
+                        Услуги
+                    </a>
+                    <a href="/#demo" class="text-gray-300 hover:text-white transition-colors font-medium">
+                        Демо-зона
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20 px-6">
+        <div class="container mx-auto max-w-7xl">
+
+            <!-- Page Header -->
+            <div class="text-center mb-16 fade-in">
+                <div class="inline-block bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-purple-600/20 border border-blue-500/30 rounded-full px-6 py-2 mb-6">
+                    <span class="text-blue-400 text-sm font-semibold">Модули разработки</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white">
+                    Услуги
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+                    Кастомные решения для автоматизации бизнеса. Без упоминания библиотек — только результат.
+                </p>
+            </div>
+
+            <!-- Bento Grid: Services -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in" style="animation-delay: 0.2s;">
+
+                <!-- Service 1 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-blue-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="workflow" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Автоматизация бизнес-процессов
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Проектирование и внедрение сквозных сценариев автоматизации. Перенос рутинных операций на выделенные серверные мощности для обеспечения бесперебойной работы систем 24/7. Полное исключение человеческого фактора из цепочки расчетов и обработки данных.
+                    </p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-purple-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="bot" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Интеллектуальные боты и ассистенты
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Разработка умных ботов для автоматизации B2B и B2C сегментов. Интеграция сложных калькуляторов для мгновенного расчета логистики, таможенных пошлин по номенклатурам и индивидуальных параметров под требования заказчика.
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-green-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="file-text" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Автоматическая генерация отчетности
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Модули мгновенного формирования коммерческих предложений, детальных смет и закрывающих документов в формате PDF. Документ генерируется на основе введенных пользователем данных за секунды и сразу отправляется в чат или CRM.
+                    </p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-cyan-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="smartphone" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Telegram Web Apps (Мини-приложения)
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Создание нативных интерактивных интерфейсов, каталогов и витрин прямо внутри мессенджера. Позволяет пользователю взаимодействовать с системой через привычный и быстрый веб-интерфейс, не покидая экосистему Telegram.
+                    </p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-orange-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="globe" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Веб-ресурсы и посадочные страницы
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Разработка высокопроизводительных веб-сайтов и посадочных страниц в строгом минималистичном стиле. Адаптивная верстка, высокая скорость загрузки и бесшовная интеграция с внутренней инфраструктурой и базами данных.
+                    </p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card glassmorphism rounded-2xl p-8 border-2 border-slate-700 hover:border-indigo-500/50">
+                    <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="layout-dashboard" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Кастомные панели управления (Admin Panels)
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Разработка изолированных административных панелей для внутреннего использования. Удобный графический интерфейс для мониторинга аналитики, управления клиентскими базами, сегментами данных и гибкой настройки логики калькуляторов.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- CTA Section -->
+            <div class="mt-16 text-center fade-in" style="animation-delay: 0.4s;">
+                <div class="glassmorphism rounded-2xl p-8 md:p-12 border border-blue-500/20">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Готовы автоматизировать ваш бизнес?
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                        Обсудим вашу задачу и подберем оптимальное решение
+                    </p>
+                    <a href="/#demo" class="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all">
+                        Запустить демо-бот
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="container mx-auto px-6 py-12 text-center border-t border-slate-800/50">
+        <p class="text-gray-500 text-sm mb-4">
+            &copy; 2024 Bereznyak AI. Все права защищены.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+            <a href="/privacy-policy.html" class="hover:text-blue-400 transition-colors">Политика конфиденциальности</a>
+            <span class="text-gray-600">•</span>
+            <a href="/terms-of-service.html" class="hover:text-blue-400 transition-colors">Условия использования</a>
+            <span class="text-gray-600">•</span>
+            <a href="/cookie-policy.html" class="hover:text-blue-400 transition-colors">Cookie Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
