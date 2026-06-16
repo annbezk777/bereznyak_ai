@@ -108,53 +108,56 @@
 
                 <!-- BOT 1: Детейлинг-центр (ACTIVE) -->
                 <div class="group relative">
-                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-300">
+                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-purple-500/40 hover:border-purple-400/60 transition-all duration-300 flex flex-col">
 
                         <!-- Active badge -->
                         <div class="absolute -top-3 -right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                             ✓ Доступен
                         </div>
 
-                        <!-- Icon -->
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/50">
-                            <i data-lucide="car" class="w-8 h-8 text-white"></i>
+                        <!-- Content -->
+                        <div class="flex-grow">
+                            <!-- Icon -->
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/50">
+                                <i data-lucide="car" class="w-8 h-8 text-white"></i>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                Детейлинг-центр
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                Расчёт услуг детейлинга и запись на осмотр автомобиля
+                            </p>
+
+                            <!-- Features -->
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>Создание сайта</span>
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>Интеграция калькулятора</span>
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>Автоматический расчёт</span>
+                                </li>
+                            </ul>
                         </div>
 
-                        <!-- Title -->
-                        <h3 class="text-xl font-bold text-white mb-2">
-                            Детейлинг-центр
-                        </h3>
-
-                        <!-- Description -->
-                        <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                            Расчёт услуг детейлинга и запись на осмотр автомобиля
-                        </p>
-
-                        <!-- Features -->
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Создание сайта</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Интеграция калькулятора</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Автоматический расчёт</span>
-                            </li>
-                        </ul>
-
                         <!-- CTA Buttons -->
-                        <div class="space-y-3">
-                            <a href="https://detailing-spb.ru" target="_blank" class="flex items-center justify-between text-purple-400 hover:text-purple-300 font-semibold text-sm border border-purple-500/40 rounded-lg px-4 py-2 hover:bg-purple-500/10 transition-all">
-                                <span>Посмотреть сайт</span>
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                            <a href="https://t.me/detailing_spb_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_click')" class="flex items-center justify-between text-white bg-purple-600 hover:bg-purple-500 font-semibold text-sm rounded-lg px-4 py-2 transition-all">
-                                <span>Запустить бот</span>
+                        <div class="space-y-3 mt-auto">
+                            <a href="https://t.me/detailing_spb_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_detailing_click')" class="flex items-center justify-between text-white bg-purple-600 hover:bg-purple-500 font-semibold text-sm rounded-lg px-4 py-2.5 transition-all">
+                                <span>Запустить демо-бот</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="https://detailing-spb.ru" target="_blank" class="flex items-center justify-between text-gray-300 hover:text-white font-medium text-sm bg-slate-700/50 hover:bg-slate-700/70 rounded-lg px-4 py-2.5 transition-all">
+                                <span>Демо-сайт детейлинга</span>
+                                <i data-lucide="monitor" class="w-4 h-4"></i>
                             </a>
                         </div>
                     </div>
@@ -162,92 +165,106 @@
 
                 <!-- BOT 2: Международная логистика (ACTIVE) -->
                 <div class="group relative">
-                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-blue-500/40 hover:border-blue-400/60 transition-all duration-300">
+                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-blue-500/40 hover:border-blue-400/60 transition-all duration-300 flex flex-col">
 
                         <!-- Active badge -->
                         <div class="absolute -top-3 -right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                             ✓ Доступен
                         </div>
 
-                        <!-- Icon -->
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/50">
-                            <i data-lucide="plane" class="w-8 h-8 text-white"></i>
+                        <!-- Content -->
+                        <div class="flex-grow">
+                            <!-- Icon -->
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/50">
+                                <i data-lucide="plane" class="w-8 h-8 text-white"></i>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-white mb-2">
+                                Международная логистика
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                Расчёт доставки из Китая в РФ с учётом веса, объёма и срочности
+                            </p>
+
+                            <!-- Features -->
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>Авто/авиа/ж/д/море</span>
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>Таможня под ключ</span>
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-gray-300">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                                    <span>PDF-КП за 30 секунд</span>
+                                </li>
+                            </ul>
                         </div>
 
-                        <!-- Title -->
-                        <h3 class="text-xl font-bold text-white mb-2">
-                            Международная логистика
-                        </h3>
-
-                        <!-- Description -->
-                        <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                            Расчёт доставки из Китая в РФ с учётом веса, объёма и срочности
-                        </p>
-
-                        <!-- Features -->
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Авто/авиа/ж/д/море</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>Таможня под ключ</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-xs text-gray-300">
-                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                                <span>PDF-КП за 30 секунд</span>
-                            </li>
-                        </ul>
-
-                        <!-- CTA Button -->
-                        <a href="https://t.me/prime_shift_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_logistics_click')" class="flex items-center justify-between text-white bg-blue-600 hover:bg-blue-500 font-semibold text-sm rounded-lg px-4 py-2 transition-all">
-                            <span>Запустить бот</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                        <!-- CTA Buttons -->
+                        <div class="space-y-3 mt-auto">
+                            <a href="https://t.me/prime_shift_bot" target="_blank" onclick="ym(108506107,'reachGoal','demo_logistics_click')" class="flex items-center justify-between text-white bg-blue-600 hover:bg-blue-500 font-semibold text-sm rounded-lg px-4 py-2.5 transition-all">
+                                <span>Запустить демо-бот</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" target="_blank" class="flex items-center justify-between text-gray-300 hover:text-white font-medium text-sm bg-slate-700/50 hover:bg-slate-700/70 rounded-lg px-4 py-2.5 transition-all">
+                                <span>Демо админ-панели</span>
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- BOT 3: Кондиционеры под ключ (COMING SOON) -->
                 <div class="group relative opacity-60 cursor-not-allowed">
-                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-slate-700">
+                    <div class="relative h-full glassmorphism rounded-2xl p-6 border-2 border-slate-700 flex flex-col">
 
                         <!-- Coming soon badge -->
                         <div class="absolute -top-3 -right-3 bg-gradient-to-r from-orange-500 to-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                             Скоро
                         </div>
 
-                        <!-- Icon (grayscale) -->
-                        <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-                            <i data-lucide="wind" class="w-8 h-8 text-gray-500"></i>
+                        <!-- Content -->
+                        <div class="flex-grow">
+                            <!-- Icon (grayscale) -->
+                            <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                                <i data-lucide="wind" class="w-8 h-8 text-gray-500"></i>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-gray-400 mb-2">
+                                Кондиционеры под ключ
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm text-gray-500 mb-4 leading-relaxed">
+                                Расчёт мощности, подбор оборудования и стоимости монтажа
+                            </p>
+
+                            <!-- Features -->
+                            <ul class="space-y-2 mb-6">
+                                <li class="flex items-center gap-2 text-xs text-gray-500">
+                                    <i data-lucide="clock" class="w-4 h-4 text-gray-600"></i>
+                                    <span>В разработке</span>
+                                </li>
+                                <li class="flex items-center gap-2 text-xs text-gray-500">
+                                    <i data-lucide="clock" class="w-4 h-4 text-gray-600"></i>
+                                    <span>Запуск в июне 2026</span>
+                                </li>
+                            </ul>
                         </div>
 
-                        <!-- Title -->
-                        <h3 class="text-xl font-bold text-gray-400 mb-2">
-                            Кондиционеры под ключ
-                        </h3>
-
-                        <!-- Description -->
-                        <p class="text-sm text-gray-500 mb-4 leading-relaxed">
-                            Расчёт мощности, подбор оборудования и стоимости монтажа
-                        </p>
-
-                        <!-- Features -->
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center gap-2 text-xs text-gray-500">
-                                <i data-lucide="clock" class="w-4 h-4 text-gray-600"></i>
-                                <span>В разработке</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-xs text-gray-500">
-                                <i data-lucide="clock" class="w-4 h-4 text-gray-600"></i>
-                                <span>Запуск в июне 2026</span>
-                            </li>
-                        </ul>
-
                         <!-- Disabled CTA -->
-                        <div class="flex items-center justify-between text-gray-600 font-semibold text-sm bg-slate-800/50 rounded-lg px-4 py-2">
-                            <span>Недоступно</span>
-                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        <div class="mt-auto">
+                            <div class="flex items-center justify-between text-gray-600 font-semibold text-sm bg-slate-800/50 rounded-lg px-4 py-2.5">
+                                <span>Недоступно</span>
+                                <i data-lucide="lock" class="w-4 h-4"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
