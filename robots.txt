@@ -10,7 +10,6 @@ Disallow: /private/
 
 # Allow all main pages
 Allow: /index.html
-Allow: /demo.html
 Allow: /blog.html
 Allow: /privacy-policy.html
 Allow: /terms-of-service.html

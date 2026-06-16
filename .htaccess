@@ -7,9 +7,6 @@
     RewriteEngine On
     RewriteBase /
 
-    # Redirect /demo to /demo.html
-    RewriteRule ^demo$ demo.html [L]
-
     # Redirect index to root (optional, for cleaner URLs)
     RewriteCond %{THE_REQUEST} ^GET.*index\.html [NC]
     RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
