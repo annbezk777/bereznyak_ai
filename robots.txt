@@ -34,3 +34,16 @@ Allow: /
 
 User-agent: Bingbot
 Allow: /
+
+# AI Crawlers and LLM Training Bots (GEO Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
